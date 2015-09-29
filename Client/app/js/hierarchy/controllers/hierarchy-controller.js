@@ -2,11 +2,11 @@
  *
  */
 /*global angular, */
-barcoApp.controller('HierarchyController', ['$scope', '$routeParams', 'hierarchyService',
-        function ($scope, $routeParams,  hierarchyService) {
+barcoApp.controller('hierarchyController', ['$scope', 'hierarchyService',
+        function ($scope,   hierarchyService) {
             $scope.getHierarchy = function(){
                 hierarchyService.gethierarchy().then(function(obj){
-                    $scope.hierarchy = obj.reponseData;
+                    $scope.hierarchys = obj.reponseData;
                 });
             };
             $scope.getHierarchy();

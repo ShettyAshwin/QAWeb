@@ -1,10 +1,10 @@
 /**
  *
  */
-barcoApp.service('hierarchyService',['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
-    var hierarchyService = {
+barcoApp.service('hospitalService',['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
+    var hospitalService = {
 
-        gethierarchy: function () {
+        getHospitalList: function () {
             var defer = $q.defer();
             $http.get('data/hospital.json').
                 success(function (data, status) {
@@ -12,9 +12,9 @@ barcoApp.service('hierarchyService',['$http', '$q', '$rootScope', function ($htt
                 });
             return defer.promise;
         },
-        Addhierarchy: function (Hierarchy) {
+        AddHospitalDetail: function (Hospital) {
             var defer = $q.defer();
-            $http.post('data/hierarchy.json',Hierarchy)
+            $http.post('data/hospital.json',Hospital)
                 .success(function (data, status) {
                     defer.resolve({'Success': true, 'Data': data, 'error': null, 'ErrorCode': status});
                 }).error(function (data, status) {
@@ -24,5 +24,5 @@ barcoApp.service('hierarchyService',['$http', '$q', '$rootScope', function ($htt
             return defer.promise;
         }
     };
-    return hierarchyService;
+    return hospitalService;
 }]);

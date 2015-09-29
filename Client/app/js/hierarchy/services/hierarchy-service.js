@@ -1,10 +1,11 @@
 /**
  * Created by katarep on 9/28/15.
  */
-barcoApp.service('hospitalService',['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
-    var hospitalService = {
 
-        getHospitalList: function () {
+barcoApp.service('hierarchyService',['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
+    var hierarchyService = {
+
+        gethierarchy: function () {
             var defer = $q.defer();
             $http.get('data/hospital.json').
                 success(function (data, status) {
@@ -12,9 +13,9 @@ barcoApp.service('hospitalService',['$http', '$q', '$rootScope', function ($http
                 });
             return defer.promise;
         },
-        AddHospitalDetail: function (Hospital) {
+        Addhierarchy: function (Hierarchy) {
             var defer = $q.defer();
-            $http.post('data/hospital.json',Hospital)
+            $http.post('data/hierarchy.json',Hierarchy)
                 .success(function (data, status) {
                     defer.resolve({'Success': true, 'Data': data, 'error': null, 'ErrorCode': status});
                 }).error(function (data, status) {
@@ -24,5 +25,9 @@ barcoApp.service('hospitalService',['$http', '$q', '$rootScope', function ($http
             return defer.promise;
         }
     };
-    return hospitalService;
+    return hierarchyService;
+
+
+
+
 }]);

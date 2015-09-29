@@ -7,7 +7,7 @@ barcoApp.service('hierarchyService',['$http', '$q', '$rootScope', function ($htt
 
         gethierarchy: function () {
             var defer = $q.defer();
-            $http.get('data/hospital.json').
+            $http.get('data/hierarchy.json').
                 success(function (data, status) {
                     defer.resolve({ "reponseData": data});
                 });

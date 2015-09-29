@@ -1,0 +1,58 @@
+<div data-ng-controller="hierarchyController">
+
+    <form name="hierarchyForm" novalidate>
+        <table>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <span>Id</span>
+                            </td>
+                            <td>
+                                <input type="text" id="hierarchyId"  ng-model="hierarchy.Id" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Name</span>
+                            </td>
+                            <td>
+                                <input type="text" id="hierarchyName"  ng-model="hierarchy.Name" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Address</span>
+                            </td>
+                            <td>
+                                <input type="text" id="hierarchyAddress" name="hierarchyAddress" required ng-model="hierarchy.Address" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="button" id="new" value="Clear Values" ng-click="clear()" />
+                                <input type="submit" id="save" value="Save" ng-click="Addhierarchy()" />
+
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Address</th>
+                        </tr>
+                        <tr ng-repeat="hierarchy in hierarchys">
+                            <td>{{hierarchy.name}}</td>
+                            <td>{{hierarchy.address}}</td>
+                            <td>
+                                <a href="#/{{hierarchy.Id}}">Edit</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+    </form>
+</div>

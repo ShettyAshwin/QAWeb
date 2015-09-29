@@ -1,0 +1,11 @@
+{
+    "Hierarchy": {
+        "name": "Hierachy1",
+        "address": "Dummy Address",
+        "location": {
+            "name": "Location 1",
+            "address": "Dummy Location Address"
+        },
+        "order": "1"
+    }
+}

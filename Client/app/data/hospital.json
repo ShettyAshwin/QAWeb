@@ -1,0 +1,11 @@
+
+    [{
+        "Id":1,
+        "name":"hospital1",
+        "address":"abc"
+    },
+        {
+            "Id":2,
+            "name":"hospital1",
+            "address":"abc"
+        }]

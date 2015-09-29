@@ -1,0 +1,58 @@
+<div data-ng-controller="HospitalController">
+
+    <form name="hospitalForm" novalidate>
+        <table>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <span>Id</span>
+                            </td>
+                            <td>
+                                <input type="text" id="hospitalId"  ng-model="Hospital.Id" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Name</span>
+                            </td>
+                            <td>
+                                <input type="text" id="hospitalName"  ng-model="Hospital.Name" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Address</span>
+                            </td>
+                            <td>
+                                <input type="text" id="hospitalAddress" name="hospitalAddress" required ng-model="Hospital.Address" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="button" id="new" value="Clear Values" ng-click="clear()" />
+                                <input type="submit" id="save" value="Save" ng-click="AddHospital()" />
+
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Address</th>
+                        </tr>
+                        <tr ng-repeat="hospital in hospitals">
+                            <td>{{hospital.name}}</td>
+                            <td>{{hospital.address}}</td>
+                            <td>
+                                <a href="#/{{hospital.Id}}">Edit</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+    </form>
+</div>

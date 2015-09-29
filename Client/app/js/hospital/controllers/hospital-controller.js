@@ -15,7 +15,7 @@ barcoApp.controller('HospitalController',['$scope', 'hospitalService',
                 Id:$scope.Hospital.Id,
                 Name: $scope.Hospital.Name,
                 Address: $scope.Hospital.Address
-            };
+    };
             hospitalService.AddHospitalDetail(objHospital).then(function (response) {
             $scope.HospitalId = response.Id;
 

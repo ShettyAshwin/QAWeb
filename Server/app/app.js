@@ -10,6 +10,7 @@ var users = require('./routes/users');
 var hospitals = require('./routes/hospitals');
 var locations = require('./routes/locations');
 var hierarchies = require('./routes/hierarchies');
+var assets = require('./routes/assets');
 
 var app = express();
 
@@ -37,6 +38,7 @@ app.use('/users', users);
 app.use('/hospitals', hospitals);
 app.use('/locations',locations);
 app.use('/hierarchy',hierarchies);
+app.use('/assets',assets);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

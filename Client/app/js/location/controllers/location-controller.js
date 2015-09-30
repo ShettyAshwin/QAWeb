@@ -7,31 +7,25 @@ barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locatio
         $scope.ddlEditAssociatedHospital = "-1"; // Default hospital selection in edit view
         $scope.ddlAssociatedHospital = "-1"; // Default hospital selection
         $scope.ddlFilteredHospital = "-1"; // Default hospital filter
-        $scope.getHospitalList = function () {
-            /*
+        $scope.getHospitalList = function () { 
             hospitalService.getHospitalList().then(function (obj) {
                 $scope.hospitalList = obj.reponseData;
-            });
-            */
-            return [{
-                "Id": 0,
-                "Name": "Ruby",
-                "Address":"Pune"
-            }, {
-                "Id": 1,
-                "Name": "Sahyadri",
-                "Address": "Mumbai"
-            }];
+            });   
         };
         // load hospital list
-        $scope.hospitalList = $scope.getHospitalList();
+        $scope.getHospitalList();
 
         /* Get hospital location list */
         $scope.LoadHospitalLocations = function (hospitalId) {
-            //alert('p');
-            locationService.getHospitalLocations(parseInt(hospitalId)).then(function (obj) {
+            locationService.getHospitalLocations(hospitalId).then(function (obj) {
                 if (obj.responseData) {
-                    $scope.locationList = obj.responseData;
+                    $scope.locationList = [];
+                    // Iterate through all the locations and filter only those belonging to given hospital
+                    for (var ind = 0; ind < obj.responseData.length; ind++) {
+                        if (obj.responseData[ind].hospitalId === hospitalId) {
+                            $scope.locationList.push(obj.responseData[ind]);
+                        }
+                    }
                 }   
             });
         };
@@ -39,7 +33,6 @@ barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locatio
         // Add hospital location
         $scope.AddHospitalLocation = function () {
             var objLocation = {
-                id: $scope.Location.Id,
                 name: $scope.Location.Name,
                 address: $scope.Location.Address,
                 hospitalId: $scope.ddlAssociatedHospital
@@ -52,7 +45,6 @@ barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locatio
         // Edit hospital location
         $scope.EditHospitalLocation = function (locationId) {
             locationService.getLocationDetails(locationId).then(function (obj) {
-                //alert(JSON.stringify(response));
                 if (obj.responseData) {
                     $scope.EditLocation = {
                         id: obj.responseData.id,
@@ -74,7 +66,7 @@ barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locatio
             };
             locationService.updateHospitalLocation(objLocation).then(function (response) {
                 $scope.EditLocation = response.result;
-                alert(response.result);
+                //alert(response.result);
             });
         };
 

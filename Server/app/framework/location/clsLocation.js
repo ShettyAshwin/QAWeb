@@ -34,7 +34,7 @@ var clsLocation  = {
             clsLocation.responseHandler(err,data);
         });
         this.disconnectDB();
-        res.json(statusOk);
+        res.json(baseframework.statusOk);
         res.end();
         //mongoose.connection.close();
     },
@@ -75,7 +75,7 @@ var clsLocation  = {
         locationModel.findByIdAndRemove(id,
             function (err, post) {
                 if (err) return next(err);
-                res.json(statusOk);
+                res.json(baseframework.statusOk);
                 res.end();
             }
         );
@@ -88,13 +88,13 @@ var clsLocation  = {
             locationModel.create(location,
                 function (err, post) {
                     if (err) return next(err);
-                    res.json(statusOk);
+                    res.json(baseframework.statusOk);
                     res.end();
                 }
             );
             //res.json(statusOk);
         }else{
-            res.json(statusError);
+            res.json(baseframework.statusError);
             res.end();
         }
     },
@@ -108,13 +108,13 @@ var clsLocation  = {
             locationModel.findByIdAndUpdate(id, location,
                 function (err, post) {
                     if (err) return next(err);
-                    res.json(statusOk);
+                    res.json(baseframework.statusOk);
                     res.end();
                 }
             );
 
         }else{
-            res.json(statusError);
+            res.json(baseframework.statusError);
             res.end();
         }
 

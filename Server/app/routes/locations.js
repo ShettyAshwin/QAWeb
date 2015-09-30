@@ -15,6 +15,7 @@ router.get('/get/:id', function(req, res, next) {
     framework.clsLocation.getById(req.params.id, res, next);
 });
 
+
 router.delete('/delete/:id', function(req, res, next) {
     framework.clsLocation.deleteById(req.params.id, res, next);
 });

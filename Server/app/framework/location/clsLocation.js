@@ -3,6 +3,7 @@ var baseframework = require('../common/baseMongoose');
 var locationSchema = new baseframework.mongoose.Schema({name: String, address: String, hospital : {type: baseframework.mongoose.Schema.Types.ObjectId, ref:'Hospital'}});
 var locationModel = baseframework.mongoose.model('Location', locationSchema);
 
+
 var clsLocation  = {
     connectDB : function(){
         baseframework.mongoose.connect(baseframework.dbServer,function(error){

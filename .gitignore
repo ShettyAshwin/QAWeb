@@ -221,3 +221,6 @@ data/
 #Ignore coverage and result folder
 coverage/
 result/
+.idea/
+test_out/
+Client/.idea/workspace.xml

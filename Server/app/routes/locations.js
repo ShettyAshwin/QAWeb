@@ -5,11 +5,9 @@ var mongoose = require('mongoose');
 var locationSchema = new mongoose.Schema({name: String, address: String, hospitalId : {type: mongoose.Schema.Types.ObjectId, ref:'Hospital'}});
 var locationModel = mongoose.model('Location', locationSchema);
 
-
 var dbServer = 'mongodb://localhost:27017/QAWeb';
-var statusOk = {status:'ok', detail :''};
+var statusOk = {status:'200', detail :''};
 var statusError =  {status :'500', detail :''};
-
 
 mongoose.connection.on('connected', function () {
     console.log('Mongoose default connection open to ' + dbServer);

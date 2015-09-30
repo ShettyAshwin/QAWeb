@@ -51,7 +51,13 @@ describe('hospital',function(){
 
             it('Should test getHospitalById Method which is used specific hospital detail by id',function(){
                 var tempObj =  fakeScope.Hospital;
-                fakeScope.getHospitalById();
+
+                fakehospitalService.getHospitalById(fakeScope.hospitals._id).then(function(response){
+                    expect(response.name).toBe(tempObj.name);
+                });
+
+                fakeScope.getHospitalById(fakeScope.Hospital._id);
+                console.log(tempObj._id);
                 expect(tempObj._id).toBe(1);
             });
         })

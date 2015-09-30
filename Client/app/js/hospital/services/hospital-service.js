@@ -33,6 +33,14 @@ barcoApp.service('hospitalService',['$http', '$q', '$rootScope', function ($http
                 });
 
             return defer.promise;
+        },
+        getHospitalById: function (id) {
+            var defer = $q.defer();
+            $http.get('http://localhost:3000/hospitals/get/'+id).
+                success(function (data, status) {
+                    defer.resolve({ "reponseData": data});
+                });
+            return defer.promise;
         }
 
     };

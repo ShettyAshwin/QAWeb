@@ -6,7 +6,6 @@ barcoApp.controller('HospitalController',['$scope', 'hospitalService',
         $scope.getHospital = function(){
             hospitalService.getHospitalList().then(function(obj){
                 $scope.hospitals = obj.reponseData;
-                console.log($scope.hospitals);
             });
         };
         $scope.getHospital();
@@ -15,13 +14,16 @@ barcoApp.controller('HospitalController',['$scope', 'hospitalService',
             var objHospital = $scope.Hospital;
             if($scope.Hospital._id ==null || $scope.Hospital._id ==0)
             {
+                alert("add");
             hospitalService.AddHospitalDetail(objHospital).then(function (response) {
+                alert("add");
             $scope.HospitalId = response._id;
             $scope.Hospital = null;
             $scope.getHospital();
             });
             }else
             {
+                alert("edit");
                 hospitalService.UpdateHospitalDetail(objHospital).then(function (response) {
                     $scope.HospitalId = response._id;
 

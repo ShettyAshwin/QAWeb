@@ -47,7 +47,8 @@ barcoApp.factory('assetService',['$http', '$q', '$rootScope', function ($http, $
                 getAssetsForLocation: function (hierarchy) {
 
                     var defer = $q.defer();
-                    $http.get('data/assetsData.json').
+                    //$http.get('data/assetsData.json').
+                   $http.get('http://localhost:3000/assets/getAll').
                         success(function (data, status) {
                             defer.resolve({ "reponseData": data});
                         });
@@ -58,7 +59,8 @@ barcoApp.factory('assetService',['$http', '$q', '$rootScope', function ($http, $
                 updateAsset: function (asset) {
                     var defer = $q.defer();
                    //var  asset = assetList[0];
-                    $http.put(asset)
+                    //$http.put(asset)
+                    $http.put('http://localhost:3000/assets/update/'+asset._id,asset)
                         .success(function (data, status) {
                             defer.resolve({'Success': true, 'Data': data, 'error': null, 'ErrorCode': status});
                         }).error(function (data, status) {
@@ -70,7 +72,7 @@ barcoApp.factory('assetService',['$http', '$q', '$rootScope', function ($http, $
                 addAsset: function(asset){
                     var defer = $q.defer();
                     //var  asset = assetList[0];
-                    $http.put(asset)
+                    $http.post('http://localhost:3000/assets/add/',asset)
                         .success(function (data, status) {
                             defer.resolve({'Success': true, 'Data': data, 'error': null, 'ErrorCode': status});
                         }).error(function (data, status) {
@@ -78,6 +80,15 @@ barcoApp.factory('assetService',['$http', '$q', '$rootScope', function ($http, $
                         });
 
                     return defer.promise;
+                },
+
+                getAssetById: function (id) {
+                var defer = $q.defer();
+                $http.get('http://localhost:3000/assets/get/'+id).
+                    success(function (data, status) {
+                        defer.resolve({ "reponseData": data});
+                    });
+                return defer.promise;
                 }
             };
             return assetService;

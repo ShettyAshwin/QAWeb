@@ -1,0 +1,115 @@
+<div data-ng-controller="assetController">
+
+    <form name="assetForm" novalidate>
+        <span> <h1>Asset Details</h1> </span>
+        <table >
+            <tr>
+                <td>
+                    <table >
+                        <tr>
+                            <td>
+                                <span>Id</span>
+                            </td>
+                            <td>
+                                <input type="text" id="assetId"  ng-model="asset.id" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Name</span>
+                            </td>
+                            <td>
+                                <input type="text" id="assetName"  ng-model="asset.name" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Hierarchy Name</span>
+                            </td>
+                            <td>
+                               <!--<input type="text" id="assetLocation"  ng-model="asset.hierarchy.name" />-->
+                                <select id="ddlhierarchy" name="" data-ng-model="ddlhierarchy" data-ng-options="h.id as h.name for h in hierarchyList">
+                                    <!--<option value="1">h1</option>
+                                    <option value="2">h2</option>-->
+                                    <option value="" ></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <span>Properties</span>
+                            </td>
+
+                        </tr>
+                        <tr data-ng-repeat="prop in assetproperties">
+                            <td> Property {{$index+1}}</td>
+                            <td > <input type="text" id="propertyname1" placeholder="name" ng-model="prop.name" /></td>
+
+                            <td ><input type="text" id="propertyvalue1" placeholder="value" ng-model="prop.value" /></td>
+
+                            <td><input type="button" id="removeProperty" value="RemoveProperty" ng-click="removeProperty($index)" /></td>
+
+                        </tr>
+                        <!--<tr>
+                            <td> Property2</td>
+                            <td> <input type="text" id="propertyname2" placeholder="name" ng-model="propertyname2" /></td>
+                            <td><input type="text" id="propertyvalue2" placeholder="value" ng-model="propertyvalue2" /></td>
+                        </tr>-->
+                        <tr>
+                            <td>
+                                </br>
+                            </td>
+                        </tr>
+                        <tr>
+                            </br>
+                            <td>
+
+                                <input type="button" id="new" value="Clear Values" ng-click="clear()" />
+                            </td>
+                            <td>
+                                <input type="submit" id="save" value="Save" ng-click="addAsset()"  />
+                            </td>
+                            <td>
+                                <input type="button" id="addProperty" value="AddProperty" ng-click="addProperty()" />
+                            </td>
+
+
+
+
+                        </tr>
+                    </table>
+                    </br>
+                    </br>
+                    <h1>Assets List</h1>
+                    <table border="1">
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>HierarchyName</th>
+                            <th> Properties</th>
+                        </tr>
+
+                        <tr ng-repeat="a in assets ">
+                            <td>{{a.id}}</td>
+                            <td>{{a.name}}</td>
+                            <td>{{a.hierarchy.name}}</td>
+                            <td>
+                                <table>
+                                <tr ng-repeat="p in a.properties">
+                                    <td>{{p.name}}</td>
+                                    <td>{{p.value}}</td>
+                                </tr>
+                                </table>
+                            </td>
+                            <td>
+                            <a href="#" ng-click="getAssetById(a.id)">Edit</a>
+                            </td>
+
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+    </form>
+</div>

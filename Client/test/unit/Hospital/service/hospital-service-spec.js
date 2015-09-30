@@ -59,6 +59,17 @@ describe('hospital',function(){
                 httpBackend.flush();
                 expect(tempObj.name).toBe("hospital2");
             });
+
+            it('Should test DeleteHospitalDetail Method which is used delete hospital details',function(){
+                var tempObj =  fakeScope.Hospital;
+
+                httpBackend.when('DELETE','http://localhost:3000/hospitals/delete/1').respond();
+                fakehospitalService.DeleteHospitalDetail(1).then(function(){
+
+                });
+                httpBackend.flush();
+                expect(true).toBe(true);
+            });
         });
     });
 });

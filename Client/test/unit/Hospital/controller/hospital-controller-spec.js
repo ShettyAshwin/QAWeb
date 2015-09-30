@@ -44,8 +44,6 @@ describe('hospital',function(){
                 });
                 fakeScope.AddHospital();
                 fakeScope.getHospital();
-
-                console.log(fakeScope.Hospital._id);
                 expect(tempObj._id).toBe(1);
             });
 
@@ -57,8 +55,29 @@ describe('hospital',function(){
                 });
 
                 fakeScope.getHospitalById(fakeScope.Hospital._id);
-                console.log(tempObj._id);
+
                 expect(tempObj._id).toBe(1);
+            });
+
+            it('Should test getHospitalById Method which is used specific hospital detail by id',function(){
+                var tempObj =  fakeScope.Hospital;
+
+                fakehospitalService.getHospitalById(fakeScope.hospitals._id).then(function(response){
+                    expect(response.name).toBe(tempObj.name);
+                });
+
+                fakeScope.getHospitalById(fakeScope.Hospital._id);
+
+                expect(tempObj._id).toBe(1);
+            });
+
+            it('Should test DeleteHospital Method which is used delete specific hospital detail by id',function(){
+                var tempObj =  fakeScope.Hospital;
+                fakehospitalService.DeleteHospitalDetail(1).then(function(){
+                });
+                fakeScope.DeleteHospital(fakeScope.Hospital._id);
+
+                expect(true).toBe(true);
             });
         })
     })

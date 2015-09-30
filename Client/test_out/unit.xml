@@ -1,33 +1,22 @@
 <?xml version="1.0"?>
 <testsuites>
-  <testsuite name="Chrome 45.0.2454 (Windows)" package="unit" timestamp="2015-09-30T06:52:25" id="0" hostname="WIN-GG4566GQI5K" tests="7" errors="0" failures="1" time="0.049">
+  <testsuite name="Chrome 45.0.2454 (Windows)" package="unit" timestamp="2015-09-30T07:44:50" id="0" hostname="WIN-GG4566GQI5K" tests="10" errors="0" failures="0" time="0.038">
     <properties>
       <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36"/>
     </properties>
-    <testcase name="Should test getHospital Method which is used for getting hospital list" time="0.015" classname="unit Chrome 45.0.2454 (Windows).hospital controller hospitalSpec"/>
-    <testcase name="Should test AddHospital Method which is used add hospital details" time="0.005" classname="unit Chrome 45.0.2454 (Windows).hospital controller hospitalSpec"/>
-    <testcase name="Should test getHospitalById Method which is used specific hospital detail by id" time="0.011" classname="unit Chrome 45.0.2454 (Windows).hospital controller hospitalSpec">
-      <failure type="">Error: Unexpected request: GET http://localhost:3000/hospitals/getAll
-No more request expected
-    at $httpBackend (C:/Users/Administrator/Documents/GitHub/QAWeb/QAWeb/Client/test/lib/angular/angular-mocks.js:1207:9)
-    at sendReq (C:/Users/Administrator/Documents/GitHub/QAWeb/QAWeb/Client/app/lib/angular/angular.js:7800:9)
-    at serverRequest (C:/Users/Administrator/Documents/GitHub/QAWeb/QAWeb/Client/app/lib/angular/angular.js:7534:16)
-    at wrappedCallback (C:/Users/Administrator/Documents/GitHub/QAWeb/QAWeb/Client/app/lib/angular/angular.js:10930:81)
-    at wrappedCallback (C:/Users/Administrator/Documents/GitHub/QAWeb/QAWeb/Client/app/lib/angular/angular.js:10930:81)
-    at C:/Users/Administrator/Documents/GitHub/QAWeb/QAWeb/Client/app/lib/angular/angular.js:11016:26
-    at Scope.$eval (C:/Users/Administrator/Documents/GitHub/QAWeb/QAWeb/Client/app/lib/angular/angular.js:11936:28)
-    at Scope.$digest (C:/Users/Administrator/Documents/GitHub/QAWeb/QAWeb/Client/app/lib/angular/angular.js:11762:31)
-    at Function.$httpBackend.flush (C:/Users/Administrator/Documents/GitHub/QAWeb/QAWeb/Client/test/lib/angular/angular-mocks.js:1481:16)
-    at null.&lt;anonymous&gt; (C:/Users/Administrator/Documents/GitHub/QAWeb/QAWeb/Client/test/unit/Hospital/controller/hospital-controller-spec.js:58:29)
-</failure>
-    </testcase>
-    <testcase name="Should test getHospitalList Method which is used for getting hospital list" time="0.003" classname="unit Chrome 45.0.2454 (Windows).hospital services hospitalServiceSpec"/>
-    <testcase name="Should test getHospitalById Method which is used for getting specific hospital details" time="0.003" classname="unit Chrome 45.0.2454 (Windows).hospital services hospitalServiceSpec"/>
-    <testcase name="Should test AddHospitalDetail Method which is used add hospital details" time="0.002" classname="unit Chrome 45.0.2454 (Windows).hospital services hospitalServiceSpec"/>
-    <testcase name="Should test UpdateHospitalDetail Method which is used update hospital details" time="0.01" classname="unit Chrome 45.0.2454 (Windows).hospital services hospitalServiceSpec"/>
+    <testcase name="Should test getHospital Method which is used for getting hospital list" time="0.01" classname="unit Chrome 45.0.2454 (Windows).hospital controller hospitalSpec"/>
+    <testcase name="Should test AddHospital Method which is used add hospital details" time="0.006" classname="unit Chrome 45.0.2454 (Windows).hospital controller hospitalSpec"/>
+    <testcase name="Should test getHospitalById Method which is used specific hospital detail by id" time="0.003" classname="unit Chrome 45.0.2454 (Windows).hospital controller hospitalSpec"/>
+    <testcase name="Should test getHospitalById Method which is used specific hospital detail by id" time="0.002" classname="unit Chrome 45.0.2454 (Windows).hospital controller hospitalSpec"/>
+    <testcase name="Should test DeleteHospital Method which is used delete specific hospital detail by id" time="0.003" classname="unit Chrome 45.0.2454 (Windows).hospital controller hospitalSpec"/>
+    <testcase name="Should test getHospitalList Method which is used for getting hospital list" time="0.002" classname="unit Chrome 45.0.2454 (Windows).hospital services hospitalServiceSpec"/>
+    <testcase name="Should test getHospitalById Method which is used for getting specific hospital details" time="0.002" classname="unit Chrome 45.0.2454 (Windows).hospital services hospitalServiceSpec"/>
+    <testcase name="Should test AddHospitalDetail Method which is used add hospital details" time="0.003" classname="unit Chrome 45.0.2454 (Windows).hospital services hospitalServiceSpec"/>
+    <testcase name="Should test UpdateHospitalDetail Method which is used update hospital details" time="0.005" classname="unit Chrome 45.0.2454 (Windows).hospital services hospitalServiceSpec"/>
+    <testcase name="Should test DeleteHospitalDetail Method which is used delete hospital details" time="0.002" classname="unit Chrome 45.0.2454 (Windows).hospital services hospitalServiceSpec"/>
     <system-out><![CDATA[Chrome 45.0.2454 (Windows) LOG: LOG
- [Object{_id: 1, name: 'hospital1', address: 'abc'}, Object{_id: 2, name: 'hospital1', address: 'abc'}],Chrome 45.0.2454 (Windows) LOG: LOG
- [Object{_id: 1, name: 'hospital1', address: 'abc'}, Object{_id: 2, name: 'hospital1', address: 'abc'}],Chrome 45.0.2454 (Windows) LOG: LOG
+ 1,Chrome 45.0.2454 (Windows) LOG: LOG
+ 1,Chrome 45.0.2454 (Windows) LOG: LOG
  1
 ]]></system-out>
     <system-err/>

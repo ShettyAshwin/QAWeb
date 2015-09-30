@@ -6,7 +6,7 @@ barcoApp.service('hospitalService',['$http', '$q', '$rootScope', function ($http
 
         getHospitalList: function () {
             var defer = $q.defer();
-            $http.get('http://localhost:3000/hospitals/getAll').
+            $http.get(angular.getAppSection('hospital').list).
                 success(function (data, status) {
                     defer.resolve({ "reponseData": data});
                 });

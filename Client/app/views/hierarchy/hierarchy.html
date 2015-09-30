@@ -1,87 +1,48 @@
 <div data-ng-controller="hierarchyController">
+    <h1><span id="wp-location-detail-TITLE" role="label"><strong>Hierarchy Details</strong></span></h1>
 
-    <form name="hierarchyForm" novalidate>
+    <form class="mainform">
+        <ul class="formfields">
+
+            <li>
+                <label class="required">Name</label>
+                <input type="text" id="hierarchyName" ng-model="hierarchy.Name"/>
+            </li>
+            <li>
+                <label class="required">Location</label>
+                <input type="text" id="hierarchyLocation" ng-model="hierarchy.hierarchyLocation"/>
+            </li>
+            <li>
+                <label class="required">Address</label>
+                <input type="text" id="hierarchyAddress" ng-model="hierarchy.hierarchyAddress"/>
+            </li>
+            <li>
+                <label class="required">Order</label>
+                <input type="text" id="hierarchyOrder" ng-model="hierarchy.Order"/>
+            </li>
+
+        </ul>
         <table>
             <tr>
                 <td>
-                    <table>
-                        <tr>
-                            <td>
-                                <span>Id</span>
-                            </td>
-                            <td>
-                                <input type="text" id="hierarchyId" ng-model="hierarchy.Id"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>Name</span>
-                            </td>
-                            <td>
-                                <input type="text" id="hierarchyName" ng-model="hierarchy.Name"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>Address</span>
-                            </td>
-                            <td>
-                                <input type="text" id="hierarchyAddress" name="hierarchyAddress" required
-                                       ng-model="hierarchy.Address"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>Location</span>
-                            </td>
-                            <td>
-                                <input type="text" id="hierarchyLocation" name="hierarchyLocation" required
-                                       ng-model="hierarchy.Location"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>Order</span>
-                            </td>
-                            <td>
-                                <input type="text" id="hierarchyOrder" name="hierarchyOrder" required
-                                       ng-model="hierarchy.Order"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="button" id="new" value="Clear Values" ng-click="clear()"/>
-                                <input type="submit" id="save" value="Save" ng-click="Addhierarchy()"/>
-
-                            </td>
-                        </tr>
-                    </table>
-                    <table border="1">
-                        <tr>
-                            <th>Name</th>
-                            <th>Address</th>
-                            <th> Location</th>
-                            <th>Order</th>
-
-                        </tr>
-                        <tr ng-repeat="hierarchy in hierarchys">
-                            <td>{{hierarchy.name}}</td>
-                            <td>{{hierarchy.address}}</td>
-                            <td>{{hierarchy.location}}</td>
-                            <td>{{hierarchy.order}}</td>
-                            <td>{{hierarchy.order}}</td>
-                            <td>{{hierarchy.order}}</td>
-                            <td>{{hierarchy.order}}</td>
-
-
-                            <td>
-                                <a href="#/{{hierarchy.Id}}">Edit</a>
-                            </td>
-                        </tr>
-                    </table>
+                    <input type="button" id="new" value="Clear Values" ng-click="clear()"/>
+                    <input type="submit" id="save" value="Save" ng-click="Addhierarchy()"/>
                 </td>
             </tr>
         </table>
+        <div>
+            <h1><span role="label"><strong>Hierarchy List</strong></span></h1>
+            <tr ng-repeat="hierarchy in hierarchys">
+                <td>{{hierarchy.name}}</td>
+                <td>{{hierarchy.address}}</td>
+                <td>{{hierarchy.location}}</td>
+                <td>{{hierarchy.order}}</td>
 
+                <a href="#/{{hierarchy.Id}}">Edit</a>
+                </td>
+            </tr>
+        </div>
     </form>
+
+
 </div>

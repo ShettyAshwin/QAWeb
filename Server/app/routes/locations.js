@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 
-var locationModel = mongoose.model('Location', {name: String, address: String, hospitalId : String});
-var hospitalModel = mongoose.model('Hospital', {name: String, address: String});
+var locationSchema = new mongoose.Schema({name: String, address: String, hospitalId : {type: mongoose.Schema.Types.ObjectId, ref:'Hospital'}});
+var locationModel = mongoose.model('Location', locationSchema);
+
 
 var dbServer = 'mongodb://localhost:27017/QAWeb';
 var statusOk = {status:'ok', detail :''};
@@ -71,7 +72,13 @@ var clsLocation  = {
     getAll : function(res){
         console.log('GetAll executed');
         this.connectDB();
-        locationModel.find({},function(err,docs){
+        locationModel.find({}).populate('Hospital').exec(
+            function (err, data) {
+                if (err) return next(err);
+                res.json(data);
+                res.end();
+            });
+        /*locationModel.find({},function(err,docs){
             docs.forEach(function(item){
                 hospitalModel.find({_id : item.hospitalId},function(err,hospital){
                     if((hospital) && hospital.length > 0){
@@ -81,18 +88,17 @@ var clsLocation  = {
             });
             res.json(docs);
             res.end();
-        });
+        });*/
     },
     getById : function(id,res, next){
         console.log('Get by Name executed');
         this.connectDB();
-        locationModel.findById(id,
+        locationModel.findOne(id).populate('Hospital').exec(
             function (err, data) {
                 if (err) return next(err);
                 res.json(data);
                 res.end();
-            }
-        );
+            });
     },
     deleteById :function(id,res, next){
         console.log('Delete by Name executed');
@@ -124,13 +130,13 @@ var clsLocation  = {
         }
     },
     update : function(id, location, res, next){
-        console.log('Update existing hospital');
+        console.log('Update existing location');
         //validate hospital
         if((location) && (location.name.length) && location.name.length > 0 && (location.address) && location.address.length > 0 && (location.hospitalId) && location.hospitalId.length > 0){
             this.connectDB();
             //hospitalModel.push(hospital);
 
-            locationModel.findByIdAndUpdate(id, hospital,
+            locationModel.findByIdAndUpdate(id, location,
                 function (err, post) {
                     if (err) return next(err);
                     res.json(statusOk);

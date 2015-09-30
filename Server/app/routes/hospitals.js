@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 
-var hospitalModel = mongoose.model('Hospital', {name: String, address: String});
+var hospitalSchema = new mongoose.Schema({name: String, address: String});
+var hospitalModel = mongoose.model('Hospital', hospitalSchema);
 
 var dbServer = 'mongodb://localhost:27017/QAWeb';
 var statusOk = {status:'ok', detail :''};

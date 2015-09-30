@@ -6,7 +6,6 @@ barcoApp.controller('HospitalController',['$scope', 'hospitalService',
         $scope.getHospital = function(){
             hospitalService.getHospitalList().then(function(obj){
                 $scope.hospitals = obj.reponseData;
-                console.log($scope.hospitals);
             });
         };
         $scope.getHospital();
@@ -29,13 +28,14 @@ barcoApp.controller('HospitalController',['$scope', 'hospitalService',
             }
         };
         $scope.getHospitalById = function(id){
-                if($scope.hospitals && $scope.hospitals.length>0)
-                {
-                    var objHospital = $scope.hospitals.filter(function (val) {
-                        return val["_id"] === id;
-                    });
-                    return $scope.Hospital = objHospital[0];
-                }
+            hospitalService.getHospitalById(id).then(function(obj){
+                $scope.Hospital = obj.reponseData;
+            });
 
+        };
+        $scope.DeleteHospital = function(id){
+            hospitalService.DeleteHospitalDetail(id).then(function(){
+            });
+            $scope.getHospital();
         };
 }]);

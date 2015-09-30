@@ -29,6 +29,16 @@ describe('hospital',function(){
                 expect(tempObj.length).toBeGreaterThan(0);
             });
 
+            it('Should test getHospitalById Method which is used for getting specific hospital details',function(){
+                var tempObj =  fakeScope.hospitals;
+                httpBackend.when('GET','http://localhost:3000/hospitals/get/'+tempObj._id).respond(tempObj);
+                fakehospitalService.getHospitalById(fakeScope.hospitals._id).then(function(response){
+                    expect(response.name).toBe(tempObj.name);
+                });
+                httpBackend.flush();
+                expect(tempObj.length).toBeGreaterThan(0);
+            });
+
             it('Should test AddHospitalDetail Method which is used add hospital details',function(){
                 var tempObj =  fakeScope.Hospital;
                 httpBackend.when('POST','http://localhost:3000/hospitals/add/').respond(tempObj);
@@ -48,6 +58,17 @@ describe('hospital',function(){
                 });
                 httpBackend.flush();
                 expect(tempObj.name).toBe("hospital2");
+            });
+
+            it('Should test DeleteHospitalDetail Method which is used delete hospital details',function(){
+                var tempObj =  fakeScope.Hospital;
+
+                httpBackend.when('DELETE','http://localhost:3000/hospitals/delete/1').respond();
+                fakehospitalService.DeleteHospitalDetail(1).then(function(){
+
+                });
+                httpBackend.flush();
+                expect(true).toBe(true);
             });
         });
     });

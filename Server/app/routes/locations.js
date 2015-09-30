@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 
-var locationSchema = new mongoose.Schema({name: String, address: String, hospitalId : {type: mongoose.Schema.Types.ObjectId, ref:'Hospital'}});
+var locationSchema = new mongoose.Schema({name: String, address: String, hospital : {type: mongoose.Schema.Types.ObjectId, ref:'Hospital'}});
 var locationModel = mongoose.model('Location', locationSchema);
 
 var dbServer = 'mongodb://localhost:27017/QAWeb';

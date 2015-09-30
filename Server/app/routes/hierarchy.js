@@ -6,7 +6,7 @@ var hierarchySchema = new mongoose.Schema({name: String, address: String, order 
 var hierarchyModel = mongoose.model('Hierarchy', hierarchySchema);
 
 var dbServer = 'mongodb://localhost:27017/QAWeb';
-var statusOk = {status:'ok', detail :''};
+var statusOk = {status:'200', detail :''};
 var statusError =  {status :'500', detail :''};
 
 mongoose.connection.on('connected', function () {

@@ -6,7 +6,7 @@ var hospitalSchema = new mongoose.Schema({name: String, address: String});
 var hospitalModel = mongoose.model('Hospital', hospitalSchema);
 
 var dbServer = 'mongodb://localhost:27017/QAWeb';
-var statusOk = {status:'ok', detail :''};
+var statusOk = {status:'200', detail :''};
 var statusError =  {status :'500', detail :''};
 
 

@@ -217,3 +217,7 @@ pip-log.txt
 
 # AngulraJS Ignore DB Changes
 data/
+
+#Ignore coverage and result folder
+coverage/
+result/

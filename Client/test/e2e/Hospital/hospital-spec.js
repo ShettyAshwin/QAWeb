@@ -25,6 +25,7 @@ describe('Hospital Test', function () {
         input('Hospital.address').enter('ABC Hospital Address save');
         element('#save').click();
         expect(element('#hospital-table tbody tr:last td:nth-child(1)').text()).toBe("ABC Hospital save");
+        pause();
     });
     it('should edit hospital details', function () {
 

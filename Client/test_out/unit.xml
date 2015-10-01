@@ -1,40 +1,47 @@
 <?xml version="1.0"?>
 <testsuites>
-  <testsuite name="Chrome 39.0.2171 (Windows 7)" package="unit" timestamp="2015-10-01T12:28:21" id="0" hostname="INDMR8570X201S8" tests="28" errors="0" failures="0" time="0.092">
+  <testsuite name="Chrome 39.0.2171 (Windows 7)" package="unit" timestamp="2015-10-01T16:33:02" id="0" hostname="INDMR8570X201S8" tests="37" errors="0" failures="0" time="0.126">
     <properties>
       <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36"/>
     </properties>
-    <testcase name="Should test get hierarchy Method which is used for getting hierarchy list" time="0.01" classname="unit Chrome 39.0.2171 (Windows 7).hierarchy controller hierarchySpec"/>
-    <testcase name="Should test AddHierarchy Method which is used add hospital details" time="0.007" classname="unit Chrome 39.0.2171 (Windows 7).hierarchy controller hierarchySpec"/>
-    <testcase name="Should test AddHierarchy Method for Update" time="0.004" classname="unit Chrome 39.0.2171 (Windows 7).hierarchy controller hierarchySpec"/>
-    <testcase name="Should test getHierarchyById Method which is used specific hierarchy detail by id" time="0.005" classname="unit Chrome 39.0.2171 (Windows 7).hierarchy controller hierarchySpec"/>
+    <testcase name="Should test get hierarchy Method which is used for getting hierarchy list" time="0.014" classname="unit Chrome 39.0.2171 (Windows 7).hierarchy controller hierarchySpec"/>
+    <testcase name="Should test AddHierarchy Method which is used add hospital details" time="0.006" classname="unit Chrome 39.0.2171 (Windows 7).hierarchy controller hierarchySpec"/>
+    <testcase name="Should test AddHierarchy Method for Update" time="0.005" classname="unit Chrome 39.0.2171 (Windows 7).hierarchy controller hierarchySpec"/>
+    <testcase name="Should test getHierarchyById Method which is used specific hierarchy detail by id" time="0.004" classname="unit Chrome 39.0.2171 (Windows 7).hierarchy controller hierarchySpec"/>
     <testcase name="Should test getHierarchyById Method which is used specific hierarchy detail by id" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).hierarchy controller hierarchySpec"/>
-    <testcase name="Should test Deletehierarchy Method which is used delete specific hierarchy detail by id" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).hierarchy controller hierarchySpec"/>
-    <testcase name="Should test getHospitalList Method which is used for getting hospital list" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
-    <testcase name="Should test getHospitalById Method which is used for getting specific hospital details" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
+    <testcase name="Should test Deletehierarchy Method which is used delete specific hierarchy detail by id" time="0.004" classname="unit Chrome 39.0.2171 (Windows 7).hierarchy controller hierarchySpec"/>
+    <testcase name="Should test getHospitalList Method which is used for getting hospital list" time="0.005" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
+    <testcase name="Should test getHospitalById Method which is used for getting specific hospital details" time="0.004" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
     <testcase name="Should test AddHospitalDetail Method which is used add hospital details" time="0.002" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
     <testcase name="Should test AddHospitalDetail Method with error" time="0.002" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
     <testcase name="Should test UpdateHospitalDetail Method which is used update hospital details" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
     <testcase name="Should test UpdateHospitalDetail Method with error" time="0.002" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
-    <testcase name="Should test DeleteHospitalDetail Method which is used delete hospital details" time="0.002" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
-    <testcase name="Should test DeleteHospitalDetail Method with error" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
-    <testcase name="Should test GetHospital Method which is used for getting hospital list" time="0.004" classname="unit Chrome 39.0.2171 (Windows 7).hospital controller hospitalSpec"/>
-    <testcase name="Should test AddHospital Method which is used add hospital details" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).hospital controller hospitalSpec"/>
-    <testcase name="Should test UpdateHospital Method which is used add hospital details" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).hospital controller hospitalSpec"/>
-    <testcase name="Should test GetHospitalById Method which is used specific hospital detail by id" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).hospital controller hospitalSpec"/>
-    <testcase name="Should test GetHospitalById Method which is used specific hospital detail by id" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).hospital controller hospitalSpec"/>
-    <testcase name="Should test DeleteHospital Method which is used delete specific hospital detail by id" time="0.002" classname="unit Chrome 39.0.2171 (Windows 7).hospital controller hospitalSpec"/>
-    <testcase name="Should test GetHospitalList Method which is used for getting hospital list" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
-    <testcase name="Should test GetHospitalById Method which is used for getting specific hospital details" time="0.002" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
-    <testcase name="Should test AddHospitalDetail Method which is used add hospital details" time="0.006" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
-    <testcase name="Should test AddHospitalDetail Method with error" time="0.002" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
-    <testcase name="Should test UpdateHospitalDetail Method which is used update hospital details" time="0.002" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
-    <testcase name="Should test UpdateHospitalDetail Method with error" time="0.002" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
     <testcase name="Should test DeleteHospitalDetail Method which is used delete hospital details" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
     <testcase name="Should test DeleteHospitalDetail Method with error" time="0.002" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
-    <system-out><![CDATA[Chrome 39.0.2171 (Windows 7) LOG: ALERT
- 'success',Chrome 39.0.2171 (Windows 7) LOG: ALERT
- 'success'
+    <testcase name="Should test GetHospital Method which is used for getting hospital list" time="0.004" classname="unit Chrome 39.0.2171 (Windows 7).hospital controller hospitalSpec"/>
+    <testcase name="Should test AddHospital Method which is used add hospital details" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).hospital controller hospitalSpec"/>
+    <testcase name="Should test UpdateHospital Method which is used add hospital details" time="0.004" classname="unit Chrome 39.0.2171 (Windows 7).hospital controller hospitalSpec"/>
+    <testcase name="Should test GetHospitalById Method which is used specific hospital detail by id" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).hospital controller hospitalSpec"/>
+    <testcase name="Should test GetHospitalById Method which is used specific hospital detail by id" time="0.002" classname="unit Chrome 39.0.2171 (Windows 7).hospital controller hospitalSpec"/>
+    <testcase name="Should test DeleteHospital Method which is used delete specific hospital detail by id" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).hospital controller hospitalSpec"/>
+    <testcase name="Should test GetHospitalList Method which is used for getting hospital list" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
+    <testcase name="Should test GetHospitalById Method which is used for getting specific hospital details" time="0.002" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
+    <testcase name="Should test AddHospitalDetail Method which is used add hospital details" time="0.001" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
+    <testcase name="Should test AddHospitalDetail Method with error" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
+    <testcase name="Should test UpdateHospitalDetail Method which is used update hospital details" time="0.002" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
+    <testcase name="Should test UpdateHospitalDetail Method with error" time="0.002" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
+    <testcase name="Should test DeleteHospitalDetail Method which is used delete hospital details" time="0.002" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
+    <testcase name="Should test DeleteHospitalDetail Method with error" time="0.002" classname="unit Chrome 39.0.2171 (Windows 7).hospital services hospitalServiceSpec"/>
+    <testcase name="Should test getHospitalList Method which is used for getting Hospital list" time="0.004" classname="unit Chrome 39.0.2171 (Windows 7).asset controller assetSpec"/>
+    <testcase name="Should test getLocationsByHospital  Method which is used for getting Location list" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).asset controller assetSpec"/>
+    <testcase name="Should test LoadHospitalLocations method which is used to get the location list for given hospital" time="0.004" classname="unit Chrome 39.0.2171 (Windows 7).Hospital location controller controller location unit tests"/>
+    <testcase name="Should test LoadHospitalLocations method which is used to get the location list for ALL the hospitals" time="0.005" classname="unit Chrome 39.0.2171 (Windows 7).Hospital location controller controller location unit tests"/>
+    <testcase name="Should test AddHospitalLocation method which is used to add the location" time="0.004" classname="unit Chrome 39.0.2171 (Windows 7).Hospital location controller controller location unit tests"/>
+    <testcase name="Should test EditHospitalLocation method which is used to edit the location" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).Hospital location controller controller location unit tests"/>
+    <testcase name="Should test UpdateHospitalLocation method which is used to update the location" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).Hospital location controller controller location unit tests"/>
+    <testcase name="Should test DeleteHospitalLocation method which is used to delete the location" time="0.003" classname="unit Chrome 39.0.2171 (Windows 7).Hospital location controller controller location unit tests"/>
+    <testcase name="Should test getAllHospitalLocations method which is used to get all the hospital location list" time="0.002" classname="unit Chrome 39.0.2171 (Windows 7).Hospital location service unit tests services location service spec"/>
+    <system-out><![CDATA[
 ]]></system-out>
     <system-err/>
   </testsuite>

@@ -54,7 +54,7 @@ describe('hierarchy', function () {
 
                 var tempResponse = { 'Success': true, 'Data': '', 'error': null, 'ErrorCode': status };
                 httpBackend.when('GET', angular.getAppSection('hierarchy').getAll).respond(tempObj);
-                httpBackend.whenPOST("http://localhost:3000/Hierarchies/add/").respond(200,{});
+                httpBackend.whenPOST(angular.getAppSection('hierarchy').add).respond(200,{});
                 fakeHierarchyService.AddHierarchyDetail(fakeScope.Hierarchy).then(function (response) {
                     expect(response.Success).toBe(true);
                 });
@@ -67,7 +67,7 @@ describe('hierarchy', function () {
 
                 var tempResponse = { 'Success': true, 'Data': '', 'error': null, 'ErrorCode': status };
                 httpBackend.when('GET', angular.getAppSection('hierarchy').getAll).respond(tempObj);
-                httpBackend.whenPUT("http://localhost:3000/Hierarchies/update/1").respond(200,{});
+                httpBackend.whenPUT(angular.getAppSection('hierarchy').update+'1').respond(200,{});
                 fakeHierarchyService.UpdateHierarchyDetail(fakeScope.Hierarchy).then(function (response) {
                     expect(response.Success).toBe(true);
                 });
@@ -104,7 +104,7 @@ describe('hierarchy', function () {
                 var hierarchyToDelete = '1';
                 var tempResponse = { 'Success': true, 'Data': '', 'error': null, 'ErrorCode': status };
                 httpBackend.when('GET', angular.getAppSection('hierarchy').getAll).respond(tempObj);
-                httpBackend.when("DELETE" ,"http://localhost:3000/Hierarchies/delete/1").respond(tempResponse);
+                httpBackend.when("DELETE" ,angular.getAppSection('hierarchy').delete+'1').respond(tempResponse);
 
                 fakeHierarchyService.DeleteHierarchyDetail(hierarchyToDelete).then(function (response) {
                     expect(response.Success).toBe(true);

@@ -14,7 +14,7 @@ describe('Location Test', function () {
         element('.container nav ul li:eq(1)').click();
     });
     
-    it('should add location', function () {
+    /*it('should add location', function () {
         pause();
         element('#btnAddLocation').click(); // Open add location view
         input('Hospital.name').enter('testName');
@@ -24,6 +24,6 @@ describe('Location Test', function () {
         alert(element('#location-table tbody tr').count());
         pause();
         expect(repeater('#location-table tbody tr').count()).toBeGreaterThan(1);
-    });
+    });*/
     
 });

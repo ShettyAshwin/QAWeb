@@ -15,9 +15,10 @@ barcoApp.service('hierarchyService',['$http', '$q', '$rootScope', function ($htt
         },
         AddHierarchyDetail: function (Hierarchy) {
             var defer = $q.defer();
-            $http.post('http://localhost:3000/Hierarchies/add/',Hierarchy)
+            $http.post(angular.getAppSection('hierarchy').add,Hierarchy)
+
                 .success(function (data, status) {
-                    alert('success');
+
                     defer.resolve({'Success': true, 'Data': data, 'error': null, 'Code': status});
                 }).error(function (data, status) {
                     alert('error'+ data);
@@ -28,7 +29,8 @@ barcoApp.service('hierarchyService',['$http', '$q', '$rootScope', function ($htt
         },
         UpdateHierarchyDetail: function (Hierarchy) {
             var defer = $q.defer();
-            $http.put('http://localhost:3000/Hierarchies/update/'+Hierarchy._id,Hierarchy)
+            $http.put(angular.getAppSection('hierarchy').update + Hierarchy._id,Hierarchy)
+
                 .success(function (data, status) {
                     defer.resolve({'Success': true, 'Data': data, 'error': null, 'Code': status});
                 }).error(function (data, status) {
@@ -39,7 +41,7 @@ barcoApp.service('hierarchyService',['$http', '$q', '$rootScope', function ($htt
         },
         getHierarchyById: function (id) {
             var defer = $q.defer();
-            $http.get('http://localhost:3000/Hierarchies/get/'+id).
+            $http.get(angular.getAppSection('hierarchy').get+id).
                 success(function (data, status) {
                     defer.resolve({ "reponseData": data});
                 });
@@ -47,7 +49,7 @@ barcoApp.service('hierarchyService',['$http', '$q', '$rootScope', function ($htt
         },
         DeleteHierarchyDetail: function (id) {
             var defer = $q.defer();
-            $http.delete('http://localhost:3000/Hierarchies/delete/'+id)
+            $http.delete(angular.getAppSection('hierarchy').delete+id)
                 .success(function (data, status) {
                     defer.resolve({'Success': true, 'Data': data, 'error': null, 'Code': status});
                 }).error(function (data, status) {

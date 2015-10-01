@@ -15,8 +15,9 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-             'test/e2e/hospital/*.js',
-            'test/e2e/location/*.js'
+            'test/e2e/hospital/*.js',
+            'test/e2e/location/*.js',
+            'test/e2e/hierarchy/*.js'
 
         ],
 
@@ -53,7 +54,7 @@ module.exports = function(config) {
         colors: true,
 
         proxies: {
-            '/QAWebPortal': 'http://localhost:55202/Client'
+            '/QAWebPortal': 'http://localhost:63342/QAWeb/Qaweb/Client'
         },
 
         // level of logging

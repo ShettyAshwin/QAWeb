@@ -31,7 +31,7 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
 
             $scope.asset.properties = [];
             $scope.asset.properties= $scope.assetproperties;
-            $scope.asset.hierarchyId =  $scope.getSelectedHierarchy ( $scope.ddlhierarchy) ;
+            $scope.asset.hierarchyId = $scope.ddlhierarchy;  //$scope.getSelectedHierarchy ( $scope.ddlhierarchy) ;
 
             //Verify Object
             result = assetService.validateAsset($scope.asset);
@@ -39,7 +39,7 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
             if (result.length > 0)
             {
                 alert (result);
-                exit;
+                return;
             }
 
             console.log(JSON.stringify($scope.asset));
@@ -49,12 +49,12 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
             {
                 assetService.addAsset($scope.asset).then(function (response) {
                     $scope.clear();
-                    $scope.getAssetsForHierarchy($scope.hierarchyList[0]);
+                    $scope.getAssetsByHierarchy($scope.ddlSelectHierarchy);
                 });
             }else
             {
                 assetService.updateAsset($scope.asset).then(function (response) {
-                    $scope.getAssetsForHierarchy($scope.hierarchyList[0]);
+                    $scope.getAssetsByHierarchy($scope.ddlSelectHierarchy);
                 });
             }
 
@@ -86,7 +86,10 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
             $scope.assetproperties = $scope.asset.properties;
             if ($scope.asset.hierarchyId)
             {
-                $scope.ddlhierarchy = $scope.getSelectedHierarchy($scope.asset.hierarchyId);
+                var tempHierarchy= $scope.getSelectedHierarchy($scope.asset.hierarchyId);
+                console.log(JSON.stringify(tempHierarchy));
+
+                $scope.ddlhierarchy = tempHierarchy;
             }
             else
             {

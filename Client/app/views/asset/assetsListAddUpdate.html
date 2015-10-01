@@ -1,22 +1,17 @@
 <div data-ng-controller="assetController">
 
-    <form name="assetForm" novalidate>
+
 
         <div class="formcontent">
-            <form class="hmsform">
+            <form class="hmsform" name="assetForm" novalidate>
                 <legend>Asset Details</legend>
                 <fieldset>
                     <ul>
-                        <!--<li>
-                             <label>ID:<span class="required">*</span> </label>
-                             <div class="col-md-4">
-                             <input id="id_req" name="id_req" placeholder="Name" class="form-control input-md" type="text">
-                             </div>
-                        </li>-->
+
                         <li>
                             <label>Name:<span class="required">*</span> </label>
                             <div class="col-md-4">
-                                <input id="id_req" name="id_req" placeholder="Name" class="form-control input-md" type="text">
+                                <input id="id_req" name="id_req" placeholder="Name" class="form-control input-md" type="text" ng-model="asset.name">
                             </div>
                         </li>
                         <li>
@@ -45,8 +40,8 @@
                             <div class="fltright"><input type="button" id="addProperty" value="+ AddProperty" ng-click="addProperty()" class="button addbutton"></div>
                         </li>
                         <li class="buttons">
-                            <input type="submit" value="Cancel" class="button">
-                            <input type="submit" value="Save" class="button">
+                            <input type="submit" value="Cancel" class="button" ng-click="clear()">
+                            <input type="submit" value="Save" class="button" ng-click="addAsset()">
                         </li>
                     </ul>
                 </fieldset>
@@ -93,17 +88,19 @@
                     </tr>
                     <tr ng-repeat="a in assets ">
                         <td>{{a.name}}</td>
+                        <td>
                         <table>
                             <tr ng-repeat="p in a.properties">
                                 <td>{{p.name}}</td>
                                 <td>{{p.value}}</td>
                             </tr>
                         </table>
+                        </td>
                         <td><div  class="icnedit icons" ng-click="getAssetById(a._id)">Edit</div> <div class="icndelete icons">Delete</div> </td>
                     </tr>
 
                 </table>
             </div>
         </div>
-    </form>
+
 </div>

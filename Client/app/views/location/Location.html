@@ -1,7 +1,7 @@
 ﻿
 
     <div class="formcontent" data-ng-controller="LocationController">
-        <form class="hmsform" ng-show="!ShowList">
+        <form name="locationForm" class="hmsform" ng-show="!ShowList">
             <legend><span>{{OperationMode}}&nbsp;</span>Location</legend>
             <fieldset>
                 <ul>
@@ -9,22 +9,25 @@
                         <label>Name<span class="required">*</span> </label>
                         <div class="col-md-4">
                             <input type="text" id="locationId" style="display:none;" ng-model="Location._id" />
-                            <input id="txtLocationName" name="id_req" placeholder="Name" class="form-control input-md" type="text" required ng-model="Location.name">
+                            <input id="txtLocationName" name="id_req" placeholder="Name" class="form-control input-md" type="text" ng-required="true" ng-model="Location.name">
                         </div>
                     </li>
                     <li>
                         <label>Address<span class="required">*</span> </label>
                         <div class="col-md-4">
-                            <input id="txtLocationAddress" name="id_req" placeholder="Address" class="form-control input-md" type="text" ng-model="Location.address">
+                            <input id="txtLocationAddress" name="id_req" placeholder="Address" class="form-control input-md" type="text" ng-required="true" ng-model="Location.address">
                         </div>
                     </li>
                     <li>
                         <label>Hospital<span class="required">*</span> </label>
                         <div class="col-md-4">
-                            <select id="ddlHospital" name="ddlHospital" style="width: 200px;" data-ng-model="ddlAssociatedHospital">
+                            <select id="ddlHospital" name="ddlHospital" style="width: 200px;" required data-ng-model="Location.associatedHospital">
                                 <option value="-1" selected disabled>[Select Hospital]</option>
                                 <option data-ng-repeat="hospital in hospitalList" value="{{hospital._id}}">{{hospital.name}}</option>
                             </select>
+                            <!--<span class="error" ng-show="myForm.service_id.$dirty && myForm.service_id.$invalid">Select service</span>
+                            <span ng-show="locationForm.ddlHospital.$error.required && locationForm.ddlHospital.$dirty
+                                  && locationForm.ddlHospital.$invalid">Select service</span>-->
                         </div>
                     </li>
                     <li class="buttons">
@@ -44,19 +47,21 @@
                     <option data-ng-repeat="hospital in hospitalList" value="{{hospital._id}}">{{hospital.name}}</option>
                 </select>
             </div>
-            <div class="fltright"><input type="button" value="+ Add New Location" class="button addbutton button-grid" ng-click="ShowList=!ShowList"></div>
+            <div class="fltright"><input type="button" value="+ Add New Location" class="button addbutton button-grid" ng-click="OpenAddHospitalLocationView()"></div>
             <table cellpadding="0" cellspacing="0">
                 <tr>
                     <th width="25%">Name</th>
                     <th>Address</th>
+                    <th>Hospital</th>
                     <th width="80px"></th>
                 </tr>
-                <tr ng-repeat="hospital in hospitals">
-                    <td>{{hospital.name}}</td>
-                    <td>{{hospital.address}}</td>
+                <tr ng-repeat="location in locationList">
+                    <td>{{location.name}}</td>
+                    <td>{{location.address}}</td>
+                    <td>{{location.hospitalName}}<span style="display:none;">{{location.hospitalId}}</span></td>
                     <td>
-                        <div class="icnedit" ng-click="getHospitalById(hospital._id)">Edit</div>
-                        <div href="#" class="icndelete" ng-click="DeleteHospital(hospital._id)">Delete</div>
+                        <div class="icnedit" ng-click="OpenEditHospitalLocationView(location._id)" title="Edit">Edit</div>
+                        <div class="icndelete" ng-click="DeleteHospitalLocation(location._id)" title="Delete">Delete</div>
                     </td>
 
                 </tr>

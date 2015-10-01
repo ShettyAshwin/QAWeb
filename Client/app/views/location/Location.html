@@ -1,143 +1,60 @@
 ﻿
 <div data-ng-controller="LocationController">
     <!-- ADD -->
-    <h4 style="color:#00f">Add Hospital Location</h4>
-    <form name="locationForm" novalidate>
-        <table>
-            <tr>
-                <td>
-                    <table>
-                        <tr>
-                            <td>
-                                <span>Id</span>
-                            </td>
-                            <td>
-                                <input type="text" id="locationId" ng-model="Location.Id" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>Name</span>
-                            </td>
-                            <td>
-                                <input type="text" id="locationName" ng-model="Location.Name" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>Address</span>
-                            </td>
-                            <td>
-                                <input type="text" id="locationAddress" name="locationAddress" required ng-model="Location.Address" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>Hospital</span>
-                            </td>
-                            <td>
-                                <select id="ddlHospital" name="ddlHospital" style="width: 200px;" data-ng-model="ddlAssociatedHospital">
-                                    <option value="-1">[Select Hospital]</option>
-                                    <option data-ng-repeat="hospital in hospitalList" value="{{hospital._id}}">{{hospital.name}}</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <!--<input type="button" id="new" value="Clear" ng-click="clear()" />-->
-                                <input type="submit" id="save" value="Save" ng-click="AddHospitalLocation()" />
 
-                            </td>
-                        </tr>
-                    </table>
-                    
-                </td>
-            </tr>
-        </table>
-
-    </form>
-
-    <!-- EDIT -->
-    <h4 style="color:#00f">Edit Hospital Location</h4>
-    <form name="locationEditForm" novalidate>
-        <table>
-            <tr>
-                <td>
-                    <table>
-                        <tr>
-                            <td>
-                                <span>Id</span>
-                            </td>
-                            <td>
-                                <input type="text" id="locationId" ng-model="EditLocation.id" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>Name</span>
-                            </td>
-                            <td>
-                                <input type="text" id="locationName" ng-model="EditLocation.name" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>Address</span>
-                            </td>
-                            <td>
-                                <input type="text" id="locationAddress" name="locationAddress" required ng-model="EditLocation.address" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>Hospital</span>
-                            </td>
-                            <td>
-                                <select id="ddlHospital" name="ddlHospital" style="width: 200px;" data-ng-model="ddlEditAssociatedHospital">
-                                    <option value="-1">[Select Hospital]</option>
-                                    <option data-ng-repeat="hospital in hospitalList" value="{{hospital._id}}">{{hospital.name}}</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <!--<input type="button" id="new" value="Clear" ng-click="clear()" />-->
-                                <input type="submit" id="save" value="Save" ng-click="UpdateHospitalLocation()" />
-
-                            </td>
-                        </tr>
-                    </table>
-
-                </td>
-            </tr>
-        </table>
-    </form>
+    <div class="formcontent" data-ng-controller="HospitalController">
+        <form class="hmsform" ng-show="!ShowList">
+            <legend>Hospital</legend>
+            <fieldset>
+                <ul>
+                    <li>
+                        <label>Name<span class="required">*</span> </label>
+                        <div class="col-md-4">
+                            <input type="text" id="locationId" style="display:none;" ng-model="Location._id" />
+                            <input id="txtLocationName" name="id_req" placeholder="Name" class="form-control input-md" type="text" required ng-model="Location.name">
+                        </div>
+                    </li>
+                    <li>
+                        <label>Address<span class="required">*</span> </label>
+                        <div class="col-md-4">
+                            <input id="txtLocationAddress" name="id_req" placeholder="Address" class="form-control input-md" type="text" ng-model="Location.address">
+                        </div>
+                    </li>
+                    <li>
+                        <label>Hospital<span class="required">*</span> </label>
+                        <div class="col-md-4">
+                            <select id="ddlHospital" name="ddlHospital" style="width: 200px;" data-ng-model="ddlAssociatedHospital">
+                                <option value="-1" selected disabled>[Select Hospital]</option>
+                                <option data-ng-repeat="hospital in hospitalList" value="{{hospital._id}}">{{hospital.name}}</option>
+                            </select>
+                        </div>
+                    </li>
+                    <li class="buttons">
+                        <input type="submit" value="Cancel" class="button" ng-click="ShowList=!ShowList">
+                        <input type="submit" value="Save" class="button" ng-click="AddHospital()">
+                    </li>
+                </ul>
+            </fieldset>
+        </form>
 
 
-    <!-- LIST  -->
-    <h4 style="color:#00f">Hospital Locations</h4>
+        <div class="datatable" ng-show="ShowList">
+            <div class="fltright"><input type="button" value="Add New Location" class="button button-green" ng-click="ShowList=!ShowList"></div>
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <th width="25%">Name</th>
+                    <th>Address</th>
+                    <th width="80px"></th>
+                </tr>
+                <tr ng-repeat="hospital in hospitals">
+                    <td>{{hospital.name}}</td>
+                    <td>{{hospital.address}}</td>
+                    <td>
+                        <div class="icnedit" ng-click="getHospitalById(hospital._id)">Edit</div>
+                        <div href="#" class="icndelete" ng-click="DeleteHospital(hospital._id)">Delete</div>
+                    </td>
 
-    <select id="ddlHospitalFilter" name="ddlHospitalFilter" style="width: 200px;" data-ng-model="ddlFilteredHospital" ng-change="LoadHospitalLocations(ddlFilteredHospital)">
-        <option value="-1">[Filter Hospital]</option>
-        <option data-ng-repeat="hospital in hospitalList" value="{{hospital._id}}">{{hospital.name}}</option>
-    </select>
-
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Hospital</th>
-        </tr>
-        <tr ng-repeat="location in locationList">
-            <td>{{location.name}}</td>
-            <td>{{location.address}}</td>
-            <td>{{location.hospitalName}}<span style="display:none;">{{location.hospitalId}}</span></td>
-            <td>
-                <div style="text-decoration:underline;" ng-click="EditHospitalLocation(location._id)">Edit</div>
-            </td>
-        </tr>
-    </table>
-
-    
-
-</div>
+                </tr>
+            </table>
+        </div>
+    </div>

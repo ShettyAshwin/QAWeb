@@ -4,11 +4,8 @@
 describe('hospital',function(){
     describe('services',function(){
         describe('hospitalServiceSpec',function(){
-            var  fakeScope, fakehospitalService, httpBackend;
-
-
+            var fakeScope, fakehospitalService, httpBackend;
             beforeEach(module('barcoApp'));
-
 
             beforeEach(inject(function ($rootScope,$httpBackend,hospitalService) {
                 fakeScope = $rootScope.$new();

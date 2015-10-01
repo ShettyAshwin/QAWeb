@@ -1,7 +1,6 @@
 var baseframework = require('../common/baseMongoose');
-
-var hierarchySchema = new baseframework.mongoose.Schema({name: String, address: String, order : Number, locationId : {type: baseframework.mongoose.Schema.Types.ObjectId, ref:'Location'}});
-var hierarchyModel = baseframework.mongoose.model('Hierarchy', hierarchySchema);
+var baseModel = require('../common/baseSchema');
+var Q = require('q');
 
 var clsHierarchy  = {
     connectDB : function(){
@@ -23,9 +22,9 @@ var clsHierarchy  = {
     },
     addDummy : function(res){
         this.connectDB();
-        var hierarchy1 = new hierarchyModel({name: 'Hierachy1', address :'Dummy Address 1'});
-        var hierarchy2 = new hierarchyModel({name: 'Hierachy2', address :'Dummy Address 2'});
-        var hierarchy3 = new hierarchyModel({name: 'Hierachy2', address :'Dummy Address 2'});
+        var hierarchy1 = new baseModel.hierarchyModel({name: 'Hierachy1', address :'Dummy Address 1'});
+        var hierarchy2 = new baseModel.hierarchyModel({name: 'Hierachy2', address :'Dummy Address 2'});
+        var hierarchy3 = new baseModel.hierarchyModel({name: 'Hierachy2', address :'Dummy Address 2'});
 
         hierarchy1.save(function (err, data) {
             clsHierarchy.responseHandler(err,data);
@@ -38,85 +37,97 @@ var clsHierarchy  = {
         res.end();
         //mongoose.connection.close();
     },
-    getAll : function(res){
+    getAll : function(){
         console.log('GetAll executed');
         this.connectDB();
-        hierarchyModel.find({}).populate('Location').exec(
+        var defer = Q.defer();
+        baseModel.hierarchyModel.find({}).populate('Location').exec(
             function (err, data) {
-                if (err) return next(err);
-                res.json(data);
-                res.end();
+                if (err) {
+                    throw err;
+                }
+                defer.resolve(data);
             });
+        return defer.promise;
     },
-    getById : function(id,res, next){
+    getById : function(id){
+        var defer = Q.defer();
         console.log('Get by id executed');
         this.connectDB();
-        hierarchyModel.findById(id).populate('location').exec(
+        baseModel.hierarchyModel.findById(id).populate('location').exec(
             function (err, data) {
-                if (err) return next(err);
-                res.json(data);
-                res.end();
+                if (err) {
+                    throw err;
+                }
+                defer.resolve(data);
             });
+        return defer.promise;
     },
-    getByLocationId : function(id,res, next){
+    getByLocationId : function(id){
+        var defer = Q.defer();
         console.log('Get by Name executed');
         this.connectDB();
-        hierarchyModel.find({locationId:id}).populate('location').exec(
+        baseModel.hierarchyModel.find({locationId:id}).populate('location').exec(
             function (err, data) {
-                if (err) return next(err);
-                res.json(data);
-                res.end();
+                if (err) {
+                    throw err;
+                }
+                defer.resolve(data);
             });
+        return defer.promise;
     },
-    deleteById :function(id,res, next){
+    deleteById :function(id){
+        var defer = Q.defer();
         console.log('Delete by Name executed');
         this.connectDB();
-        hierarchyModel.findByIdAndRemove(id,
+        baseModel.hierarchyModel.findByIdAndRemove(id,
             function (err, post) {
-                if (err) return next(err);
-                res.json(baseframework.statusOk);
-                res.end();
+                if (err) {
+                    throw err;
+                }
+                defer.resolve(baseframework.statusOk);
             }
         );
+        return defer.promise;
 
     },
-    add :function(hierarchy, res, next){
+    add :function(hierarchy){
+        var defer = Q.defer();
         console.log('Add new Hospital');
         if((hierarchy) && (hierarchy.name.length) && hierarchy.name.length > 0 && (hierarchy.address) && hierarchy.address.length > 0 && (hierarchy.locationId) && hierarchy.locationId.length > 0){
             this.connectDB();
-            hierarchyModel.create(hierarchy,
+            baseModel.hierarchyModel.create(hierarchy,
                 function (err, post) {
-                    if (err) return next(err);
-                    res.json(baseframework.statusOk);
-                    res.end();
+                    if (err) {
+                        throw err;
+                    }
+                    defer.resolve(baseframework.statusOk);
                 }
             );
-            //res.json(statusOk);
         }else{
-            res.json(baseframework.statusError);
-            res.end();
+            defer.resolve(baseframework.statusError);
         }
+
+        return defer.promise;
     },
-    update : function(id, hierarchy, res, next){
+    update : function(id, hierarchy){
+        var defer = Q.defer();
         console.log('Update existing hierarchy');
         //validate hospital
         if((hierarchy) && (hierarchy.name.length) && hierarchy.name.length > 0 && (hierarchy.address) && hierarchy.address.length > 0 && (hierarchy.locationId) && hierarchy.locationId.length > 0){
             this.connectDB();
-            //hospitalModel.push(hospital);
-
-            hierarchyModel.findByIdAndUpdate(id, hierarchy,
+            baseModel.hierarchyModel.findByIdAndUpdate(id, hierarchy,
                 function (err, post) {
-                    if (err) return next(err);
-                    res.json(baseframework.statusOk);
-                    res.end();
-                }
-            );
+                    if (err) {
+                        throw err;
+                    }
+                    defer.resolve(baseframework.statusOk);
+                });
 
         }else{
-            res.json(baseframework.statusError);
-            res.end();
+            defer.resolve(baseframework.statusError);
         }
-
+        return defer.promise;
     }
 }
 

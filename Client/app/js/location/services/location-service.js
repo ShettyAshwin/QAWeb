@@ -4,12 +4,22 @@
 barcoApp.service('locationService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
     var locationService = {
         /* Get all the hospital locations */
-        getHospitalLocations: function () {           
+        getAllHospitalLocations: function () {           
             var defer = $q.defer();
             $http.get(angular.getAppSection('location').list).
                 success(function (data, status) {
                     defer.resolve({ "responseData": data });
             });
+            return defer.promise;
+        },
+
+        /* Get the locations for given hospital */
+        getHospitalLocations: function (hospitalId) {
+            var defer = $q.defer();
+            $http.get(angular.getAppSection('location').getByHospital + hospitalId).
+                success(function (data, status) {
+                    defer.resolve({ "responseData": data });
+                });
             return defer.promise;
         },
 
@@ -28,7 +38,8 @@ barcoApp.service('locationService', ['$http', '$q', '$rootScope', function ($htt
             var defer = $q.defer();            
             $http.post(angular.getAppSection('location').add, location)
                 .success(function (data, status) {
-                    defer.resolve({ 'Success': true, 'Data': data, 'error': null, 'ErrorCode': status });
+                    //defer.resolve({ 'Success': true, 'Data': data, 'error': null, 'ErrorCode': status });
+                    defer.resolve(data);
                 }).error(function (data, status) {
                     defer.resolve({ 'Success': false, 'Data': null, 'error': data, 'ErrorCode': status });
             });
@@ -48,9 +59,9 @@ barcoApp.service('locationService', ['$http', '$q', '$rootScope', function ($htt
         },
 
         /* Delete hospital location */
-        deleteHospitalLocation: function (location) {
+        deleteHospitalLocation: function (locationId) {
             var defer = $q.defer();       
-            $http.delete(angular.getAppSection('location').delete + location._id)
+            $http.delete(angular.getAppSection('location').delete + locationId)
                 .success(function (data, status) {
                     defer.resolve({ 'Success': true, 'Data': data, 'error': null, 'ErrorCode': status });
                 }).error(function (data, status) {

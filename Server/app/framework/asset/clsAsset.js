@@ -1,10 +1,5 @@
 var baseframework = require('../common/baseMongoose');
-
-//var hospitalSchema = new baseframework.mongoose.Schema({name: String, address: String});
-//var hospitalModel = baseframework.mongoose.model('Hospital', hospitalSchema);
-
-var assetSchema = new baseframework.mongoose.Schema({name: String, properties: [{name : String, value:String}], HierarchyId : {type: baseframework.mongoose.Schema.Types.ObjectId, ref:'Hierarchy'}});
-var assetModel = baseframework.mongoose.model('asset', assetSchema);
+var baseModel = require('../common/baseSchema');
 
 var clsAsset  = {
     connectDB : function(){
@@ -26,9 +21,9 @@ var clsAsset  = {
     },
     addDummy : function(res){
         this.connectDB();
-        var asset1 = new assetModel({name: 'asset1', properties :[{ name: 'p1', value:'v1'},{name : 'p1', value:'v2'}]});
-        var asset2 = new assetModel({name: 'asset1', properties :[{ name: 'p11', value:'v11'},{name : 'p11', value:'v21'}]});
-        var asset3 = new assetModel({name: 'asset1', properties :[{ name: 'p111', value:'v111'},{name : 'p111', value:'v211'}]});
+        var asset1 = new baseModel.assetModel({name: 'asset1', properties :[{ name: 'p1', value:'v1'},{name : 'p1', value:'v2'}]});
+        var asset2 = new baseModel.assetModel({name: 'asset1', properties :[{ name: 'p11', value:'v11'},{name : 'p11', value:'v21'}]});
+        var asset3 = new baseModel.assetModel({name: 'asset1', properties :[{ name: 'p111', value:'v111'},{name : 'p111', value:'v211'}]});
 
         asset1.save(function (err, asset) {
             clsAsset.responseHandler(err,asset);
@@ -47,7 +42,7 @@ var clsAsset  = {
     getAll : function(res){
         console.log('GetAll executed');
         this.connectDB();
-        assetModel.find({},function(err,docs){
+        baseModel.assetModel.find({},function(err,docs){
             console.log('dataFetch');
             res.json(docs);
             res.end();
@@ -56,7 +51,7 @@ var clsAsset  = {
     getById : function(id,res, next){
         console.log('Get by Name executed');
         this.connectDB();
-        assetModel.findById(id,
+        baseModel.assetModel.findById(id,
             function (err, data) {
                 if (err) return next(err);
                 res.json(data);
@@ -68,7 +63,7 @@ var clsAsset  = {
         console.log('Delete by Name executed');
         this.connectDB();
         
-        assetModel.findByIdAndRemove(id,
+        baseModel.assetModel.findByIdAndRemove(id,
             function (err, post) {
                 if (err) return next(err);
                 res.json(baseframework.statusOk);
@@ -81,8 +76,8 @@ var clsAsset  = {
         console.log('Add new asset');
         if((asset) && (asset.name.length) && asset.name.length > 0){
             this.connectDB();
-            //assetModel.create(asset);
-            assetModel.create(asset,
+            //baseModel.assetModel.create(asset);
+            baseModel.assetModel.create(asset,
                 function (err, post) {
                     if (err) return next(err);
                     res.json(baseframework.statusOk);
@@ -100,9 +95,9 @@ var clsAsset  = {
         //validate asset
         if((asset) && (asset.name.length) && asset.name.length > 0 ){
             this.connectDB();
-            //assetModel.push(asset);
+            //baseModel.assetModel.push(asset);
 
-            assetModel.findByIdAndUpdate(id, asset,
+            baseModel.assetModel.findByIdAndUpdate(id, asset,
                 function (err, post) {
                     if (err) return next(err);
                     res.json(baseframework.statusOk);
@@ -119,7 +114,7 @@ var clsAsset  = {
     getByHierarchyId : function(id,res, next){
         console.log('Get by Name executed');
         this.connectDB();
-        assetModel.find({HierarchyId:id}).populate('Hierarchy').exec(
+        baseModel.assetModel.find({HierarchyId:id}).populate('Hierarchy').exec(
             function (err, data) {
                 if (err) return next(err);
                 res.json(data);

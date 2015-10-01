@@ -40,7 +40,7 @@ var clsLocation  = {
         console.log('GetAll executed');
         this.connectDB();
         var defer = Q.defer();
-        baseModel.locationModel.find({}).populate('Hospital').exec(
+        baseModel.locationModel.find({}).populate('hospitalId').exec(
             function (err, data) {
                 if (err) {
                     throw err;
@@ -53,7 +53,7 @@ var clsLocation  = {
         console.log('Get by Name executed');
         this.connectDB();
         var defer = Q.defer();
-        baseModel.locationModel.find({hospitalId : id}).populate('Hospital').exec(
+        baseModel.locationModel.find({hospitalId : id}).populate('hospitalId').exec(
             function (err, data) {
                 if (err) {
                     throw err;
@@ -66,7 +66,7 @@ var clsLocation  = {
         console.log('Get by Name executed');
         this.connectDB();
         var defer = Q.defer();
-        baseModel.locationModel.findById(id).populate('Hospital').exec(
+        baseModel.locationModel.findById(id).populate('hospitalId').exec(
             function (err, data) {
                 if (err) {
                     throw err;

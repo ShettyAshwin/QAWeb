@@ -15,6 +15,7 @@ barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locatio
         $scope.getHospitalList = function () {
             hospitalService.GetHospitalList().then(function (obj) {
                 $scope.hospitalList = obj.reponseData;
+                console.log('1');
             });   
         };
         // load hospital list
@@ -27,7 +28,7 @@ barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locatio
                     if (obj.responseData) {
                         $scope.locationList = obj.responseData;
                         // If there are locations; associate the corresponding hospital details apart from already available hospital id
-                        AssociateHospitalToLocation();
+                        //AssociateHospitalToLocation();
                     }
                 });
             }
@@ -36,17 +37,18 @@ barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locatio
                     if (obj.responseData) {
                         $scope.locationList = obj.responseData;
                         // If there are locations; associate the corresponding hospital details apart from already available hospital id
-                        AssociateHospitalToLocation();
+                        //AssociateHospitalToLocation();
                     }
                 });
             }
         };
+
         $scope.LoadHospitalLocations("-1"); // Show all locations
 
         /* Associate hospital details to locations present in location list */
         function AssociateHospitalToLocation() {
             try {
-                $scope.getHospitalList(); // This will get us all the hospital details
+               // $scope.getHospitalList(); // This will get us all the hospital details
                 // Let's iterate through locations and update the hospital details
                 for (var tempHospital, ind = 0; ind < $scope.locationList.length; ind++) {
                     tempHospital = $scope.hospitalList.filter(function (hospital) {
@@ -91,7 +93,10 @@ barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locatio
                         name: obj.responseData.name,
                         address: obj.responseData.address
                     };
-                    $scope.Location.associatedHospital = obj.responseData.hospitalId; // ?? not getting updated on UI
+                    $scope.Location.associatedHospital = $scope.hospitalList.filter(function (hospital) {
+                        return hospital._id === obj.responseData.hospitalId._id;
+                    })[0]._id;
+                    //$scope.Location.associatedHospital = obj.responseData.hospitalId; // ?? not getting updated on UI
                 }
             });
         };

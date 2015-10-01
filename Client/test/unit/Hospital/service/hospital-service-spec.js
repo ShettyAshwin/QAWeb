@@ -16,20 +16,20 @@ describe('hospital',function(){
 
             }));
 
-            it('Should test getHospitalList Method which is used for getting hospital list',function(){
+            it('Should test GetHospitalList Method which is used for getting hospital list',function(){
                 var tempObj =  fakeScope.hospitals;
 
                 httpBackend.when('GET',angular.getAppSection('hospital').list).respond(tempObj);
-                fakehospitalService.getHospitalList().then(function(response){
+                fakehospitalService.GetHospitalList().then(function(response){
                     expect(response.name).toBe(tempObj.name);
                 });
                 httpBackend.flush();
                 expect(tempObj.length).toBeGreaterThan(0);
             });
-            it('Should test getHospitalById Method which is used for getting specific hospital details',function(){
+            it('Should test GetHospitalById Method which is used for getting specific hospital details',function(){
                 var tempObj =  fakeScope.hospitals;
                 httpBackend.when('GET',angular.getAppSection('hospital').get+tempObj._id).respond(tempObj);
-                fakehospitalService.getHospitalById(fakeScope.hospitals._id).then(function(response){
+                fakehospitalService.GetHospitalById(fakeScope.hospitals._id).then(function(response){
                     expect(response.name).toBe(tempObj.name);
                 });
                 httpBackend.flush();

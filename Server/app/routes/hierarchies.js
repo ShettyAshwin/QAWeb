@@ -40,7 +40,7 @@ router.put('/update/:id',function(req, res, next){
     try{
         console.log('In Update');
         console.log(req.body);
-        framework.clsLocation.update(req.params.id, req.body, res, next);
+        framework.clsHierarchy.update(req.params.id, req.body, res, next);
     }
     catch(ex){
         console.log(ex);

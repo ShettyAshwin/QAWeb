@@ -1,6 +1,6 @@
 var baseframework = require('../common/baseMongoose');
 
-var hierarchySchema = new baseframework.mongoose.Schema({name: String, address: String, order : Number, location : {type: baseframework.mongoose.Schema.Types.ObjectId, ref:'Location'}});
+var hierarchySchema = new baseframework.mongoose.Schema({name: String, address: String, order : Number, locationId : {type: baseframework.mongoose.Schema.Types.ObjectId, ref:'Location'}});
 var hierarchyModel = baseframework.mongoose.model('Hierarchy', hierarchySchema);
 
 var clsHierarchy  = {
@@ -58,6 +58,16 @@ var clsHierarchy  = {
                 res.end();
             });
     },
+    getByLocationId : function(id,res, next){
+        console.log('Get by Name executed');
+        this.connectDB();
+        hierarchyModel.find({locationId:Id}).populate('location').exec(
+            function (err, data) {
+                if (err) return next(err);
+                res.json(data);
+                res.end();
+            });
+    },
     deleteById :function(id,res, next){
         console.log('Delete by Name executed');
         this.connectDB();
@@ -72,7 +82,7 @@ var clsHierarchy  = {
     },
     add :function(hierarchy, res, next){
         console.log('Add new Hospital');
-        if((hierarchy) && (hierarchy.name.length) && hierarchy.name.length > 0 && (hierarchy.address) && hierarchy.address.length > 0 && (hierarchy.location) && hierarchy.location.length > 0){
+        if((hierarchy) && (hierarchy.name.length) && hierarchy.name.length > 0 && (hierarchy.address) && hierarchy.address.length > 0 && (hierarchy.locationId) && hierarchy.locationId.length > 0){
             this.connectDB();
             hierarchyModel.create(location,
                 function (err, post) {

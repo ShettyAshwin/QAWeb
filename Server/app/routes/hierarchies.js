@@ -14,6 +14,10 @@ router.get('/get/:id', function(req, res, next) {
     framework.clsHierarchy.getById(req.params.id, res, next);
 });
 
+router.get('/getByLocation/:id', function(req, res, next) {
+    framework.clsHierarchy.getByLocationId(req.params.id, res, next);
+});
+
 router.delete('/delete/:id', function(req, res, next) {
     framework.clsHierarchy.deleteById(req.params.id, res, next);
 });

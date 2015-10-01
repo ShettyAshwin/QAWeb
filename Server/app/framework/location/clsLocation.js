@@ -1,6 +1,6 @@
 var baseframework = require('../common/baseMongoose');
 
-var locationSchema = new baseframework.mongoose.Schema({name: String, address: String, hospital : {type: baseframework.mongoose.Schema.Types.ObjectId, ref:'Hospital'}});
+var locationSchema = new baseframework.mongoose.Schema({name: String, address: String, hospitalId : {type: baseframework.mongoose.Schema.Types.ObjectId, ref:'Hospital'}});
 var locationModel = baseframework.mongoose.model('Location', locationSchema);
 
 
@@ -59,10 +59,20 @@ var clsLocation  = {
          res.end();
          });*/
     },
+    getByHospitalId : function(id,res, next){
+        console.log('Get by Name executed');
+        this.connectDB();
+        locationModel.find({hospitalId : id}).populate('Hospital').exec(
+            function (err, data) {
+                if (err) return next(err);
+                res.json(data);
+                res.end();
+            });
+    },
     getById : function(id,res, next){
         console.log('Get by Name executed');
         this.connectDB();
-        locationModel.findOne(id).populate('Hospital').exec(
+        locationModel.findById(id).populate('Hospital').exec(
             function (err, data) {
                 if (err) return next(err);
                 res.json(data);

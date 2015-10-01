@@ -1,5 +1,6 @@
 barcoApp.controller('hierarchyController', ['$scope', 'hierarchyService', 'locationService',
     function ($scope, hierarchyService, locationService) {
+        $scope.showList = true;
         $scope.ddlAssociatedLocation = "-1";
         $scope.getHierarchies = function () {
             hierarchyService.getHierarchyList().then(function (obj) {
@@ -37,11 +38,13 @@ barcoApp.controller('hierarchyController', ['$scope', 'hierarchyService', 'locat
 
                 });
             }
+            $scope.showList = true;
         };
         $scope.getHierarchyById = function (id) {
             hierarchyService.getHierarchyById(id).then(function (obj) {
                 $scope.Hierarchy = obj.reponseData;
             });
+            $scope.showList = false;
 
         };
         $scope.deleteHierarchy = function (id) {

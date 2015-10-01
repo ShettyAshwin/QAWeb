@@ -119,7 +119,18 @@ var clsHospital  = {
         }
 
         return defer.promise;
+    },
+    getTree : function () {
+        console.log('Get Hospital Tree');
+        var defer = Q.defer();
+        this.connectDB();
+        baseModel.hospitalModel.find({}).populate('LocationId').populate('hierarchyId').exec(function(err, docs){
+            console.log(docs);
+            defer.resolve(docs);
+        });
+        return defer.promise;
     }
+
 };
 
 module.exports.clsHospital = clsHospital;

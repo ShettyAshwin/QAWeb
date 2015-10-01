@@ -97,8 +97,17 @@ var clsLocation  = {
                 function (err, post) {
                     if (err) {
                         throw err;
+                    }else{
+                        baseModel.hospitalModel.findByIdAndUpdate(location.hospitalId,{$push : {LocationId : post._id}},{safe: true, upsert: true},
+                            function(err, model) {
+                                if (err) {
+                                    throw err;
+                                }else{
+                                    defer.resolve(baseframework.statusOk);
+                                }
+                            });
                     }
-                    defer.resolve(baseframework.statusOk);
+
                 }
             );
         }else{

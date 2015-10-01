@@ -101,7 +101,16 @@ var clsHierarchy  = {
                     if (err) {
                         throw err;
                     }
-                    defer.resolve(baseframework.statusOk);
+                    else{
+                        baseModel.locationModel.findByIdAndUpdate(hierarchy.locationId,{$push : {hierarchyId : post._id}},{safe: true, upsert: true},
+                            function(err, model) {
+                                if (err) {
+                                    throw err;
+                                }else{
+                                    defer.resolve(baseframework.statusOk);
+                                }
+                            });
+                    }
                 }
             );
         }else{

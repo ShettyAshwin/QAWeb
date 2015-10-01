@@ -1,9 +1,6 @@
 var baseframework = require('../common/baseMongoose');
+var baseModel = require('../common/baseSchema');
 var Q = require('q');
-
-var locationSchema = new baseframework.mongoose.Schema({name: String, address: String, hospitalId : {type: baseframework.mongoose.Schema.Types.ObjectId, ref:'Hospital'}});
-var locationModel = baseframework.mongoose.model('Location', locationSchema);
-
 
 var clsLocation  = {
     connectDB : function(){
@@ -25,8 +22,8 @@ var clsLocation  = {
     },
     addDummy : function(res){
         this.connectDB();
-        var location1 = new locationModel({name: 'Mumbai', address :'Maharashtra, India'});
-        var location2 = new locationModel({name: 'Pune', address :'Maharashtra, India'});
+        var location1 = new baseModel.locationModel({name: 'Mumbai', address :'Maharashtra, India'});
+        var location2 = new baseModel.locationModel({name: 'Pune', address :'Maharashtra, India'});
 
         location1.save(function (err, data) {
             clsLocation.responseHandler(err,data);
@@ -43,7 +40,7 @@ var clsLocation  = {
         console.log('GetAll executed');
         this.connectDB();
         var defer = Q.defer();
-        locationModel.find({}).populate('Hospital').exec(
+        baseModel.locationModel.find({}).populate('Hospital').exec(
             function (err, data) {
                 if (err) {
                     throw err;
@@ -56,7 +53,7 @@ var clsLocation  = {
         console.log('Get by Name executed');
         this.connectDB();
         var defer = Q.defer();
-        locationModel.find({hospitalId : id}).populate('Hospital').exec(
+        baseModel.locationModel.find({hospitalId : id}).populate('Hospital').exec(
             function (err, data) {
                 if (err) {
                     throw err;
@@ -68,7 +65,7 @@ var clsLocation  = {
     getById : function(id){
         console.log('Get by Name executed');
         this.connectDB();
-        locationModel.findById(id).populate('Hospital').exec(
+        baseModel.locationModel.findById(id).populate('Hospital').exec(
             function (err, data) {
                 if (err) {
                     throw err;
@@ -81,7 +78,7 @@ var clsLocation  = {
         console.log('Delete by Name executed');
         this.connectDB();
         var defer = Q.defer();
-        locationModel.findByIdAndRemove(id,
+        baseModel.locationModel.findByIdAndRemove(id,
             function (err, post) {
                 if (err) {
                     throw err;
@@ -96,7 +93,7 @@ var clsLocation  = {
         console.log('Add new Location');
         if((location) && (location.name.length) && location.name.length > 0 && (location.address) && location.address.length > 0 && (location.hospitalId) && location.hospitalId.length > 0){
             this.connectDB();
-            locationModel.create(location,
+            baseModel.locationModel.create(location,
                 function (err, post) {
                     if (err) {
                         throw err;
@@ -118,7 +115,7 @@ var clsLocation  = {
             this.connectDB();
             //hospitalModel.push(hospital);
 
-            locationModel.findByIdAndUpdate(id, location,
+            baseModel.locationModel.findByIdAndUpdate(id, location,
                 function (err, post) {
                     if (err) {
                         throw err;

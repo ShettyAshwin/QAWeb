@@ -1,8 +1,8 @@
 var baseframework = require('../common/baseMongoose');
+var baseModel = require('../common/baseSchema');
+
 var Q = require('q');
 
-var hospitalSchema = new baseframework.mongoose.Schema({name: String, address: String});
-var hospitalModel = baseframework.mongoose.model('Hospital', hospitalSchema);
 
 var clsHospital  = {
     connectDB : function(){
@@ -24,9 +24,9 @@ var clsHospital  = {
     },
     addDummy : function(res){
         this.connectDB();
-        var hospital1 = new hospitalModel({name: 'Hospital1', address :'Mumbai, India'});
-        var hospital2 = new hospitalModel({name: 'Hospital2', address :'Pune, India'});
-        var hospital3 = new hospitalModel({name: 'Hospital3', address :'Bangalore, India'});
+        var hospital1 = new baseModel.hospitalModel({name: 'Hospital1', address :'Mumbai, India'});
+        var hospital2 = new baseModel.hospitalModel({name: 'Hospital2', address :'Pune, India'});
+        var hospital3 = new baseModel.hospitalModel({name: 'Hospital3', address :'Bangalore, India'});
 
         hospital1.save(function (err, hospital) {
             clsHospital.responseHandler(err,hospital);
@@ -46,7 +46,7 @@ var clsHospital  = {
         console.log('GetAll executed');
         var defer = Q.defer();
         this.connectDB();
-        hospitalModel.find({},function(err,docs){
+        baseModel.hospitalModel.find({},function(err,docs){
             console.log('dataFetch');
             defer.resolve(docs);
         });
@@ -56,7 +56,7 @@ var clsHospital  = {
         console.log('Get by Name executed');
         this.connectDB();
         var defer = Q.defer();
-        hospitalModel.findById(id,
+        baseModel.hospitalModel.findById(id,
             function (err, data) {
                 if (err) {
                     throw err;
@@ -70,7 +70,7 @@ var clsHospital  = {
         console.log('Delete by Name executed');
         this.connectDB();
         var defer = Q.defer();
-        hospitalModel.findByIdAndRemove(id,
+        baseModel.hospitalModel.findByIdAndRemove(id,
             function (err, post) {
                 if (err) {
                     throw err;
@@ -85,7 +85,7 @@ var clsHospital  = {
         console.log('Add new Hospital');
         if((hospital) && (hospital.name.length) && hospital.name.length > 0 && (hospital.address) && hospital.address.length > 0){
             this.connectDB();
-            hospitalModel.create(hospital,
+            baseModel.hospitalModel.create(hospital,
                 function (err, post) {
                     if (err) {
                         throw err;
@@ -105,7 +105,7 @@ var clsHospital  = {
         //validate hospital
         if((hospital) && (hospital.name.length) && hospital.name.length > 0 && (hospital.address) && hospital.address.length > 0){
             this.connectDB();
-            hospitalModel.findByIdAndUpdate(id, hospital,
+            baseModel.hospitalModel.findByIdAndUpdate(id, hospital,
                 function (err, post) {
                     if (err) {
                         throw err;

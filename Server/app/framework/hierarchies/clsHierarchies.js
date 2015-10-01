@@ -1,8 +1,6 @@
 var baseframework = require('../common/baseMongoose');
+var baseModel = require('../common/baseSchema');
 var Q = require('q');
-
-var hierarchySchema = new baseframework.mongoose.Schema({name: String, address: String, order : Number, locationId : {type: baseframework.mongoose.Schema.Types.ObjectId, ref:'Location'}});
-var hierarchyModel = baseframework.mongoose.model('Hierarchy', hierarchySchema);
 
 var clsHierarchy  = {
     connectDB : function(){
@@ -24,9 +22,9 @@ var clsHierarchy  = {
     },
     addDummy : function(res){
         this.connectDB();
-        var hierarchy1 = new hierarchyModel({name: 'Hierachy1', address :'Dummy Address 1'});
-        var hierarchy2 = new hierarchyModel({name: 'Hierachy2', address :'Dummy Address 2'});
-        var hierarchy3 = new hierarchyModel({name: 'Hierachy2', address :'Dummy Address 2'});
+        var hierarchy1 = new baseModel.hierarchyModel({name: 'Hierachy1', address :'Dummy Address 1'});
+        var hierarchy2 = new baseModel.hierarchyModel({name: 'Hierachy2', address :'Dummy Address 2'});
+        var hierarchy3 = new baseModel.hierarchyModel({name: 'Hierachy2', address :'Dummy Address 2'});
 
         hierarchy1.save(function (err, data) {
             clsHierarchy.responseHandler(err,data);
@@ -43,7 +41,7 @@ var clsHierarchy  = {
         console.log('GetAll executed');
         this.connectDB();
         var defer = Q.defer();
-        hierarchyModel.find({}).populate('Location').exec(
+        baseModel.hierarchyModel.find({}).populate('Location').exec(
             function (err, data) {
                 if (err) {
                     throw err;
@@ -56,7 +54,7 @@ var clsHierarchy  = {
         var defer = Q.defer();
         console.log('Get by id executed');
         this.connectDB();
-        hierarchyModel.findById(id).populate('location').exec(
+        baseModel.hierarchyModel.findById(id).populate('location').exec(
             function (err, data) {
                 if (err) {
                     throw err;
@@ -69,7 +67,7 @@ var clsHierarchy  = {
         var defer = Q.defer();
         console.log('Get by Name executed');
         this.connectDB();
-        hierarchyModel.find({locationId:id}).populate('location').exec(
+        baseModel.hierarchyModel.find({locationId:id}).populate('location').exec(
             function (err, data) {
                 if (err) {
                     throw err;
@@ -82,7 +80,7 @@ var clsHierarchy  = {
         var defer = Q.defer();
         console.log('Delete by Name executed');
         this.connectDB();
-        hierarchyModel.findByIdAndRemove(id,
+        baseModel.hierarchyModel.findByIdAndRemove(id,
             function (err, post) {
                 if (err) {
                     throw err;
@@ -98,7 +96,7 @@ var clsHierarchy  = {
         console.log('Add new Hospital');
         if((hierarchy) && (hierarchy.name.length) && hierarchy.name.length > 0 && (hierarchy.address) && hierarchy.address.length > 0 && (hierarchy.locationId) && hierarchy.locationId.length > 0){
             this.connectDB();
-            hierarchyModel.create(hierarchy,
+            baseModel.hierarchyModel.create(hierarchy,
                 function (err, post) {
                     if (err) {
                         throw err;
@@ -118,7 +116,7 @@ var clsHierarchy  = {
         //validate hospital
         if((hierarchy) && (hierarchy.name.length) && hierarchy.name.length > 0 && (hierarchy.address) && hierarchy.address.length > 0 && (hierarchy.locationId) && hierarchy.locationId.length > 0){
             this.connectDB();
-            hierarchyModel.findByIdAndUpdate(id, hierarchy,
+            baseModel.hierarchyModel.findByIdAndUpdate(id, hierarchy,
                 function (err, post) {
                     if (err) {
                         throw err;

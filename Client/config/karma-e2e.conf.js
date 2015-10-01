@@ -15,6 +15,7 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
+             'test/e2e/hospital/*.js',
             'test/e2e/location/*.js'
 
         ],

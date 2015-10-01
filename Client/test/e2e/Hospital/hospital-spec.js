@@ -34,7 +34,7 @@ describe('Hospital Test', function () {
 
         element('#save').click();
 
-        expect(element('#hospital-table tbody tr:nth-child(2) td:nth-child(1)').text()).toBe("ABC Hospital edit");
+        expect(element('#hospital-table tbody tr:last td:nth-child(1)').text()).toBe("ABC Hospital edit");
     });
 
     it('should delete hospital details', function () {

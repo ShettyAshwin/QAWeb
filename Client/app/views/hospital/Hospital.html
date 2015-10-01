@@ -25,7 +25,7 @@
 
 
     <div class="datatable" ng-show ="showHospitalList">
-        <div class="fltright"><input type="button" value="Add New Hospital" class="button button-green" ng-click="showHospitalList=!showHospitalList"></div>
+        <div class="fltright"><input type="button" id="add-new-hospital" value="Add New Hospital" class="button button-green" ng-click="showHospitalList=!showHospitalList"></div>
         <table cellpadding="0" cellspacing="0" id="hospital-table">
             <tr>
                 <th width="25%">Name</th>
@@ -36,7 +36,7 @@
                 <td>{{hospital.name}}</td>
                 <td>{{hospital.address}}</td>
                 <td> <div class="icnedit" ng-click="GetHospitalById(hospital._id)">Edit</div>
-                    <div href="#" class="icndelete" ng-click="DeleteHospital(hospital._id)">Delete</div> </td>
+                    <div id="edit" class="icndelete" ng-click="DeleteHospital(hospital._id)">Delete</div> </td>
 
             </tr>
         </table>

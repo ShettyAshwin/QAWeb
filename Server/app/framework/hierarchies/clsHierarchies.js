@@ -49,9 +49,9 @@ var clsHierarchy  = {
             });
     },
     getById : function(id,res, next){
-        console.log('Get by Name executed');
+        console.log('Get by id executed');
         this.connectDB();
-        hierarchyModel.findOne(id).populate('location').exec(
+        hierarchyModel.findById(id).populate('location').exec(
             function (err, data) {
                 if (err) return next(err);
                 res.json(data);
@@ -84,7 +84,7 @@ var clsHierarchy  = {
         console.log('Add new Hospital');
         if((hierarchy) && (hierarchy.name.length) && hierarchy.name.length > 0 && (hierarchy.address) && hierarchy.address.length > 0 && (hierarchy.locationId) && hierarchy.locationId.length > 0){
             this.connectDB();
-            hierarchyModel.create(location,
+            hierarchyModel.create(hierarchy,
                 function (err, post) {
                     if (err) return next(err);
                     res.json(baseframework.statusOk);
@@ -97,17 +97,17 @@ var clsHierarchy  = {
             res.end();
         }
     },
-    update : function(id, location, res, next){
-        console.log('Update existing location');
+    update : function(id, hierarchy, res, next){
+        console.log('Update existing hierarchy');
         //validate hospital
-        if((location) && (location.name.length) && location.name.length > 0 && (location.address) && location.address.length > 0 && (location.hospitalId) && location.hospitalId.length > 0){
+        if((hierarchy) && (hierarchy.name.length) && hierarchy.name.length > 0 && (hierarchy.address) && hierarchy.address.length > 0 && (hierarchy.locationId) && hierarchy.locationId.length > 0){
             this.connectDB();
             //hospitalModel.push(hospital);
 
-            locationModel.findByIdAndUpdate(id, location,
+            hierarchyModel.findByIdAndUpdate(id, hierarchy,
                 function (err, post) {
                     if (err) return next(err);
-                    res.json(statusOk);
+                    res.json(baseframework.statusOk);
                     res.end();
                 }
             );

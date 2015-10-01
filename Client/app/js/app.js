@@ -8,16 +8,6 @@ angular.module('barcoWebApp', [
     ]).config(['$routeProvider', '$httpProvider',
         function ($routeProvider, $httpProvider) {
 
-
-            $httpProvider.defaults.headers.post['Content-Type'] = 'application/json';
-            $httpProvider.defaults.useXDomain = true;
-            $httpProvider.defaults.headers.common = {Accept: "application/json, text/plain, */*"};
-
-            $httpProvider.defaults.transformRequest = [function (data) {
-
-            }];
-
-
             $routeProvider.when('/Hospitals', {templateUrl: 'views/hospital/Hospital.html', controller: 'HospitalController'});
             $routeProvider.when('/Assets', {templateUrl: 'views/asset/assetsListAddUpdate.html', controller: 'assetController'});
 

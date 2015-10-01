@@ -37,7 +37,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/hospitals', hospitals);
 app.use('/locations',locations);
-app.use('/hierarchy',hierarchies);
+app.use('/hierarchies',hierarchies);
 app.use('/assets',assets);
 
 // catch 404 and forward to error handler

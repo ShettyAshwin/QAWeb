@@ -4,8 +4,11 @@
 describe('hospital',function(){
     describe('services',function(){
         describe('hospitalServiceSpec',function(){
-            var fakeScope, fakehospitalService, httpBackend;
+            var  fakeScope, fakehospitalService, httpBackend;
+
+
             beforeEach(module('barcoApp'));
+
 
             beforeEach(inject(function ($rootScope,$httpBackend,hospitalService) {
                 fakeScope = $rootScope.$new();
@@ -16,7 +19,7 @@ describe('hospital',function(){
 
             }));
 
-            it('Should test GetHospitalList Method which is used for getting hospital list',function(){
+            it('Should test getHospitalList Method which is used for getting hospital list',function(){
                 var tempObj =  fakeScope.hospitals;
 
                 httpBackend.when('GET',angular.getAppSection('hospital').list).respond(tempObj);
@@ -26,7 +29,7 @@ describe('hospital',function(){
                 httpBackend.flush();
                 expect(tempObj.length).toBeGreaterThan(0);
             });
-            it('Should test GetHospitalById Method which is used for getting specific hospital details',function(){
+            it('Should test getHospitalById Method which is used for getting specific hospital details',function(){
                 var tempObj =  fakeScope.hospitals;
                 httpBackend.when('GET',angular.getAppSection('hospital').get+tempObj._id).respond(tempObj);
                 fakehospitalService.GetHospitalById(fakeScope.hospitals._id).then(function(response){

@@ -4,7 +4,7 @@
 barcoApp.service('hospitalService',['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
     var hospitalService = {
 
-        getHospitalList: function () {
+        GetHospitalList: function () {
             var defer = $q.defer();
             $http.get(angular.getAppSection('hospital').list).
                 success(function (data, status) {
@@ -34,11 +34,11 @@ barcoApp.service('hospitalService',['$http', '$q', '$rootScope', function ($http
 
             return defer.promise;
         },
-        getHospitalById: function (id) {
+        GetHospitalById: function (id) {
             var defer = $q.defer();
             $http.get(angular.getAppSection('hospital').get + id).
                 success(function (data, status) {
-                    defer.resolve({ "reponseData": data});
+                    defer.resolve({ "Data": data});
                 });
             return defer.promise;
         },
@@ -53,8 +53,6 @@ barcoApp.service('hospitalService',['$http', '$q', '$rootScope', function ($http
 
             return defer.promise;
         }
-
-
     };
     return hospitalService;
 }]);

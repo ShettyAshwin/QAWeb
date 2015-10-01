@@ -3,6 +3,7 @@ barcoApp.controller('hierarchyController', ['$scope', 'hierarchyService', 'locat
         $scope.ddlAssociatedLocation = "-1";
         $scope.getHierarchies = function () {
             hierarchyService.getHierarchyList().then(function (obj) {
+
                 $scope.Hierarchies = obj.reponseData;
 
             });
@@ -10,7 +11,7 @@ barcoApp.controller('hierarchyController', ['$scope', 'hierarchyService', 'locat
         };
         $scope.getHierarchies();
         $scope.getHospitalLocations = function () {
-            locationService.getHospitalLocations().then(function (obj) {
+            locationService.getAllHospitalLocations().then(function (obj) {
                 $scope.LocationList = obj.responseData;
             });
 
@@ -19,7 +20,7 @@ barcoApp.controller('hierarchyController', ['$scope', 'hierarchyService', 'locat
         $scope.getHospitalLocations();
 
 
-        $scope.AddHierarchy = function () {
+        $scope.addHierarchy = function () {
             var objHierarchy = $scope.Hierarchy;
 
             if ($scope.Hierarchy._id == null || $scope.Hierarchy._id == 0) {
@@ -43,10 +44,13 @@ barcoApp.controller('hierarchyController', ['$scope', 'hierarchyService', 'locat
             });
 
         };
-        $scope.DeleteHierarchy = function (id) {
+        $scope.deleteHierarchy = function (id) {
             hierarchyService.DeleteHierarchyDetail(id).then(function () {
             });
             $scope.getHierarchies();
+        };
+        $scope.Cancel = function(){
+            $scope.Hierarchy = null;
         };
 
     }]);

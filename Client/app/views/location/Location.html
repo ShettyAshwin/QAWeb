@@ -1,10 +1,8 @@
 ﻿
-<div data-ng-controller="LocationController">
-    <!-- ADD -->
 
-    <div class="formcontent" data-ng-controller="HospitalController">
+    <div class="formcontent" data-ng-controller="LocationController">
         <form class="hmsform" ng-show="!ShowList">
-            <legend>Hospital</legend>
+            <legend><span>{{OperationMode}}&nbsp;</span>Location</legend>
             <fieldset>
                 <ul>
                     <li>
@@ -31,7 +29,7 @@
                     </li>
                     <li class="buttons">
                         <input type="submit" value="Cancel" class="button" ng-click="ShowList=!ShowList">
-                        <input type="submit" value="Save" class="button" ng-click="AddHospital()">
+                        <input type="submit" value="Save" class="button" ng-click="AddHospitalLocation()">
                     </li>
                 </ul>
             </fieldset>
@@ -39,7 +37,14 @@
 
 
         <div class="datatable" ng-show="ShowList">
-            <div class="fltright"><input type="button" value="Add New Location" class="button button-green" ng-click="ShowList=!ShowList"></div>
+            <div class="fltleft">
+                <span style="font-size: 1.333em;line-height:40px;">Filter By Hospital&nbsp;</span>
+                <select id="ddlHospitalFilter" name="ddlHospitalFilter" style="width: 200px;" data-ng-model="ddlFilteredHospital" ng-change="LoadHospitalLocations(ddlFilteredHospital)">
+                    <option value="-1">[ALL]</option>
+                    <option data-ng-repeat="hospital in hospitalList" value="{{hospital._id}}">{{hospital.name}}</option>
+                </select>
+            </div>
+            <div class="fltright"><input type="button" value="+ Add New Location" class="button addbutton button-grid" ng-click="ShowList=!ShowList"></div>
             <table cellpadding="0" cellspacing="0">
                 <tr>
                     <th width="25%">Name</th>

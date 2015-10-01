@@ -8,7 +8,6 @@ body {
     min-height:100%;padding:0px;margin:0;
 	font-size:12px;
     font-family:Arial, Helvetica, sans-serif;
-    background-color: #252932;
 }
 .container{height: 92.7%;position: absolute;width: 100%;}
 header{height:70px; background:#ed1b24;padding:0 25px;}
@@ -34,10 +33,14 @@ fieldset{ min-width:0;padding:0;border:0;margin:0;}
 .label{float:left;margin:15px 8px 0 0;}
 .hmsform li{display: flex;margin-bottom:15px;line-height: 40px;}
 .hmsform li:last-child{margin-bottom:0px;}
-input[type="text"], select{padding:10px;border:solid 1px #cbcbcb;color:#6b6b6b;font-size:16px;}
+input[type="text"], select{padding:5px;border:solid 1px #cbcbcb;color:#6b6b6b;font-size:16px;}
+select { padding:5px !important; }
 .button{padding:10px;min-width:70px; border:solid 0px #c2d6e7;color:#fff; font-size:14px;background:#828282;font-weight:bold; margin-right: 5px;cursor:pointer;}
 .button-green {
 background-color: #32CD32 !important;}
+.button-grid {
+margin:5px 0 0 !important;
+}
 .buttons{margin-left:180px;}
 .addbutton{font-size:12px; background:#4bb0bc;margin-top:-8px;}
 .selectbox{width:217px;}
@@ -129,5 +132,3 @@ ul.filters li{float:left;margin-left:25px; list-style:none;}
 ul.filters .selectbox {
     width: 180px;
 }
-
-

@@ -33,7 +33,7 @@
                 </li>
                 <li class="buttons">
                     <input type="submit" value="Cancel" class="button" ng-click="Cancel()">
-                    <input type="submit" value="Save" class="button" ng-click="AddHierarchy()">
+                    <input type="submit" value="Save" class="button" ng-click="addHierarchy()">
                 </li>
             </ul>
         </fieldset>
@@ -66,7 +66,7 @@
                 <td>{{hierarchy.name}}</td>
                 <td>{{hierarchy.address}}</td>
                 <td> <div class="icnedit" ng-click="getHierarchyById(hierarchy._id)">Edit</div>
-                    <div href="#" class="icndelete" ng-click="DeleteHierarchy(hierarchy._id)">Delete</div> </td>
+                    <div href="#" class="icndelete" ng-click="deleteHierarchy(hierarchy._id)">Delete</div> </td>
 
             </tr>
         </table>

@@ -38,18 +38,22 @@ describe('hospital',function(){
             });
             it('Should test AddHospital Method which is used add hospital details',function(){
                 var tempObj =  fakeScope.Hospital;
-                fakehospitalService.AddHospitalDetail(fakeScope.Hospital).then(function(response){
+                tempObj._id = null;
+                fakehospitalService.AddHospitalDetail(tempObj).then(function(response){
                     fakeScope.HospitalId = response._id;
                     fakeScope.Hospital = null;
                     fakeScope.getHospital();
-                    expect(response.Data._id).toBe(tempObj._id);
+                    expect(response.Data.name).toBe(fakeScope.Hospital.name);
                 });
+                var tempObjUpdate =  fakeScope.Hospital;
+                //httpBackend.expectPUT(angular.getAppSection('hospital').update+'1').respond(500,tempObj);
                 fakehospitalService.UpdateHospitalDetail(fakeScope.Hospital).then(function(response){
                     expect(response.Data.name).toBe(tempObj.name);
                 });
+                //httpBackend.flush();
                 fakeScope.AddHospital();
                 fakeScope.getHospital();
-                expect(tempObj._id).toBe(1);
+                expect(tempObj.name).toBe("hospital1");
             });
 
             it('Should test getHospitalById Method which is used specific hospital detail by id',function(){

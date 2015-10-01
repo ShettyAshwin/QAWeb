@@ -37,4 +37,8 @@
                     $scope.getHospital();
                 });
             };
+
+            $scope.Cancel = function(){
+                $scope.Hospital = null;
+            };
     }]);

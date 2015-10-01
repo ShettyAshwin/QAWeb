@@ -25,4 +25,8 @@ var barcoApp = angular.module('barcoApp',['ngRoute'])
 
             $routeProvider.when('/Hierarchies', {templateUrl: 'views/hierarchy/hierarchy.html', controller: 'hierarchyController'});
             $routeProvider.when('/Locations', {templateUrl: 'views/location/Location.html', controller: 'LocationController'});
+
+            $routeProvider.otherwise({
+                redirectTo: '/Hospitals'
+            });
         }])

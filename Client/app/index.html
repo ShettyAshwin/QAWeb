@@ -6,18 +6,28 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Barco App</title>
 
-
-    <link href="css/barco.css" rel="stylesheet" type="text/css"/>
+    <link type="text/css" href="css/Style.css" rel="stylesheet">
 
 </head>
 
 <body>
-<!--<section id="wp-login-page" data-ng-include data-src="'views/hospital/Hospital.html'">-->
-<section id="maincontent" class="searchcontent">
-    <admin-header id="wp-header"></admin-header>
-    <section id="wp-content-page" class="content" ng-view>
-    </section>
 
+<header>
+    <div class="brandlogo">Barco</div>
+</header>
+<section class="container">
+    <nav>
+        <ul>
+            <li class="selected"><span></span><a href="#/Hospitals">Hospital</a></li>
+            <li><span></span><a href="#/Locations">Locations</a></li>
+            <li><span></span><a href="#/Hierarchies">Hierarchy</a></li>
+            <li><span></span><a href="#/Assets">Assets</a></li>
+        </ul>
+    </nav>
+    <section class="maincontent">
+        <section id="wp-content-page" class="content" ng-view>
+        </section>
+    </section>
 </section>
 
 <script src="lib/jquery-2.1.1.min.js"></script>

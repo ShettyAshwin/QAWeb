@@ -1,0 +1,66 @@
+@charset "utf-8";
+/* CSS Document */
+html { 
+    height:100%;
+	font-family:Arial, Helvetica, sans-serif;
+}
+body { 
+    min-height:100%;padding:0px;margin:0;font-family:Arial, Helvetica, sans-serif;
+}
+.container{height: 92.7%;position: absolute;width: 100%;}
+header{height:70px; background:#ed1b24;padding:0 25px;}
+.brandlogo{margin-top:20px; background:url(../images/brandlogo.jpg); height:32px;width:115px;display:block;float:left; text-indent:-99999px;}
+nav{width:225px; background:#252932;float:left;height: 100%;}
+.maincontent{background:#fff;min-height: 100%; background:#fff;margin-left: 225px;}
+.fltright{float:right;}
+.fltleft{float:left;}
+.formcontent{padding:35px;}
+nav ul{padding:0px;}
+nav li{display:block;height:33px; background:#55585f;line-height: 33px;border-bottom:solid 1px #000;}
+nav li a{color:#acadb1; text-decoration:none;padding-left: 17px;}
+nav li a:hover{color:#fff;}
+nav li.selected a{color:#fff;}
+nav li span{width:6px;float:left;height: 100%;}
+nav li.selected span{width:6px; background:#e7201d;float:left;height: 100%;}
+
+fieldset{ min-width:0;padding:0;border:0;margin:0;}
+.hmsform{font-size:1.333em;}
+.hmsform label{float:left;width:160px;}
+.label{float:left;margin:15px 8px 0 0;}
+.hmsform li{display: flex;margin-bottom:15px;line-height: 40px;}
+.hmsform li:last-child{margin-bottom:0px;}
+input[type="text"], select{padding:10px;border:solid 1px #cbcbcb;color:#6b6b6b;font-size:16px;}
+.button{padding:10px;border:solid 0px #c2d6e7;color:#fff; font-size:14px;background:#828282;font-weight:bold; margin-right: 5px;border-radius:8px; cursor:pointer;}
+.buttons{margin-left:160px;}
+.selectbox{width:217px;}
+.selectbox select {
+    width: 100%!important;
+    margin-right: 27px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background:#fff url(../images/dropdownarrow.png) no-repeat right 0px;
+    padding-right: 13px;
+}
+.required{color:#F00;}
+legend {
+    display: block;
+    width: 100%;
+    padding: 0 0 5px 0;
+    font-size: 21px;
+    line-height: inherit;
+    color: #333;
+    border: 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+
+/*Data Table CSS*/
+.datatable table{width:100%;margin-top:15px;border:solid 1px #cdcdcd;border-right:none;display: inline-table;}
+.datatable th, .datatable td{padding:15px 10px;line-height: initial; text-align:left;margin:0;}
+.datatable th { background:#fafafa;color:#343434;border-bottom:solid 0px #cdcdcd;border-right:solid 1px #cdcdcd;text-transform:uppercase; font-weight:bold;font-size:14px;}
+.datatable th a{color:#78a1c4; }
+.datatable td {color:#6b6b6b;border-top:solid 1px #cdcdcd;border-right:solid 1px #cdcdcd;}
+.icnedit{background:url(../images/icnedit.png); width:15px;height:15px; float:left;text-indent:-99999px;margin-left:20px;}
+.icndelete{background:url(../images/icndelete.png); width:12px;height:13px; float:left;text-indent:-99999px;margin-left:20px;}
+/*Data Table CSS End*/

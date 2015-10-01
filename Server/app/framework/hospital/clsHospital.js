@@ -126,7 +126,20 @@ var clsHospital  = {
         this.connectDB();
         baseModel.hospitalModel.find({}).populate('LocationId').exec(function(err, docs){
             baseModel.hierarchyModel.populate(docs,'LocationId.hierarchyId',function(err, hier){
-                baseModel.assetModel.populate(hier,'LocationId.hierarchyId.assertId',function(err, asset){
+                baseModel.assetModel.populate(hier,'LocationId.hierarchyId.assetId',function(err, asset){
+                    defer.resolve(docs);
+                });
+            });
+        });
+        return defer.promise;
+    },
+    getTreeById : function (id) {
+        console.log('Get Hospital Tree by Id');
+        var defer = Q.defer();
+        this.connectDB();
+        baseModel.hospitalModel.findById(id).populate('LocationId').exec(function(err, docs){
+            baseModel.hierarchyModel.populate(docs,'LocationId.hierarchyId',function(err, hier){
+                baseModel.assetModel.populate(hier,'LocationId.hierarchyId.assetId',function(err, asset){
                     defer.resolve(docs);
                 });
             });

@@ -309,4 +309,17 @@ router.get('/getTree', function(req, res, next) {
     }
 });
 
+router.get('/getTreeById/:id', function(req, res, next) {
+    try{
+        framework.clsHospital.getTree(req.params.id).then(function(data){
+            res.json(data);
+            res.end();
+        });
+    }
+    catch(ex){
+        console.log(ex);
+        res.json(framework.statusError);
+        res.end();
+    }
+});
 module.exports = router;

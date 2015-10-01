@@ -84,8 +84,16 @@ var clsHierarchy  = {
             function (err, post) {
                 if (err) {
                     throw err;
+                }else{
+                    baseModel.locationModel.findByIdAndUpdate(post.locationId,{$pull : {hierarchyId : id}},{safe: true, upsert: true},
+                        function(err, model) {
+                            if (err) {
+                                throw err;
+                            }else{
+                                defer.resolve(baseframework.statusOk);
+                            }
+                        });
                 }
-                defer.resolve(baseframework.statusOk);
             }
         );
         return defer.promise;

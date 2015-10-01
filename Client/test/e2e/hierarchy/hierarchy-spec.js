@@ -35,21 +35,21 @@ describe('Hierarchy  Test', function () {
 
     it('should save Hierarchy details', function () {
         element('#add-new-Hierarchy').click();
-        input('Hierarchy.name').enter('ABC Hierarchy save');
-        input('Hierarchy.address').enter('ABC Hierarchy Address save');
+        input('Hierarchy.name').enter('  Hierarchy save');
+        input('Hierarchy.address').enter('  Hierarchy Address save');
         element('#save').click();
-        expect(element('#hierarchy-table tbody tr:last td:nth-child(1)').text()).toBe("ABC Hierarchy save");
+        expect(element('#hierarchy-table tbody tr:last td:nth-child(1)').text()).toBe("  Hierarchy save");
         pause();
     });
     it('should edit Hierarchy details', function () {
 
         element('#edit').click();
-        input('Hierarchy.name').enter('ABC Hierarchy edit');
-        input('Hierarchy.address').enter('ABC Hierarchy Address');
+        input('Hierarchy.name').enter('  Hierarchy edit');
+        input('Hierarchy.address').enter('  Hierarchy Address');
 
         element('#save').click();
 
-        expect(element('#hierarchy-table tbody tr:last td:nth-child(1)').text()).toBe("ABC Hierarchy edit");
+        expect(element('#hierarchy-table tbody tr:last td:nth-child(1)').text()).toBe("  Hierarchy edit");
         pause();
     });
 

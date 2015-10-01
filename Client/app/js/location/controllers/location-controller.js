@@ -8,12 +8,12 @@ barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locatio
         $scope.ShowList = true;
         $scope.OperationMode = "Add";
 
-        $scope.ddlEditAssociatedHospital = "-1"; // Default hospital selection in edit view
-        $scope.ddlAssociatedHospital = "-1"; // Default hospital selection
+        ////$scope.ddlEditAssociatedHospital = "-1"; // Default hospital selection in edit view
+        ////$scope.ddlAssociatedHospital = "-1"; // Default hospital selection
         $scope.ddlFilteredHospital = "-1"; // Default hospital filter
 
         $scope.getHospitalList = function () {
-            hospitalService.getHospitalList().then(function (obj) {
+            hospitalService.GetHospitalList().then(function (obj) {
                 $scope.hospitalList = obj.reponseData;
             });   
         };
@@ -22,7 +22,7 @@ barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locatio
 
         /* Get hospital location list */
         $scope.LoadHospitalLocations = function (hospitalId) {
-            if (hospitalId === '-1') {
+            if (hospitalId === "-1") {
                 locationService.getAllHospitalLocations().then(function (obj) {
                     if (obj.responseData) {
                         $scope.locationList = obj.responseData;
@@ -41,6 +41,7 @@ barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locatio
                 });
             }
         };
+        $scope.LoadHospitalLocations("-1"); // Show all locations
 
         /* Associate hospital details to locations present in location list */
         function AssociateHospitalToLocation() {
@@ -62,11 +63,11 @@ barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locatio
 
         /* Add hospital location */
         $scope.AddHospitalLocation = function () {
-            if ($scope.OperationMode === 'Add') {
+            if ($scope.OperationMode === "Add") {
                 var objLocation = {
                     name: $scope.Location.name,
                     address: $scope.Location.address,
-                    hospitalId: $scope.ddlAssociatedHospital
+                    hospitalId: $scope.Location.associatedHospital // $scope.ddlAssociatedHospital
                 };
                 locationService.addHospitalLocation(objLocation).then(function (response) {
                     $scope.LocationId = response.result;
@@ -85,12 +86,12 @@ barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locatio
         $scope.EditHospitalLocation = function (locationId) {
             locationService.getLocationDetails(locationId).then(function (obj) {
                 if (obj.responseData) {
-                    $scope.EditLocation = {
+                    $scope.Location = {
                         _id: obj.responseData._id,
                         name: obj.responseData.name,
                         address: obj.responseData.address
                     };
-                    $scope.ddlEditAssociatedHospital = obj.responseData.hospitalId; // ?? not getting updated on UI
+                    $scope.Location.associatedHospital = obj.responseData.hospitalId; // ?? not getting updated on UI
                 }
             });
         };
@@ -112,10 +113,25 @@ barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locatio
         /* Delete hospital location */
         $scope.DeleteHospitalLocation = function (locationId) {
             locationService.deleteHospitalLocation(locationId).then(function (response) {
-                return response.result;
+                $scope.LoadHospitalLocations("-1"); // Show all locations
+                //return response.result;
             });
         };
 
-   
+        /* Switch from grid view to edit view */
+        $scope.OpenAddHospitalLocationView = function () {
+            $scope.ShowList = false;
+            $scope.OperationMode = "Add";
+            //$scope.Location = null;
+            $scope.Location = { 'name': '', 'address': '', 'associatedHospital': '-1' };
+            //$scope.apply();
+        }
+
+        /* Switch from grid view to edit view */
+        $scope.OpenEditHospitalLocationView = function (locationId) {
+            $scope.ShowList = false;
+            $scope.OperationMode = "Edit";
+            $scope.EditHospitalLocation(locationId);
+        }
 
     }]);

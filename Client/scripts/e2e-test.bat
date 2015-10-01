@@ -8,4 +8,5 @@ REM - NodeJS (http://nodejs.org/)
 REM - Karma (already contained in project's node_modules directory)
 
 set BASE_DIR=%~dp0
-%BASE_DIR%\..\app\node_modules\.bin\karma start "%BASE_DIR%\..\config\karma-e2e.conf.js" %*
+%BASE_DIR%\..\node_modules\.bin\karma start "%BASE_DIR%\..\config\karma-e2e.conf.js" %*
+

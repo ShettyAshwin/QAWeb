@@ -15,7 +15,7 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'test/e2e/Hospital/*.js'
+            'test/e2e/location/*.js'
 
         ],
 
@@ -52,7 +52,7 @@ module.exports = function(config) {
         colors: true,
 
         proxies: {
-            '/adminPortal': 'http://localhost/client'
+            '/QAWebPortal': 'http://localhost:55202/Client'
         },
 
         // level of logging

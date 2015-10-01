@@ -18,6 +18,10 @@ barcoApp.factory('assetService',['$http', '$q', '$rootScope', function ($http, $
                        // notificationService.error("ASSET.ERROR.ASSET_NAME_ERROR_TITLE", "ASSET.ERROR.ASSET_NAME_ERROR_MSG");
                         result = "Asset name is complusary. \n";
                     }
+                    if (!asset.hierarchyId)
+                    {
+                        result = result +"Hierarchy is complusary. \n";
+                    }
                     if (asset.properties) {
                         for (i = 0; i < asset.properties.length; i++) {
                             if (asset.properties[i].name.trim().length == 0)

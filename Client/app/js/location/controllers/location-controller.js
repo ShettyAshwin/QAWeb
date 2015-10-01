@@ -4,6 +4,10 @@
 barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locationService',
     function ($scope, hospitalService, locationService) {
 
+        // Display grid
+        $scope.ShowList = true;
+        $scope.OperationMode = "ADD";
+
         $scope.ddlEditAssociatedHospital = "-1"; // Default hospital selection in edit view
         $scope.ddlAssociatedHospital = "-1"; // Default hospital selection
         $scope.ddlFilteredHospital = "-1"; // Default hospital filter
@@ -38,7 +42,7 @@ barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locatio
             }
         };
 
-
+        /* Associate hospital details to locations present in location list */
         function AssociateHospitalToLocation() {
             try {
                 $scope.getHospitalList(); // This will get us all the hospital details
@@ -102,5 +106,8 @@ barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locatio
                 return response.result;
             });
         };
+
+
+        
 
     }]);

@@ -4,7 +4,7 @@
 barcoApp.controller('assetController', ['$scope', '$location','assetService',
     function ($scope, $location,assetService) {
 
-        $scope.newAsset = {};
+        //$scope.newAsset = {};
         $scope.showList = true;
         //$scope.hierarchyList = [{_id: "H1",name :'hierarchy1'}, {_id: "H2",name :'hierarchy2'}, {_id: "H3",name :'hierarchy3'}  ];
 
@@ -125,7 +125,7 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
         $scope.getHospitalList = function (){
             //$scope.hospitalList = [{"_id":"1", "name": "Hospital1"}, {"_id":"2", "name": "Hospital2"}];
             assetService.getHospitalList().then(function (obj) {
-                $scope.hospitalList = obj.reponseData;
+                $scope.hospitalList = obj.responseData;
                 $scope.assets=[];
                 $scope.hierarchyList = [];
                 $scope.assetproperties= [];

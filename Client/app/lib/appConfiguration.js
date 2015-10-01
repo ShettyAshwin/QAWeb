@@ -21,21 +21,23 @@ var app_Config = {
         'update': '{{ServerDetail}}/locations/update/',
         'delete': '{{ServerDetail}}/locations/delete/',
         'get': '{{ServerDetail}}/locations/get/',
-        'getByHospital': '{{ServerDetail}}/locations/getByHospital/',
+        'getByHospital': '{{ServerDetail}}/locations/getByHospital/'
     },
     'hierarchy': {
         'list': '{{ServerDetail}}/hierarchies/getAll/',
         'add': '{{ServerDetail}}/hierarchies/add/',
         'update': '{{ServerDetail}}/hierarchies/update/',
         'delete': '{{ServerDetail}}/hierarchies/delete/',
-        'get': '{{ServerDetail}}/hierarchies/get/'
+        'get': '{{ServerDetail}}/hierarchies/get/',
+        'getByLocation':'{{ServerDetail}}/hierarchies/getByLocation/'
     },
     'asset': {
         'list': '{{ServerDetail}}/assets/getAll/',
         'add': '{{ServerDetail}}/assets/add/',
         'update': '{{ServerDetail}}/assets/update/',
         'delete': '{{ServerDetail}}/assets/delete/',
-        'get': '{{ServerDetail}}/assets/get/'
+        'get': '{{ServerDetail}}/assets/get/',
+        'getByHierarchy': '{{ServerDetail}}/assets/getByHierarchy/'
     }
 };
 

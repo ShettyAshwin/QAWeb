@@ -41,10 +41,11 @@ barcoApp.factory('assetService',['$http', '$q', '$rootScope', function ($http, $
 
                     var defer = $q.defer();
                     //$http.get('data/assetsData.json').
-                   //$http.get('http://localhost:3000/assets/getAll').
-                   $http.get('http://localhost:3000/assets/getByHierarchy/'+hierarchyId).
+
+                   //$http.get('http://localhost:3000/assets/getByHierarchy/'+hierarchyId).
+                   $http.get(angular.getAppSection('asset').getByHierarchy+hierarchyId).
                         success(function (data, status) {
-                            defer.resolve({ "reponseData": data});
+                            defer.resolve({ "responseData": data});
                         });
                     return defer.promise;
                     //return assetList.assets;
@@ -54,7 +55,8 @@ barcoApp.factory('assetService',['$http', '$q', '$rootScope', function ($http, $
                     var defer = $q.defer();
                    //var  asset = assetList[0];
                     //$http.put(asset)
-                    $http.put('http://localhost:3000/assets/update/'+asset._id,asset)
+                    //$http.put('http://localhost:3000/assets/update/'+asset._id,asset)
+                    $http.put(angular.getAppSection('asset').update+ asset._id,asset)
                         .success(function (data, status) {
                             defer.resolve({'Success': true, 'Data': data, 'error': null, 'ErrorCode': status});
                         }).error(function (data, status) {
@@ -66,7 +68,8 @@ barcoApp.factory('assetService',['$http', '$q', '$rootScope', function ($http, $
                 addAsset: function(asset){
                     var defer = $q.defer();
                     //var  asset = assetList[0];
-                    $http.post('http://localhost:3000/assets/add/',asset)
+                    //$http.post('http://localhost:3000/assets/add/',asset)
+                    $http.post(angular.getAppSection('asset').add,asset)
                         .success(function (data, status) {
                             defer.resolve({'Success': true, 'Data': data, 'error': null, 'ErrorCode': status});
                         }).error(function (data, status) {
@@ -78,9 +81,10 @@ barcoApp.factory('assetService',['$http', '$q', '$rootScope', function ($http, $
 
                 getAssetById: function (id) {
                 var defer = $q.defer();
-                $http.get('http://localhost:3000/assets/get/'+id).
+                //$http.get('http://localhost:3000/assets/get/'+id).
+                $http.get(angular.getAppSection('asset').get + id).
                     success(function (data, status) {
-                        defer.resolve({ "reponseData": data});
+                        defer.resolve({ "responseData": data});
                     });
                 return defer.promise;
                 },
@@ -89,7 +93,7 @@ barcoApp.factory('assetService',['$http', '$q', '$rootScope', function ($http, $
                     var defer = $q.defer();
                     $http.get(angular.getAppSection('hospital').list).
                         success(function (data, status) {
-                            defer.resolve({ "reponseData": data});
+                            defer.resolve({ "responseData": data});
                         });
                     return defer.promise;
                 },
@@ -98,9 +102,11 @@ barcoApp.factory('assetService',['$http', '$q', '$rootScope', function ($http, $
                 getLocationsByHospital: function (hospitalId) {
 
                     var defer = $q.defer();
-                    $http.get('http://localhost:3000/locations/getByHospital/'+hospitalId).
+                    //var url =
+                    //$http.get('http://localhost:3000/locations/getByHospital/'+hospitalId).
+                    $http.get(angular.getAppSection('location').getByHospital + hospitalId).
                         success(function (data, status) {
-                            defer.resolve({ "reponseData": data});
+                            defer.resolve({ "responseData": data});
                         });
                     return defer.promise;
                     //return assetList.assets;
@@ -109,9 +115,10 @@ barcoApp.factory('assetService',['$http', '$q', '$rootScope', function ($http, $
                 getHierachiesByLocation: function (locationId) {
 
                     var defer = $q.defer();
-                    $http.get('http://localhost:3000/hierarchies/getByLocation/'+locationId).
+                    //$http.get('http://localhost:3000/hierarchies/getByLocation/'+locationId).
+                    $http.get(angular.getAppSection('hierarchy').getByLocation + locationId).
                         success(function (data, status) {
-                            defer.resolve({ "reponseData": data});
+                            defer.resolve({ "responseData": data});
                         });
                     return defer.promise;
                     //return assetList.assets;

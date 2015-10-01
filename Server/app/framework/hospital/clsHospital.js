@@ -1,4 +1,5 @@
 var baseframework = require('../common/baseMongoose');
+var Q = require('q');
 
 var hospitalSchema = new baseframework.mongoose.Schema({name: String, address: String});
 var hospitalModel = baseframework.mongoose.model('Hospital', hospitalSchema);
@@ -41,88 +42,83 @@ var clsHospital  = {
         res.end();
         //mongoose.connection.close();
     },
-    getAll : function(res){
+    getAll : function(){
         console.log('GetAll executed');
+        var defer = Q.defer();
         this.connectDB();
         hospitalModel.find({},function(err,docs){
             console.log('dataFetch');
-            res.json(docs);
-            res.end();
+            defer.resolve(docs);
         });
+        return defer.promise;
     },
-    getById : function(id,res, next){
+    getById : function(id){
         console.log('Get by Name executed');
         this.connectDB();
-        /*
-         hospitalModel.find({name:hospitalName},function(err,docs){
-         res.json(docs);
-         res.end();
-         });
-         */
+        var defer = Q.defer();
         hospitalModel.findById(id,
             function (err, data) {
-                if (err) return next(err);
-                res.json(data);
-                res.end();
+                if (err) {
+                    throw err;
+                }
+                defer.resolve(data);
             }
         );
+        return defer.promise;
     },
-    deleteById :function(id,res, next){
+    deleteById :function(id){
         console.log('Delete by Name executed');
         this.connectDB();
-        /*
-         hospitalModel.splice({name:hospitalName},function(err,docs){
-         res.json(baseframework.statusOk);
-         res.end();
-         });
-         */
+        var defer = Q.defer();
         hospitalModel.findByIdAndRemove(id,
             function (err, post) {
-                if (err) return next(err);
-                res.json(baseframework.statusOk);
-                res.end();
+                if (err) {
+                    throw err;
+                }
+                defer.resolve(baseframework.statusOk);
             }
         );
-
+        return defer.promise;
     },
     add :function(hospital, res, next){
+        var defer = Q.defer();
         console.log('Add new Hospital');
         if((hospital) && (hospital.name.length) && hospital.name.length > 0 && (hospital.address) && hospital.address.length > 0){
             this.connectDB();
-            //hospitalModel.create(hospital);
             hospitalModel.create(hospital,
                 function (err, post) {
-                    if (err) return next(err);
-                    res.json(baseframework.statusOk);
-                    res.end();
+                    if (err) {
+                        throw err;
+                    }
+                    defer.resolve(baseframework.statusOk);
                 }
             );
-            //res.json(framework.statusOk);
         }else{
-            res.json(baseframework.statusError);
-            res.end();
+            defer.resolve(baseframework.statusError);
         }
+
+        return defer.promise;
     },
-    update : function(id, hospital, res, next){
+    update : function(id, hospital){
+        var defer = Q.defer();
         console.log('Update existing hospital');
         //validate hospital
         if((hospital) && (hospital.name.length) && hospital.name.length > 0 && (hospital.address) && hospital.address.length > 0){
             this.connectDB();
-            //hospitalModel.push(hospital);
-
             hospitalModel.findByIdAndUpdate(id, hospital,
                 function (err, post) {
-                    if (err) return next(err);
-                    res.json(baseframework.statusOk);
-                    res.end();
+                    if (err) {
+                        throw err;
+                    }
+                    defer.resolve(baseframework.statusOk);
                 }
             );
 
         }else{
-            res.json(baseframework.statusError);
-            res.end();
+            defer.resolve(baseframework.statusError);
         }
 
+        return defer.promise;
     }
 };
 

@@ -1,4 +1,5 @@
 var baseframework = require('../common/baseMongoose');
+var Q = require('q');
 
 var locationSchema = new baseframework.mongoose.Schema({name: String, address: String, hospitalId : {type: baseframework.mongoose.Schema.Types.ObjectId, ref:'Hospital'}});
 var locationModel = baseframework.mongoose.model('Location', locationSchema);
@@ -38,77 +39,79 @@ var clsLocation  = {
         res.end();
         //mongoose.connection.close();
     },
-    getAll : function(res){
+    getAll : function(){
         console.log('GetAll executed');
         this.connectDB();
+        var defer = Q.defer();
         locationModel.find({}).populate('Hospital').exec(
             function (err, data) {
-                if (err) return next(err);
-                res.json(data);
-                res.end();
+                if (err) {
+                    throw err;
+                }
+                defer.resolve(data);
             });
-        /*locationModel.find({},function(err,docs){
-         docs.forEach(function(item){
-         hospitalModel.find({_id : item.hospitalId},function(err,hospital){
-         if((hospital) && hospital.length > 0){
-         item.Hospital = hospital[0];
-         }
-         });
-         });
-         res.json(docs);
-         res.end();
-         });*/
+        return defer.promise;
     },
-    getByHospitalId : function(id,res, next){
+    getByHospitalId : function(id){
         console.log('Get by Name executed');
         this.connectDB();
+        var defer = Q.defer();
         locationModel.find({hospitalId : id}).populate('Hospital').exec(
             function (err, data) {
-                if (err) return next(err);
-                res.json(data);
-                res.end();
+                if (err) {
+                    throw err;
+                }
+                defer.resolve(data);
             });
+        return defer.promise;
     },
-    getById : function(id,res, next){
+    getById : function(id){
         console.log('Get by Name executed');
         this.connectDB();
         locationModel.findById(id).populate('Hospital').exec(
             function (err, data) {
-                if (err) return next(err);
-                res.json(data);
-                res.end();
+                if (err) {
+                    throw err;
+                }
+                defer.resolve(data);
             });
+        return defer.promise;
     },
-    deleteById :function(id,res, next){
+    deleteById :function(id){
         console.log('Delete by Name executed');
         this.connectDB();
+        var defer = Q.defer();
         locationModel.findByIdAndRemove(id,
             function (err, post) {
-                if (err) return next(err);
-                res.json(baseframework.statusOk);
-                res.end();
+                if (err) {
+                    throw err;
+                }
+                defer.resolve(baseframework.statusOk);
             }
         );
-
+        return defer.promise;
     },
-    add :function(location, res, next){
+    add :function(location){
+        var defer = Q.defer();
         console.log('Add new Location');
-        if((location) && (location.name.length) && location.name.length > 0 && (location.address) && location.address.length > 0 && (location.hospital) && location.hospital.length > 0){
+        if((location) && (location.name.length) && location.name.length > 0 && (location.address) && location.address.length > 0 && (location.hospitalId) && location.hospitalId.length > 0){
             this.connectDB();
             locationModel.create(location,
                 function (err, post) {
-                    if (err) return next(err);
-                    res.json(baseframework.statusOk);
-                    res.end();
+                    if (err) {
+                        throw err;
+                    }
+                    defer.resolve(baseframework.statusOk);
                 }
             );
-            //res.json(statusOk);
         }else{
-            res.json(baseframework.statusError);
-            res.end();
+            defer.resolve(baseframework.statusError);
         }
+
+        return defer.promise;
     },
     update : function(id, location, res, next){
+        var defer = Q.defer();
         console.log('Update existing location');
         //validate hospital
         if((location) && (location.name.length) && location.name.length > 0 && (location.address) && location.address.length > 0 && (location.hospitalId) && location.hospitalId.length > 0){
@@ -117,11 +120,11 @@ var clsLocation  = {
 
             locationModel.findByIdAndUpdate(id, location,
                 function (err, post) {
-                    if (err) return next(err);
-                    res.json(baseframework.statusOk);
-                    res.end();
-                }
-            );
+                    if (err) {
+                        throw err;
+                    }
+                    defer.resolve(baseframework.statusOk);
+                });
 
         }else{
             res.json(baseframework.statusError);

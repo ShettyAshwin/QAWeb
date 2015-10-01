@@ -38,7 +38,7 @@
                             <td>
                                 <select id="ddlHospital" name="ddlHospital" style="width: 200px;" data-ng-model="ddlAssociatedHospital">
                                     <option value="-1">[Select Hospital]</option>
-                                    <option data-ng-repeat="hospital in hospitalList" value="{{hospital.Id}}">{{hospital.Name}}</option>
+                                    <option data-ng-repeat="hospital in hospitalList" value="{{hospital._id}}">{{hospital.name}}</option>
                                 </select>
                             </td>
                         </tr>
@@ -95,7 +95,7 @@
                             <td>
                                 <select id="ddlHospital" name="ddlHospital" style="width: 200px;" data-ng-model="ddlEditAssociatedHospital">
                                     <option value="-1">[Select Hospital]</option>
-                                    <option data-ng-repeat="hospital in hospitalList" value="{{hospital.Id}}">{{hospital.Name}}</option>
+                                    <option data-ng-repeat="hospital in hospitalList" value="{{hospital._id}}">{{hospital.name}}</option>
                                 </select>
                             </td>
                         </tr>
@@ -118,8 +118,8 @@
     <h4 style="color:#00f">Hospital Locations</h4>
 
     <select id="ddlHospitalFilter" name="ddlHospitalFilter" style="width: 200px;" data-ng-model="ddlFilteredHospital" ng-change="LoadHospitalLocations(ddlFilteredHospital)">
-        <option value="0">[Filter Hospital]</option>
-        <option data-ng-repeat="hospital in hospitalList" value="{{hospital.Id}}">{{hospital.Name}}</option>
+        <option value="-1">[Filter Hospital]</option>
+        <option data-ng-repeat="hospital in hospitalList" value="{{hospital._id}}">{{hospital.name}}</option>
     </select>
 
     <table>
@@ -133,7 +133,7 @@
             <td>{{location.address}}</td>
             <td>{{location.hospitalName}}<span style="display:none;">{{location.hospitalId}}</span></td>
             <td>
-                <a href="#" ng-click="EditHospitalLocation(location.id)">Edit</a>
+                <div style="text-decoration:underline;" ng-click="EditHospitalLocation(location._id)">Edit</div>
             </td>
         </tr>
     </table>

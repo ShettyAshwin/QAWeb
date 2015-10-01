@@ -1,19 +1,33 @@
-
-barcoApp.controller('hierarchyController', ['$scope', 'hierarchyService',
-    function ($scope, hierarchyService) {
+barcoApp.controller('hierarchyController', ['$scope', 'hierarchyService', 'locationService',
+    function ($scope, hierarchyService, locationService) {
+        $scope.ddlAssociatedLocation = "-1";
         $scope.getHierarchies = function () {
             hierarchyService.getHierarchyList().then(function (obj) {
+                alert(JSON.stringify(obj));
                 $scope.Hierarchies = obj.reponseData;
-                alert(JSON.stringify($scope.Hierarchies));
+
             });
+
         };
         $scope.getHierarchies();
+        $scope.getHospitalLocations = function () {
+            locationService.getHospitalLocations().then(function (obj) {
+
+                $scope.LocationList = obj.responseData;
+
+            });
+
+        }
+
+        $scope.getHospitalLocations();
+
 
         $scope.AddHierarchy = function () {
             var objHierarchy = $scope.Hierarchy;
-            alert(JSON.stringify($scope.Hierarchy));
+
             if ($scope.Hierarchy._id == null || $scope.Hierarchy._id == 0) {
-                hierarchyService.AddHierarchyDetail(objHierarchy).then(function (response) {
+                $scope.Hierarchy.locationId=$scope.ddlAssociatedLocation;
+                 hierarchyService.AddHierarchyDetail(objHierarchy).then(function (response) {
                     $scope.HierarchyId = response._id;
                     $scope.Hierarchy = null;
                     $scope.getHierarchies();
@@ -36,4 +50,5 @@ barcoApp.controller('hierarchyController', ['$scope', 'hierarchyService',
             });
             $scope.getHierarchies();
         };
+
     }]);

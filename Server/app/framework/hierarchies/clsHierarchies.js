@@ -61,7 +61,7 @@ var clsHierarchy  = {
     getByLocationId : function(id,res, next){
         console.log('Get by Name executed');
         this.connectDB();
-        hierarchyModel.find({locationId:Id}).populate('location').exec(
+        hierarchyModel.find({locationId:id}).populate('location').exec(
             function (err, data) {
                 if (err) return next(err);
                 res.json(data);

@@ -24,11 +24,12 @@ router.delete('/delete/:id', function(req, res, next) {
 
 router.post('/add',function(req, res, next){
     try{
-        console.log('In Add');
+        console.log('In Add 123');
         console.log(req.body);
         framework.clsHierarchy.add(req.body, res, next);
     }
     catch(ex){
+        console.log('In error');
         console.log(ex);
         res.json(framework.statusError);
         res.end();

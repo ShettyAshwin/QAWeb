@@ -3,153 +3,62 @@
  */
 barcoApp.service('locationService', ['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
     var locationService = {
-
-        getHospitalLocations: function (hospitalId) {
-            /*
+        /* Get all the hospital locations */
+        getHospitalLocations: function () {           
             var defer = $q.defer();
-            $http.get('data/hospital.json').
+            $http.get(angular.getAppSection('location').list).
                 success(function (data, status) {
-                    defer.resolve({ "reponseData": data });
+                    defer.resolve({ "responseData": data });
             });
-            return defer.promise;
-            */
-
-            var filteredLocations;
-            var defer = $q.defer();
-            var locationList = [
-                {
-                    "id": 1,
-                    "name": "Loc 1",
-                    "address": "Addr 1",
-                    "hospitalId": 0,
-                    "hospitalName": "Ruby",
-                },
-                {
-                    "id": 2,
-                    "name": "Loc 2",
-                    "address": "Addr 2",
-                    "hospitalId": 0,
-                    "hospitalName": "Ruby",
-                },
-                {
-                    "id": 3,
-                    "name": "Loc 3",
-                    "address": "Addr 3",
-                    "hospitalId": 1,
-                    "hospitalName": "Sahyadri",
-                },
-                {
-                    "id": 4,
-                    "name": "Loc 4",
-                    "address": "Addr 4",
-                    "hospitalId": 1,
-                    "hospitalName": "Sahyadri",
-                },
-                {
-                    "id": 5,
-                    "name": "Loc 5",
-                    "address": "Addr 5",
-                    "hospitalId": 1,
-                    "hospitalName": "Sahyadri",
-                }
-            ];
-
-            if (hospitalId === -1) {
-                filteredLocations = locationList;
-            }
-            else {
-                filteredLocations = locationList.filter(function (location) {
-                    return location.hospitalId === hospitalId
-                });
-            }
-
-            defer.resolve({ "responseData": filteredLocations });
             return defer.promise;
         },
 
+        /* Get hospital location details */
         getLocationDetails: function myfunction(locationId) {
             var defer = $q.defer();
-            var locationList = [
-                {
-                    "id": 1,
-                    "name": "Loc 1",
-                    "address": "Addr 1",
-                    "hospitalId": 0,
-                    "hospitalName": "Ruby",
-                },
-                {
-                    "id": 2,
-                    "name": "Loc 2",
-                    "address": "Addr 2",
-                    "hospitalId": 0,
-                    "hospitalName": "Ruby",
-                },
-                {
-                    "id": 3,
-                    "name": "Loc 3",
-                    "address": "Addr 3",
-                    "hospitalId": 1,
-                    "hospitalName": "Sahyadri",
-                },
-                {
-                    "id": 4,
-                    "name": "Loc 4",
-                    "address": "Addr 4",
-                    "hospitalId": 1,
-                    "hospitalName": "Sahyadri",
-                },
-                {
-                    "id": 5,
-                    "name": "Loc 5",
-                    "address": "Addr 5",
-                    "hospitalId": 1,
-                    "hospitalName": "Sahyadri",
-                }
-            ];
-
-            var filteredLocations = locationList.filter(function (location) {
-                return location.id === locationId
+            $http.get(angular.getAppSection('location').get + locationId).
+                success(function (data, status) {
+                    defer.resolve({ "responseData": data });
             });
-
-            if (filteredLocations) {
-                filteredLocations = filteredLocations[0];
-            }
-
-            defer.resolve({ "responseData": filteredLocations });
             return defer.promise;
         },
 
+        /* Add new hospital location */
         addHospitalLocation: function (location) {
-            var defer = $q.defer();
-            /*
-            $http.post('data/hospital.json', Hospital)
+            var defer = $q.defer();            
+            $http.post(angular.getAppSection('location').add, location)
                 .success(function (data, status) {
                     defer.resolve({ 'Success': true, 'Data': data, 'error': null, 'ErrorCode': status });
                 }).error(function (data, status) {
                     defer.resolve({ 'Success': false, 'Data': null, 'error': data, 'ErrorCode': status });
             });
-            */
-
-            defer.resolve({ 'statusCode': 200, 'result': 1 });
-
             return defer.promise;
         },
 
+        /* Update hospital location details */
         updateHospitalLocation: function (location) {
-            var defer = $q.defer();
-            /*
-            $http.post('data/hospital.json', Hospital)
+            var defer = $q.defer();       
+            $http.put(angular.getAppSection('location').update + location._id, location)
                 .success(function (data, status) {
                     defer.resolve({ 'Success': true, 'Data': data, 'error': null, 'ErrorCode': status });
                 }).error(function (data, status) {
                     defer.resolve({ 'Success': false, 'Data': null, 'error': data, 'ErrorCode': status });
-            });
-            */
+            });         
+            return defer.promise;
+        },
 
-            defer.resolve({ 'statusCode': 200, 'result': 1 });
-
+        /* Delete hospital location */
+        deleteHospitalLocation: function (location) {
+            var defer = $q.defer();       
+            $http.delete(angular.getAppSection('location').delete + location._id)
+                .success(function (data, status) {
+                    defer.resolve({ 'Success': true, 'Data': data, 'error': null, 'ErrorCode': status });
+                }).error(function (data, status) {
+                    defer.resolve({ 'Success': false, 'Data': null, 'error': data, 'ErrorCode': status });
+                });         
             return defer.promise;
         }
     };
+
     return locationService;
 }]);

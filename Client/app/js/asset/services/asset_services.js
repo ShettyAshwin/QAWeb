@@ -33,22 +33,12 @@ barcoApp.factory('assetService',['$http', '$q', '$rootScope', function ($http, $
                     return result;
                 },
 
-                updateAssetList: function(assets){
-                    this.assetList= assets;
-                    return true;
-                },
-                addToAssetList: function(asset){
-                    this.assetList.push(asset);
-                },
-
-                getAssetList: function(){
-                    return this.assetList;
-                },
-                getAssetsForLocation: function (hierarchy) {
+                getAssetsByHierarchy: function (hierarchyId) {
 
                     var defer = $q.defer();
                     //$http.get('data/assetsData.json').
-                   $http.get('http://localhost:3000/assets/getAll').
+                   //$http.get('http://localhost:3000/assets/getAll').
+                   $http.get('http://localhost:3000/assets/getAssetsByHierarchy/'+hierarchyId).
                         success(function (data, status) {
                             defer.resolve({ "reponseData": data});
                         });
@@ -89,6 +79,38 @@ barcoApp.factory('assetService',['$http', '$q', '$rootScope', function ($http, $
                         defer.resolve({ "reponseData": data});
                     });
                 return defer.promise;
+                },
+
+                getHospitalList: function () {
+                    var defer = $q.defer();
+                    $http.get(angular.getAppSection('hospital').list).
+                        success(function (data, status) {
+                            defer.resolve({ "reponseData": data});
+                        });
+                    return defer.promise;
+                },
+
+
+                getLocationsByHospital: function () {
+
+                    var defer = $q.defer();
+                    $http.get('http://localhost:3000/locations/getByHospital/'+hospitalId).
+                        success(function (data, status) {
+                            defer.resolve({ "reponseData": data});
+                        });
+                    return defer.promise;
+                    //return assetList.assets;
+                },
+
+                getHierachiesByLocation: function (locationId) {
+
+                    var defer = $q.defer();
+                    $http.get('http://localhost:3000/hierarchies/getByLocation/'+locationId).
+                        success(function (data, status) {
+                            defer.resolve({ "reponseData": data});
+                        });
+                    return defer.promise;
+                    //return assetList.assets;
                 }
             };
             return assetService;

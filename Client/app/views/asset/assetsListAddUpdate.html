@@ -80,6 +80,40 @@
                     </table>
                     </br>
                     </br>
+                    <h1>Select Hospital, Location and Hierarchy </h1>
+                    <table>
+                        <tr>
+                            <td>
+                                Select Hospital
+                            </td>
+                            <td>
+                                <select id="ddlHospitals" name="" data-ng-model="ddlHospital" data-ng-options="hosp._id as hosp.name for hosp in hospitalList" data-ng-change="getLocationsByHospital()">
+                                    <option value="" ></option>
+                               </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Select Location
+                            </td>
+                            <td>
+                                <select id="ddlLocations" name="" data-ng-model="ddlLocations" data-ng-options="loc._id as loc.name for loc in locationList" data-ng-change="getHierachiesByLocation()">
+                                    <option value="" ></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Select Hierarchy
+                            </td>
+                            <td>
+                                <select id="ddlSelectHierarchy" name="" data-ng-model="ddlSelectHierarchy" data-ng-options="hi._id as hi.name for hi in hierarchyList" data-ng-change="displayAssetsList()">
+                                    <option value="" ></option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <span></span> <span>  </span>
                     <h1>Assets List</h1>
                     <table border="1">
                         <tr>
@@ -102,7 +136,8 @@
                                 </table>
                             </td>
                             <td>
-                            <a href="#" ng-click="getAssetById(a._id)">Edit</a>
+
+                            <div ng-click="getAssetById(a._id)">Edit</div>
                             </td>
 
                         </tr>

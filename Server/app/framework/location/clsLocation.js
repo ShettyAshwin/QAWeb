@@ -127,10 +127,9 @@ var clsLocation  = {
                 });
 
         }else{
-            res.json(baseframework.statusError);
-            res.end();
+            defer.resolve(baseframework.statusError);
         }
-
+        return defer.promise;
     }
 };
 

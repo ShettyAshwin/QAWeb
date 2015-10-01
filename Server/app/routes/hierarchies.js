@@ -7,26 +7,41 @@ router.get('/addDummy', function(req, res, next) {
 });
 
 router.get('/getAll', function(req, res, next) {
-    framework.clsHierarchy.getAll(res);
+    framework.clsHierarchy.getAll().then(function(data){
+        res.json(data);
+        res.end();
+    });
 });
 
 router.get('/get/:id', function(req, res, next) {
-    framework.clsHierarchy.getById(req.params.id, res, next);
+    framework.clsHierarchy.getById(req.params.id).then(function(data){
+        res.json(data);
+        res.end();
+    });
 });
 
 router.get('/getByLocation/:id', function(req, res, next) {
-    framework.clsHierarchy.getByLocationId(req.params.id, res, next);
+    framework.clsHierarchy.getByLocationId(req.params.id).then(function(data){
+        res.json(data);
+        res.end();
+    });
 });
 
 router.delete('/delete/:id', function(req, res, next) {
-    framework.clsHierarchy.deleteById(req.params.id, res, next);
+    framework.clsHierarchy.deleteById(req.params.id).then(function(data){
+        res.json(data);
+        res.end();
+    });
 });
 
 router.post('/add',function(req, res, next){
     try{
         console.log('In Add 123');
         console.log(req.body);
-        framework.clsHierarchy.add(req.body, res, next);
+        framework.clsHierarchy.add(req.body).then(function(data){
+            res.json(data);
+            res.end();
+        });
     }
     catch(ex){
         console.log('In error');
@@ -40,11 +55,14 @@ router.put('/update/:id',function(req, res, next){
     try{
         console.log('In Update');
         console.log(req.body);
-        framework.clsHierarchy.update(req.params.id, req.body, res, next);
+        framework.clsHierarchy.update(req.params.id, req.body).then(function(data){
+            res.json(data);
+            res.end();
+        });
     }
     catch(ex){
         console.log(ex);
-        res.json(statusError);
+        res.json(framework.statusError);
         res.end();
     }
 

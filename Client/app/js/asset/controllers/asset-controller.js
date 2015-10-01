@@ -1,8 +1,8 @@
 /**
  * Created by petkarp on 9/28/15.
  */
-barcoApp.controller('assetController', ['$scope', 'assetService',
-    function ($scope, assetService) {
+barcoApp.controller('assetController', ['$scope', '$location','assetService',
+    function ($scope, $location,assetService) {
 
         $scope.newAsset = {};
         $scope.hierarchyList = [{_id: "H1",name :'hierarchy1'}, {_id: "H2",name :'hierarchy2'}, {_id: "H3",name :'hierarchy3'}  ];
@@ -13,8 +13,8 @@ barcoApp.controller('assetController', ['$scope', 'assetService',
         $scope.assetproperties.push({"name":"", "value":""});
 
 
-        $scope.getAssetsForLocation = function (data) {
-            assetService.getAssetsForLocation(data).then(function (obj) {
+        $scope.getAssetsForHierarchy = function (data) {
+            assetService.getAssetsForHierarchy(data).then(function (obj) {
                 $scope.assets = obj.reponseData;
 
 
@@ -22,7 +22,7 @@ barcoApp.controller('assetController', ['$scope', 'assetService',
 
             //assetService.updateAssetList($scope.assets);
         };
-        $scope.getAssetsForLocation($scope.hierarchy);
+        $scope.getAssetsForHierarchy($scope.hierarchy);
 
         $scope.getSelectedHierarchy = function (hierarchyId) {
             return  $scope.hierarchyList.filter(function (element) {
@@ -52,12 +52,12 @@ barcoApp.controller('assetController', ['$scope', 'assetService',
             {
                 assetService.addAsset($scope.asset).then(function (response) {
                     $scope.clear();
-                    $scope.getAssetsForLocation($scope.hierarchyList[0]);
+                    $scope.getAssetsForHierarchy($scope.hierarchyList[0]);
                 });
             }else
             {
                 assetService.updateAsset($scope.asset).then(function (response) {
-                    $scope.getAssetsForLocation($scope.hierarchyList[0]);
+                    $scope.getAssetsForHierarchy($scope.hierarchyList[0]);
                 });
             }
 
@@ -80,7 +80,9 @@ barcoApp.controller('assetController', ['$scope', 'assetService',
             assetService.getAssetById(id).then(function(obj){
                 $scope.asset = obj.reponseData;
                 $scope.afterGetAsset();
+                //$location.url("/Assets/" + $scope.asset._id);
             });
+
         };
 
         $scope.afterGetAsset =function(){

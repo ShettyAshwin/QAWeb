@@ -17,7 +17,7 @@ barcoApp.controller('assetController', ['$scope', 'assetService',
             assetService.getAssetsForLocation(data).then(function (obj) {
                 $scope.assets = obj.reponseData;
 
-                //console.log(obj.reponseData[0].name);
+
             });
 
             //assetService.updateAssetList($scope.assets);

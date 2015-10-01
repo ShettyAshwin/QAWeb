@@ -124,9 +124,12 @@ var clsHospital  = {
         console.log('Get Hospital Tree');
         var defer = Q.defer();
         this.connectDB();
-        baseModel.hospitalModel.find({}).populate('LocationId').populate('hierarchyId').exec(function(err, docs){
-            console.log(docs);
-            defer.resolve(docs);
+        baseModel.hospitalModel.find({}).populate('LocationId').exec(function(err, docs){
+            baseModel.hierarchyModel.populate(docs,'LocationId.hierarchyId',function(err, hier){
+                baseModel.assetModel.populate(hier,'LocationId.hierarchyId.assertId',function(err, asset){
+                    defer.resolve(docs);
+                });
+            });
         });
         return defer.promise;
     }

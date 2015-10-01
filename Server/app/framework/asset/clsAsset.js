@@ -1,5 +1,6 @@
 var baseframework = require('../common/baseMongoose');
 var baseModel = require('../common/baseSchema');
+var Q = require('q');
 
 var clsAsset  = {
     connectDB : function(){
@@ -39,58 +40,80 @@ var clsAsset  = {
         res.end();
         
     },
-    getAll : function(res){
+    getAll : function(){
+        var defer = Q.defer();
         console.log('GetAll executed');
         this.connectDB();
         baseModel.assetModel.find({},function(err,docs){
             console.log('dataFetch');
-            res.json(docs);
-            res.end();
+            defer.resolve(docs);
         });
+
+        return defer.promise;
     },
-    getById : function(id,res, next){
+    getById : function(id){
+        var defer = Q.defer();
         console.log('Get by Name executed');
         this.connectDB();
         baseModel.assetModel.findById(id,
             function (err, data) {
-                if (err) return next(err);
-                res.json(data);
-                res.end();
+                if (err) {
+                    throw err;
+                }
+                defer.resolve(data);
             }
         );
+        return defer.promise;
     },
-    deleteById :function(id,res, next){
+    deleteById :function(id){
+        var defer = Q.defer();
         console.log('Delete by Name executed');
         this.connectDB();
         
         baseModel.assetModel.findByIdAndRemove(id,
             function (err, post) {
-                if (err) return next(err);
-                res.json(baseframework.statusOk);
-                res.end();
+                if (err) {
+                    throw err;
+                }
+                defer.resolve(baseframework.statusOk);
             }
         );
+        return defer.promise;
 
     },
-    add :function(asset, res, next){
+    add :function(asset){
+        var defer = Q.defer();
         console.log('Add new asset');
-        if((asset) && (asset.name.length) && asset.name.length > 0){
+        var defer = Q.defer();
+        if((asset) && (asset.name.length) && asset.name.length > 0 && (asset.hierarchyId) && asset.hierarchyId.length > 0){
             this.connectDB();
             //baseModel.assetModel.create(asset);
             baseModel.assetModel.create(asset,
                 function (err, post) {
-                    if (err) return next(err);
-                    res.json(baseframework.statusOk);
-                    res.end();
+                    if (err) {
+                        throw err;
+                    }else{
+                        baseModel.hierarchyModel.findByIdAndUpdate(asset.hierarchyId,{$push : {assertId : post._id}},{safe: true, upsert: true},
+                            function(err, model) {
+                                if (err) {
+                                    throw err;
+                                }else{
+                                    defer.resolve(baseframework.statusOk);
+                                }
+                            });
+                    }
+
                 }
             );
             //res.json(statusOk);
         }else{
-            res.json(baseframework.statusError);
-            res.end();
+            defer.resolve(baseframework.statusError);
         }
+
+        return defer.promise;
     },
-    update : function(id, asset, res, next){
+    update : function(id, asset){
+        var defer = Q.defer();
         console.log('Update existing asset');
         //validate asset
         if((asset) && (asset.name.length) && asset.name.length > 0 ){
@@ -99,27 +122,32 @@ var clsAsset  = {
 
             baseModel.assetModel.findByIdAndUpdate(id, asset,
                 function (err, post) {
-                    if (err) return next(err);
-                    res.json(baseframework.statusOk);
-                    res.end();
+                    if (err) {
+                        throw err;
+                    }
+                    defer.resolve(baseframework.statusOk);
                 }
             );
 
         }else{
-            res.json(baseframework.statusError);
-            res.end();
+            defer.resolve(baseframework.statusError);
         }
 
+        return defer.promise;
     },
-    getByHierarchyId : function(id,res, next){
+    getByHierarchyId : function(id){
+        var defer = Q.defer();
         console.log('Get by Name executed');
         this.connectDB();
         baseModel.assetModel.find({hierarchyId:id}).populate('Hierarchy').exec(
             function (err, data) {
-                if (err) return next(err);
-                res.json(data);
-                res.end();
-            });
+                if (err) {
+                    throw err;
+                }
+                defer.resolve(data);
+            }
+        );
+        return defer.promise;
     }
 };
 

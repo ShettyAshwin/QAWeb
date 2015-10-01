@@ -5,24 +5,21 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
     function ($scope, $location,assetService) {
 
         $scope.newAsset = {};
-        $scope.hierarchyList = [{_id: "H1",name :'hierarchy1'}, {_id: "H2",name :'hierarchy2'}, {_id: "H3",name :'hierarchy3'}  ];
+        //$scope.hierarchyList = [{_id: "H1",name :'hierarchy1'}, {_id: "H2",name :'hierarchy2'}, {_id: "H3",name :'hierarchy3'}  ];
 
-        $scope.hierarchy = $scope.hierarchyList[0];
+       // $scope.hierarchy = $scope.hierarchyList[0];
         $scope.asset= {};
         $scope.assetproperties= [];
         $scope.assetproperties.push({"name":"", "value":""});
 
 
-        $scope.getAssetsForHierarchy = function (data) {
-            assetService.getAssetsForHierarchy(data).then(function (obj) {
+        $scope.getAssetsByHierarchy = function (data) {
+            assetService.getAssetsByHierarchy(data).then(function (obj) {
                 $scope.assets = obj.reponseData;
-
-
             });
-
-            //assetService.updateAssetList($scope.assets);
         };
-        $scope.getAssetsForHierarchy($scope.hierarchy);
+
+
 
         $scope.getSelectedHierarchy = function (hierarchyId) {
             return  $scope.hierarchyList.filter(function (element) {
@@ -34,7 +31,7 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
 
             $scope.asset.properties = [];
             $scope.asset.properties= $scope.assetproperties;
-            $scope.asset.hierarchy =  $scope.getSelectedHierarchy ( $scope.ddlhierarchy) ;
+            $scope.asset.hierarchyId =  $scope.getSelectedHierarchy ( $scope.ddlhierarchy) ;
 
             //Verify Object
             result = assetService.validateAsset($scope.asset);
@@ -87,17 +84,16 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
 
         $scope.afterGetAsset =function(){
             $scope.assetproperties = $scope.asset.properties;
-            if ($scope.asset.hierarchy)
+            if ($scope.asset.hierarchyId)
             {
-                $scope.ddlhierarchy = $scope.getSelectedHierarchy($scope.asset.hierarchy._id);
+                $scope.ddlhierarchy = $scope.getSelectedHierarchy($scope.asset.hierarchyId);
             }
             else
             {
-                $scope.hierarchy = $scope.hierarchyList[0];
+                //$scope.hierarchyId = $scope.hierarchyList[0];
             }
             return $scope.asset;
-        },
-
+        };
 
         $scope.addProperty = function(){
             $scope.assetproperties.push({"name":"", "value":""});
@@ -114,9 +110,35 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
             $scope.assetproperties = [];
             $scope.assetproperties.push({"name":"", "value":""});
             $scope.ddlhierarchy ={};
-        }
+        };
 
+        $scope.getHospitalList = function (){
+            $scope.hospitalList = [{"_id":"1", "name": "Hospital1"}, {"_id":"2", "name": "Hospital2"}];
+            /*assetService.getHospitalList().then(function (obj) {
+                $scope.hospitalList = obj.reponseData;
+            });*/
+        };
 
+        $scope.getLocationsByHospital = function (){
+            // alert ($scope.ddlHospital);
+            $scope.locationList = [{"_id":"1", "name": "Location1"}, {"_id":"2", "name": "Location2"}];
+            /*assetService.getLocationsByHospital($scope.ddlHospital).then(function (obj) {
+                $scope.locationList = obj.reponseData;
+            });*/
+        };
 
+        $scope.getHierachiesByLocation = function (){
+            // alert ($scope.ddlHospital);
+            $scope.hierarchyList = [{_id: "H1",name :'hierarchy1'}, {_id: "H2",name :'hierarchy2'}, {_id: "H3",name :'hierarchy3'}  ];
+            /*assetService.getHierachiesByLocation().then(function (obj) {
+             $scope.hierarchyList = obj.reponseData;
+             });*/
+        };
+        $scope.displayAssetsList = function(){
+
+            $scope.getAssetsByHierarchy($scope.ddlSelectHierarchy);
+        };
+
+        $scope.getHospitalList();
 
     }]);

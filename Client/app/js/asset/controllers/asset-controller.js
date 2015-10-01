@@ -113,26 +113,26 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
         };
 
         $scope.getHospitalList = function (){
-            $scope.hospitalList = [{"_id":"1", "name": "Hospital1"}, {"_id":"2", "name": "Hospital2"}];
-            /*assetService.getHospitalList().then(function (obj) {
+            //$scope.hospitalList = [{"_id":"1", "name": "Hospital1"}, {"_id":"2", "name": "Hospital2"}];
+            assetService.getHospitalList().then(function (obj) {
                 $scope.hospitalList = obj.reponseData;
-            });*/
+            });
         };
 
         $scope.getLocationsByHospital = function (){
             // alert ($scope.ddlHospital);
-            $scope.locationList = [{"_id":"1", "name": "Location1"}, {"_id":"2", "name": "Location2"}];
-            /*assetService.getLocationsByHospital($scope.ddlHospital).then(function (obj) {
+            //$scope.locationList = [{"_id":"1", "name": "Location1"}, {"_id":"2", "name": "Location2"}];
+            assetService.getLocationsByHospital($scope.ddlHospital).then(function (obj) {
                 $scope.locationList = obj.reponseData;
-            });*/
+            });
         };
 
         $scope.getHierachiesByLocation = function (){
             // alert ($scope.ddlHospital);
-            $scope.hierarchyList = [{_id: "H1",name :'hierarchy1'}, {_id: "H2",name :'hierarchy2'}, {_id: "H3",name :'hierarchy3'}  ];
-            /*assetService.getHierachiesByLocation().then(function (obj) {
+            //$scope.hierarchyList = [{_id: "H1",name :'hierarchy1'}, {_id: "H2",name :'hierarchy2'}, {_id: "H3",name :'hierarchy3'}  ];
+            assetService.getHierachiesByLocation($scope.ddlLocation).then(function (obj) {
              $scope.hierarchyList = obj.reponseData;
-             });*/
+             });
         };
         $scope.displayAssetsList = function(){
 

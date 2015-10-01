@@ -38,7 +38,7 @@ barcoApp.factory('assetService',['$http', '$q', '$rootScope', function ($http, $
                     var defer = $q.defer();
                     //$http.get('data/assetsData.json').
                    //$http.get('http://localhost:3000/assets/getAll').
-                   $http.get('http://localhost:3000/assets/getAssetsByHierarchy/'+hierarchyId).
+                   $http.get('http://localhost:3000/assets/getByHierarchy/'+hierarchyId).
                         success(function (data, status) {
                             defer.resolve({ "reponseData": data});
                         });
@@ -91,7 +91,7 @@ barcoApp.factory('assetService',['$http', '$q', '$rootScope', function ($http, $
                 },
 
 
-                getLocationsByHospital: function () {
+                getLocationsByHospital: function (hospitalId) {
 
                     var defer = $q.defer();
                     $http.get('http://localhost:3000/locations/getByHospital/'+hospitalId).

@@ -1,150 +1,109 @@
 <div data-ng-controller="assetController">
 
     <form name="assetForm" novalidate>
-        <span> <h1>Asset Details</h1> </span>
-        <table >
-            <tr>
-                <td>
-                    <table >
-                        <tr>
-                            <td>
-                                <span>Id</span>
-                            </td>
-                            <td>
-                                <input type="text" id="assetId"  ng-model="asset._id" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>Name</span>
-                            </td>
-                            <td>
-                                <input type="text" id="assetName"  ng-model="asset.name" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>Hierarchy Name</span>
-                            </td>
-                            <td>
-                               <!--<input type="text" id="assetLocation"  ng-model="asset.hierarchy.name" />-->
-                                <select id="ddlhierarchy" name="" data-ng-model="ddlhierarchy" data-ng-options="h._id as h.name for h in hierarchyList">
-                                    <!--<option value="1">h1</option>
-                                    <option value="2">h2</option>-->
-                                    <option value="" ></option>
+
+        <div class="formcontent">
+            <form class="hmsform">
+                <legend>Asset Details</legend>
+                <fieldset>
+                    <ul>
+                        <!--<li>
+                             <label>ID:<span class="required">*</span> </label>
+                             <div class="col-md-4">
+                             <input id="id_req" name="id_req" placeholder="Name" class="form-control input-md" type="text">
+                             </div>
+                        </li>-->
+                        <li>
+                            <label>Name:<span class="required">*</span> </label>
+                            <div class="col-md-4">
+                                <input id="id_req" name="id_req" placeholder="Name" class="form-control input-md" type="text">
+                            </div>
+                        </li>
+                        <li>
+                            <label>Hierarchy Name:<span class="required">*</span> </label>
+                            <div class="col-md-4">
+                                <div class="selectbox">
+                                    <select id="ddlhierarchy" class="form-control col-md-4" data-ng-model="ddlhierarchy" data-ng-options="h._id as h.name for h in hierarchyList">
+                                        <option value="" selected=""></option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <label><strong>Properties:</strong><span class="required">*</span> </label>
+                        </li>
+                        <li data-ng-repeat="prop in assetproperties">
+                            <label>Property {{$index+1}}:<span class="required">*</span> </label>
+                            <div>
+                                <input type="text" id="propertyname"  placeholder="name" ng-model="prop.name">
+                                <input type="text" id="propertyvalue" placeholder="value" ng-model="prop.value">
+                            </div>
+                            <input type="button" id="removeProperty" value="RemoveProperty" ng-click="removeProperty($index)" class="icndelete icons removerow">
+                        </li>
+                        <li class="buttons mrgtop">
+                            <div class="fltright"><input type="button" id="addProperty" value="+ AddProperty" ng-click="addProperty()" class="button addbutton"></div>
+                        </li>
+                        <li class="buttons">
+                            <input type="submit" value="Cancel" class="button">
+                            <input type="submit" value="Save" class="button">
+                        </li>
+                    </ul>
+                </fieldset>
+            </form>
+            <hr/>
+
+            <div class="datatable">
+                <div class="fltright">
+                    <ul class="filters">
+                        <li>
+                            <label class="label">Select Hospital</label>
+                            <div class="selectbox fltright">
+                                <select class="form-control col-md-4" id="ddlHospitals" name="" data-ng-model="ddlHospital" data-ng-options="hosp._id as hosp.name for hosp in hospitalList" data-ng-change="getLocationsByHospital()">
+                                    <option value="All" selected=""></option>
+
                                 </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <span>Properties</span>
-                            </td>
+                            </div>
+                        </li>
+                        <li>
+                            <label class="label">Select Location</label>
+                            <div class="selectbox fltright">
+                                <select class="form-control col-md-4" id="ddlLocations" name="" data-ng-model="ddlLocation" data-ng-options="loc._id as loc.name for loc in locationList" data-ng-change="getHierachiesByLocation()">
+                                    <option value="" selected=""></option>
 
-                        </tr>
-                        <tr data-ng-repeat="prop in assetproperties">
-                            <td> Property {{$index+1}}</td>
-                            <td > <input type="text" id="propertyname1" placeholder="name" ng-model="prop.name" /></td>
-
-                            <td ><input type="text" id="propertyvalue1" placeholder="value" ng-model="prop.value" /></td>
-
-                            <td><input type="button" id="removeProperty" value="RemoveProperty" ng-click="removeProperty($index)" /></td>
-
-                        </tr>
-                        <!--<tr>
-                            <td> Property2</td>
-                            <td> <input type="text" id="propertyname2" placeholder="name" ng-model="propertyname2" /></td>
-                            <td><input type="text" id="propertyvalue2" placeholder="value" ng-model="propertyvalue2" /></td>
-                        </tr>-->
-                        <tr>
-                            <td>
-                                </br>
-                            </td>
-                        </tr>
-                        <tr>
-                            </br>
-                            <td>
-
-                                <input type="button" id="new" value="Clear Values" ng-click="clear()" />
-                            </td>
-                            <td>
-                                <input type="submit" id="save" value="Save" ng-click="addAsset()"  />
-                            </td>
-                            <td>
-                                <input type="button" id="addProperty" value="AddProperty" ng-click="addProperty()" />
-                            </td>
-
-
-
-
-                        </tr>
-                    </table>
-                    </br>
-                    </br>
-                    <h1>Select Hospital, Location and Hierarchy </h1>
-                    <table>
-                        <tr>
-                            <td>
-                                Select Hospital
-                            </td>
-                            <td>
-                                <select id="ddlHospitals" name="" data-ng-model="ddlHospital" data-ng-options="hosp._id as hosp.name for hosp in hospitalList" data-ng-change="getLocationsByHospital()">
-                                    <option value="" ></option>
-                               </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Select Location
-                            </td>
-                            <td>
-                                <select id="ddlLocations" name="" data-ng-model="ddlLocations" data-ng-options="loc._id as loc.name for loc in locationList" data-ng-change="getHierachiesByLocation()">
-                                    <option value="" ></option>
                                 </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Select Hierarchy
-                            </td>
-                            <td>
-                                <select id="ddlSelectHierarchy" name="" data-ng-model="ddlSelectHierarchy" data-ng-options="hi._id as hi.name for hi in hierarchyList" data-ng-change="displayAssetsList()">
-                                    <option value="" ></option>
+                            </div>
+                        </li>
+                        <li>
+                            <label class="label">Select Hierarchy</label>
+                            <div class="selectbox fltright">
+                                <select class="form-control col-md-4" id="ddlSelectHierarchy" name="" data-ng-model="ddlSelectHierarchy" data-ng-options="hi._id as hi.name for hi in hierarchyList" data-ng-change="displayAssetsList()">
+                                    <option value="" selected=""></option>
+
                                 </select>
-                            </td>
-                        </tr>
-                    </table>
-                    <span></span> <span>  </span>
-                    <h1>Assets List</h1>
-                    <table border="1">
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>HierarchyName</th>
-                            <th> Properties</th>
-                        </tr>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th>Name</th>
+                        <th>Properties</th>
+                        <th width="80px"></th>
+                    </tr>
+                    <tr ng-repeat="a in assets ">
+                        <td>{{a.name}}</td>
+                        <table>
+                            <tr ng-repeat="p in a.properties">
+                                <td>{{p.name}}</td>
+                                <td>{{p.value}}</td>
+                            </tr>
+                        </table>
+                        <td><div  class="icnedit icons" ng-click="getAssetById(a._id)">Edit</div> <div class="icndelete icons">Delete</div> </td>
+                    </tr>
 
-                        <tr ng-repeat="a in assets ">
-                            <td>{{a._id}}</td>
-                            <td>{{a.name}}</td>
-                            <td>{{a.hierarchy.name}}</td>
-                            <td>
-                                <table>
-                                <tr ng-repeat="p in a.properties">
-                                    <td>{{p.name}}</td>
-                                    <td>{{p.value}}</td>
-                                </tr>
-                                </table>
-                            </td>
-                            <td>
-
-                            <div ng-click="getAssetById(a._id)">Edit</div>
-                            </td>
-
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-
+                </table>
+            </div>
+        </div>
     </form>
 </div>

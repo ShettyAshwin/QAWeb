@@ -39,12 +39,12 @@ describe('hospital',function(){
             it('Should test AddHospital Method which is used add hospital details',function(){
                 var tempObj =  fakeScope.Hospital;
                 tempObj._id = null;
+                httpBackend.when('GET',angular.getAppSection('hospital').list).respond(tempObj);
+                httpBackend.expectPOST(angular.getAppSection('hospital').add).respond(500,tempObj);
                 fakehospitalService.AddHospitalDetail(tempObj).then(function(response){
-                    fakeScope.HospitalId = response._id;
-                    fakeScope.Hospital = null;
-                    fakeScope.getHospital();
-                    expect(response.Data.name).toBe(fakeScope.Hospital.name);
+                    expect(response.error.name).toBe(fakeScope.Hospital.name);
                 });
+                httpBackend.flush();
                 var tempObjUpdate =  fakeScope.Hospital;
                 //httpBackend.expectPUT(angular.getAppSection('hospital').update+'1').respond(500,tempObj);
                 fakehospitalService.UpdateHospitalDetail(fakeScope.Hospital).then(function(response){

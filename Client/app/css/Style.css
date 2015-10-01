@@ -5,7 +5,9 @@ html {
 	font-family:Arial, Helvetica, sans-serif;
 }
 body { 
-    min-height:100%;padding:0px;margin:0;font-family:Arial, Helvetica, sans-serif;
+    min-height:100%;padding:0px;margin:0;
+	font-size:12px;
+    font-family:Arial, Helvetica, sans-serif;
 }
 .container{height: 92.7%;position: absolute;width: 100%;}
 header{height:70px; background:#ed1b24;padding:0 25px;}
@@ -14,10 +16,12 @@ nav{width:225px; background:#252932;float:left;height: 100%;}
 .maincontent{background:#fff;min-height: 100%; background:#fff;margin-left: 225px;}
 .fltright{float:right;}
 .fltleft{float:left;}
+.clearboth{clear:both;}
 .formcontent{padding:35px;}
+.mrgtop{margin-top: -17px;}
 nav ul{padding:0px;}
 nav li{display:block;height:33px; background:#55585f;line-height: 33px;border-bottom:solid 1px #000;}
-nav li a{color:#acadb1; text-decoration:none;padding-left: 17px;}
+nav li a{color:#acadb1; text-decoration:none;padding-left: 17px;font-size:14px;}
 nav li a:hover{color:#fff;}
 nav li.selected a{color:#fff;}
 nav li span{width:6px;float:left;height: 100%;}
@@ -25,13 +29,14 @@ nav li.selected span{width:6px; background:#e7201d;float:left;height: 100%;}
 
 fieldset{ min-width:0;padding:0;border:0;margin:0;}
 .hmsform{font-size:1.333em;}
-.hmsform label{float:left;width:160px;}
+.hmsform label{float:left;width:180px;}
 .label{float:left;margin:15px 8px 0 0;}
 .hmsform li{display: flex;margin-bottom:15px;line-height: 40px;}
 .hmsform li:last-child{margin-bottom:0px;}
 input[type="text"], select{padding:10px;border:solid 1px #cbcbcb;color:#6b6b6b;font-size:16px;}
-.button{padding:10px;border:solid 0px #c2d6e7;color:#fff; font-size:14px;background:#828282;font-weight:bold; margin-right: 5px;border-radius:8px; cursor:pointer;}
-.buttons{margin-left:160px;}
+.button{padding:10px;border:solid 0px #c2d6e7;color:#fff; font-size:14px;background:#828282;font-weight:bold; margin-right: 5px;cursor:pointer;}
+.buttons{margin-left:180px;}
+.addbutton{font-size:12px; background:#4bb0bc;margin-top:-8px;}
 .selectbox{width:217px;}
 .selectbox select {
     width: 100%!important;
@@ -61,6 +66,16 @@ legend {
 .datatable th { background:#fafafa;color:#343434;border-bottom:solid 0px #cdcdcd;border-right:solid 1px #cdcdcd;text-transform:uppercase; font-weight:bold;font-size:14px;}
 .datatable th a{color:#78a1c4; }
 .datatable td {color:#6b6b6b;border-top:solid 1px #cdcdcd;border-right:solid 1px #cdcdcd;}
+.icons{border:0px;}
 .icnedit{background:url(../images/icnedit.png); width:15px;height:15px; float:left;text-indent:-99999px;margin-left:20px;}
 .icndelete{background:url(../images/icndelete.png); width:12px;height:13px; float:left;text-indent:-99999px;margin-left:20px;}
+.removerow{margin-top:15px;}
 /*Data Table CSS End*/
+
+ul.filters{overflow:hidden;}
+ul.filters li{float:left;margin-left:25px; list-style:none;}
+ul.filters .selectbox {
+    width: 180px;
+}
+
+

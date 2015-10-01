@@ -65,6 +65,7 @@ var clsLocation  = {
     getById : function(id){
         console.log('Get by Name executed');
         this.connectDB();
+        var defer = Q.defer();
         baseModel.locationModel.findById(id).populate('Hospital').exec(
             function (err, data) {
                 if (err) {

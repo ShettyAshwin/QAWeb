@@ -8,8 +8,22 @@ describe('Location Test', function () {
     url = '/QAWebPortal/app/index.html#/Hospitals';
 
     beforeEach(function () {
+        //pause();
         browser().navigateTo(url);
-        element('.container nav ul li a:contains("Locations")').click();
+        //pause();
+        element('.container nav ul li:eq(1)').click();
     });
-
+    
+    it('should add location', function () {
+        pause();
+        element('#btnAddLocation').click(); // Open add location view
+        input('Hospital.name').enter('testName');
+        input('Hospital.address').enter('testAddress');
+        pause();
+        element('#save').click();
+        alert(element('#location-table tbody tr').count());
+        pause();
+        expect(repeater('#location-table tbody tr').count()).toBeGreaterThan(1);
+    });
+    
 });

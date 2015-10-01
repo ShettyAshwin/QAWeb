@@ -14,7 +14,7 @@ barcoApp.service('hospitalService',['$http', '$q', '$rootScope', function ($http
         },
         AddHospitalDetail: function (Hospital) {
             var defer = $q.defer();
-            $http.post('http://localhost:3000/hospitals/add/',Hospital)
+            $http.post(angular.getAppSection('hospital').add,Hospital)
                 .success(function (data, status) {
                     defer.resolve({'Success': true, 'Data': data, 'error': null, 'Code': status});
                 }).error(function (data, status) {
@@ -25,7 +25,7 @@ barcoApp.service('hospitalService',['$http', '$q', '$rootScope', function ($http
         },
         UpdateHospitalDetail: function (Hospital) {
             var defer = $q.defer();
-            $http.put('http://localhost:3000/hospitals/update/'+Hospital._id,Hospital)
+            $http.put(angular.getAppSection('hospital').update + Hospital._id,Hospital)
                 .success(function (data, status) {
                     defer.resolve({'Success': true, 'Data': data, 'error': null, 'Code': status});
                 }).error(function (data, status) {
@@ -36,7 +36,7 @@ barcoApp.service('hospitalService',['$http', '$q', '$rootScope', function ($http
         },
         getHospitalById: function (id) {
             var defer = $q.defer();
-            $http.get('http://localhost:3000/hospitals/get/'+id).
+            $http.get(angular.getAppSection('hospital').get + id).
                 success(function (data, status) {
                     defer.resolve({ "reponseData": data});
                 });
@@ -44,7 +44,7 @@ barcoApp.service('hospitalService',['$http', '$q', '$rootScope', function ($http
         },
         DeleteHospitalDetail: function (id) {
             var defer = $q.defer();
-            $http.delete('http://localhost:3000/hospitals/delete/'+id)
+            $http.delete(angular.getAppSection('hospital').delete + id)
                 .success(function (data, status) {
                     defer.resolve({'Success': true, 'Data': data, 'error': null, 'Code': status});
                 }).error(function (data, status) {
@@ -53,7 +53,6 @@ barcoApp.service('hospitalService',['$http', '$q', '$rootScope', function ($http
 
             return defer.promise;
         }
-
 
 
     };

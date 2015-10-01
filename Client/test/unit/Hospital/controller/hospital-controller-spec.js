@@ -6,12 +6,13 @@ describe('hospital',function(){
         describe('hospitalSpec',function(){
             var fakeScope, fakeController, fakeRootScope,httpBackend,fakehospitalService;
             beforeEach(module('barcoApp'));
+
             beforeEach(inject(function ($rootScope,$q, $controller,$httpBackend,hospitalService) {
                 fakeScope =  $rootScope.$new();
                 fakeRootScope = $rootScope;
                 fakeController = $controller;
                 fakehospitalService = hospitalService;
-                fakeScope.hospitals= [{"_id":1,"name":"hospital1","address":"abc"},{"_id":2,"name":"hospital1","address":"abc"}];
+                fakeScope.hospitals = [{"_id":1,"name":"hospital1","address":"abc"},{"_id":2,"name":"hospital1","address":"abc"}];
                 fakeScope.Hospital= {"_id":1,"name":"hospital1","address":"abc"};
                 httpBackend = $httpBackend;
 
@@ -19,13 +20,15 @@ describe('hospital',function(){
                 fakeScope.AddHospital = function(){};
                 fakeScope.getHospitalById = function(){};
                 $controller('HospitalController',{
-                    $scope : fakeScope
+                    $scope : fakeScope,
+                    hospitalService : fakehospitalService
                 });
             }));
 
             it('Should test getHospital Method which is used for getting hospital list',function(){
                 var tempObj =  fakeScope.hospitals;
-                httpBackend.when('GET','http://localhost:3000/hospitals/getAll').respond(tempObj);
+
+                httpBackend.when('GET',angular.getAppSection('hospital').list).respond(tempObj);
                 fakehospitalService.getHospitalList().then(function(response){
                     expect(response.name).toBe(tempObj.name);
                 });
@@ -33,10 +36,12 @@ describe('hospital',function(){
                 httpBackend.flush();
                 expect(tempObj.length).toBeGreaterThan(0);
             });
-
             it('Should test AddHospital Method which is used add hospital details',function(){
                 var tempObj =  fakeScope.Hospital;
-                fakehospitalService.AddHospitalDetail().then(function(response){
+                fakehospitalService.AddHospitalDetail(fakeScope.Hospital).then(function(response){
+                    fakeScope.HospitalId = response._id;
+                    fakeScope.Hospital = null;
+                    fakeScope.getHospital();
                     expect(response.Data._id).toBe(tempObj._id);
                 });
                 fakehospitalService.UpdateHospitalDetail(fakeScope.Hospital).then(function(response){
@@ -51,6 +56,7 @@ describe('hospital',function(){
                 var tempObj =  fakeScope.Hospital;
 
                 fakehospitalService.getHospitalById(fakeScope.hospitals._id).then(function(response){
+                    fakeScope.Hospital = response;
                     expect(response.name).toBe(tempObj.name);
                 });
 

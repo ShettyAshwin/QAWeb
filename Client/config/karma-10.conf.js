@@ -17,13 +17,18 @@ module.exports = function(config) {
             'app/lib/angular-translate/*.js',
             'app/lib/angular-translate-*/*.js',
             'test/lib/angular/angular-mocks.js',
+            'app/lib/appConfiguration.js',
             'app/js/app.js',
 
+
             'app/js/**/**/*.js',
-            'test/unit/**/**/*.js', //Error
+            'test/unit/**/**/*.js' //Error
+
+
+
 
             //'app/views/embedding/embedding-popup.html',
-            'app/lib/appConfiguration.js',
+
             //'test/data/*.js',
 
         ],

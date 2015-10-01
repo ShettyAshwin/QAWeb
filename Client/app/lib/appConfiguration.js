@@ -20,7 +20,8 @@ var app_Config = {
         'add': '{{ServerDetail}}/locations/add/',
         'update': '{{ServerDetail}}/locations/update/',
         'delete': '{{ServerDetail}}/locations/delete/',
-        'get': '{{ServerDetail}}/locations/get/'
+        'get': '{{ServerDetail}}/locations/get/',
+        'getByHospital': '{{ServerDetail}}/locations/getByHospital/',
     },
     'hierarchy': {
         'list': '{{ServerDetail}}/hierarchies/getAll/',

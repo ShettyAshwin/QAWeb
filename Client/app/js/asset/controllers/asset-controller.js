@@ -5,6 +5,7 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
     function ($scope, $location,assetService) {
 
         $scope.newAsset = {};
+        $scope.showList = true;
         //$scope.hierarchyList = [{_id: "H1",name :'hierarchy1'}, {_id: "H2",name :'hierarchy2'}, {_id: "H3",name :'hierarchy3'}  ];
 
        // $scope.hierarchy = $scope.hierarchyList[0];
@@ -16,6 +17,7 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
         $scope.getAssetsByHierarchy = function (data) {
             assetService.getAssetsByHierarchy(data).then(function (obj) {
                 $scope.assets = obj.reponseData;
+
             });
         };
 
@@ -27,6 +29,7 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
             })[0];
         };
 
+        //save
         $scope.addAsset = function () {
 
             $scope.asset.properties = [];
@@ -50,11 +53,13 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
                 assetService.addAsset($scope.asset).then(function (response) {
                     $scope.clear();
                     $scope.getAssetsByHierarchy($scope.ddlSelectHierarchy);
+                    $scope.showList = !$scope.showList;
                 });
             }else
             {
                 assetService.updateAsset($scope.asset).then(function (response) {
                     $scope.getAssetsByHierarchy($scope.ddlSelectHierarchy);
+                    $scope.showList = !$scope.showList;
                 });
             }
 
@@ -95,6 +100,7 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
             {
                 //$scope.hierarchyId = $scope.hierarchyList[0];
             }
+            $scope.showList= !$scope.showList;
             return $scope.asset;
         };
 
@@ -113,12 +119,18 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
             $scope.assetproperties = [];
             $scope.assetproperties.push({"name":"", "value":""});
             $scope.ddlhierarchy ={};
+            $scope.showList =!$scope.showList
         };
 
         $scope.getHospitalList = function (){
             //$scope.hospitalList = [{"_id":"1", "name": "Hospital1"}, {"_id":"2", "name": "Hospital2"}];
             assetService.getHospitalList().then(function (obj) {
                 $scope.hospitalList = obj.reponseData;
+                $scope.assets=[];
+                $scope.hierarchyList = [];
+                $scope.assetproperties= [];
+                $scope.ddlSelectHierarchy = {};
+                $scope.ddlLocation= {};
             });
         };
 
@@ -127,6 +139,11 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
             //$scope.locationList = [{"_id":"1", "name": "Location1"}, {"_id":"2", "name": "Location2"}];
             assetService.getLocationsByHospital($scope.ddlHospital).then(function (obj) {
                 $scope.locationList = obj.reponseData;
+                $scope.assets=[];
+                $scope.hierarchyList = [];
+                $scope.assetproperties= [];
+                $scope.ddlSelectHierarchy = {};
+                $scope.ddlLocation= {};
             });
         };
 
@@ -135,6 +152,7 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
             //$scope.hierarchyList = [{_id: "H1",name :'hierarchy1'}, {_id: "H2",name :'hierarchy2'}, {_id: "H3",name :'hierarchy3'}  ];
             assetService.getHierachiesByLocation($scope.ddlLocation).then(function (obj) {
              $scope.hierarchyList = obj.reponseData;
+                $scope.assets=[];
              });
         };
         $scope.displayAssetsList = function(){
@@ -142,6 +160,18 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
             $scope.getAssetsByHierarchy($scope.ddlSelectHierarchy);
         };
 
+        $scope.showAssetDetails = function()
+        {
+            if ($scope.ddlSelectHierarchy)
+            {
+                $scope.showList = ! $scope.showList;
+            }
+        };
+        $scope.deleteAsset = function(id){
+            assetService.deleteAsset(id).then(function(){
+                $scope.displayAssetsList();
+            });
+        };
         $scope.getHospitalList();
 
     }]);

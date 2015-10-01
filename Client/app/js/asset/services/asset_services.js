@@ -115,7 +115,18 @@ barcoApp.factory('assetService',['$http', '$q', '$rootScope', function ($http, $
                         });
                     return defer.promise;
                     //return assetList.assets;
-                }
+                },
+
+            deleteAsset: function (id) {
+                var defer = $q.defer();
+                $http.delete(angular.getAppSection('asset').delete + id)
+                    .success(function (data, status) {
+                        defer.resolve({'Success': true, 'Data': data, 'error': null, 'Code': status});
+                    }).error(function (data, status) {
+                        defer.resolve({'Success': false, 'Data': null, 'error': data, 'Code': status});
+                    });
+                return defer.promise;
+            }
             };
             return assetService;
         }]);

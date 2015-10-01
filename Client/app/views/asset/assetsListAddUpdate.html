@@ -1,9 +1,6 @@
 <div data-ng-controller="assetController">
-
-
-
         <div class="formcontent">
-            <form class="hmsform" name="assetForm" novalidate>
+            <form class="hmsform" name="assetForm" novalidate ng-show="!showList">
                 <legend>Asset Details</legend>
                 <fieldset>
                     <ul>
@@ -46,9 +43,9 @@
                     </ul>
                 </fieldset>
             </form>
-            <hr/>
 
-            <div class="datatable">
+
+            <div class="datatable" ng-show="showList">
                 <div class="fltright">
                     <ul class="filters">
                         <li>
@@ -78,28 +75,39 @@
                                 </select>
                             </div>
                         </li>
+                        <li>
+                            <div class="fltright"><input type="button" value="Add New Asset" class="button addbutton button-grid" ng-click="showAssetDetails()"></div>
+                        </li>
                     </ul>
                 </div>
-                <table cellpadding="0" cellspacing="0">
-                    <tr>
-                        <th>Name</th>
-                        <th>Properties</th>
-                        <th width="80px"></th>
-                    </tr>
-                    <tr ng-repeat="a in assets ">
-                        <td>{{a.name}}</td>
-                        <td>
-                        <table>
-                            <tr ng-repeat="p in a.properties">
-                                <td>{{p.name}}</td>
-                                <td>{{p.value}}</td>
-                            </tr>
-                        </table>
-                        </td>
-                        <td><div  class="icnedit icons" ng-click="getAssetById(a._id)">Edit</div> <div class="icndelete icons">Delete</div> </td>
-                    </tr>
 
-                </table>
+                <div class="datatable" ng-show="showList">
+
+                    <table cellpadding="0" cellspacing="0" ng-show="showList">
+
+                        <tr>
+                            <th>Name</th>
+                            <th>Properties</th>
+                            <th width="80px"></th>
+                        </tr>
+                        <tr ng-repeat="a in assets ">
+                            <td>{{a.name}}</td>
+                            <td>
+                                <div ng-repeat="p in a.properties">
+                                {{p.name}},{{p.value}}
+                                </div>
+                            <!--<table>
+                                <tr ng-repeat="p in a.properties">
+                                    <td>{{p.name}}</td>
+                                    <td>{{p.value}}</td>
+                                </tr>
+                            </table>-->
+                            </td>
+                            <td><div  class="icnedit icons" ng-click="getAssetById(a._id)">Edit</div> <div class="icndelete icons" ng-click="deleteAsset(a._id)">Delete</div> </td>
+                        </tr>
+
+                    </table>
+                </div>
             </div>
         </div>
 

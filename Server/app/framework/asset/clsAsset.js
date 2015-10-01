@@ -114,7 +114,7 @@ var clsAsset  = {
     getByHierarchyId : function(id,res, next){
         console.log('Get by Name executed');
         this.connectDB();
-        baseModel.assetModel.find({HierarchyId:id}).populate('Hierarchy').exec(
+        baseModel.assetModel.find({hierarchyId:id}).populate('Hierarchy').exec(
             function (err, data) {
                 if (err) return next(err);
                 res.json(data);

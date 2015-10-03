@@ -16,13 +16,13 @@
                     </li>
                     <li>
                         <label>Location:<span class="required">*</span> </label>
-                        <select id="ddlLocation" name="ddlLocation" style="width: 200px;"
-                                data-ng-model="ddlAssociatedLocation">
-                            <option value="-1">[Select Location]</option>
-                            <option data-ng-repeat="location in LocationList" value="{{location._id}}">
-                                {{location.name}}
-                            </option>
-                        </select>
+                        <div class="col-md-4">
+                            <select id="ddlLocation" name="ddlLocation" style="width: 200px;" required data-ng-model="Hierarchy.associatedLocation">
+                                <option value="-1" selected disabled>[Select Location]</option>
+                                <option data-ng-repeat="location in LocationList" value="{{location._id}}">{{location.name}}</option>
+                            </select>
+
+                        </div>
 
                     </li>
                     <li>
@@ -39,7 +39,7 @@
                                ng-model="Hierarchy.order"/>
                     </li>
                     <li class="buttons">
-                        <input id="cancel" type="submit" value="Cancel" class="button" ng-click="Cancel()">
+                        <input id="cancel" type="submit" value="Cancel" class="button" ng-click="showList=!showList">
                         <input id="save" type="submit" value="Save" class="button" ng-click="addHierarchy()">
                     </li>
                 </ul>
@@ -69,15 +69,21 @@
                 <table cellpadding="0" cellspacing="0" id="hierarchy-table">
                     <tr>
                         <th width="25%">Name</th>
+                        <th>Location</th>
                         <th>Address</th>
+                        <th>Order</th>
                         <th width="80px"></th>
                     </tr>
                     <tr ng-repeat="hierarchy in Hierarchies">
                         <td>{{hierarchy.name}}</td>
+                        <td>{{hierarchy.locationId.name}}</td>
                         <td>{{hierarchy.address}}</td>
+                        <td>{{hierarchy.order}}</td>
+
+
 
                         <td>
-                            <div class="icnedit" ng-click="getHierarchyById(hierarchy._id)">Edit</div>
+                            <div class="icnedit" id  ng-click="getHierarchyById(hierarchy._id)">Edit</div>
                             <div href="#" class="icndelete" ng-click="deleteHierarchy(hierarchy._id)">Delete</div>
                         </td>
 

@@ -36,7 +36,7 @@ var clsHierarchy = function () {
             console.log('GetAll executed');
             baseframework.connect();
             var defer = Q.defer();
-            hierarchyModel.find({}).populate('Location').exec(
+            hierarchyModel.find({}).populate('locationId').exec(
                 function (err, data) {
                     baseframework.close();
                     if (err) {
@@ -50,7 +50,7 @@ var clsHierarchy = function () {
             var defer = Q.defer();
             console.log('Get by id executed');
             baseframework.connect();
-            hierarchyModel.findById(id).populate('location').exec(
+            hierarchyModel.findById(id).populate('locationId').exec(
                 function (err, data) {
                     baseframework.close();
                     if (err) {
@@ -64,7 +64,7 @@ var clsHierarchy = function () {
             var defer = Q.defer();
             console.log('Get by Name executed');
             baseframework.connect();
-            hierarchyModel.find({locationId: id}).populate('location').exec(
+            hierarchyModel.find({locationId: id}).populate('locationId').exec(
                 function (err, data) {
                     baseframework.close();
                     if (err) {

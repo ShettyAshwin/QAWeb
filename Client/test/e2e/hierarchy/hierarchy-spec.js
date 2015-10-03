@@ -1,45 +1,38 @@
 ﻿/**
-* Created by Administrator on 10/1/15.
-*/
+ * Created by Administrator on 10/1/15.
+ */
 describe('Hierarchy  Test', function () {
     'use strict';
 
     var url;
-    url = '/QAWebPortal/app/index.html#/Hierarchys';
+    url = '/QAWebPortal/app/index.html#/Hospitals';
+
 
     beforeEach(function () {
         browser().navigateTo(url);
-    });
-
-    'use strict';
-
-    var url;
-    url = '/QAWebPortal/app/index.html#/Hierarchies';
-
-    beforeEach(function () {
-        //pause();
-        browser().navigateTo(url);
-        //pause();
-        element('.container nav ul li:eq(2)').click();
+        element('.container nav ul li:eq(2) a').click();
     });
 
 
-
-    it('should display Hierarchy list', function () {
-        pause();
-        input('Hierarchy.name').enter('Hierarchy 3');
-        input('Hierarchy.address').enter('Hierarchy 3 Address');
+    it('should add First   Hierarchy details', function () {
+        element('#add-new-hierarchy').click();
+        input('Hierarchy.name').enter('Hierarchy 1');
+        input('Hierarchy.address').enter('  Hierarchy Address 1 ');
+        select('Hierarchy.associatedLocation').option('testName');
+        input('Hierarchy.order').enter('1');
         element('#save').click();
-        expect(repeater('#hierarchy-table tbody tr').count()).toBeGreaterThan(1);
-    });
+       expect(element('#hierarchy-table tbody tr:last td:nth-child(1)').text()).toBe("Hierarchy 1");
 
-    it('should save Hierarchy details', function () {
-        element('#add-new-Hierarchy').click();
-        input('Hierarchy.name').enter('  Hierarchy save');
-        input('Hierarchy.address').enter('  Hierarchy Address save');
+    });
+    it('should add Second   Hierarchy details', function () {
+        element('#add-new-hierarchy').click();
+        input('Hierarchy.name').enter('Hierarchy 2');
+        input('Hierarchy.address').enter('  Hierarchy Address 2 ');
+        select('Hierarchy.associatedLocation').option('testName');
+        input('Hierarchy.order').enter('2');
         element('#save').click();
-        expect(element('#hierarchy-table tbody tr:last td:nth-child(1)').text()).toBe("  Hierarchy save");
-        pause();
+        expect(element('#hierarchy-table tbody tr:last td:nth-child(1)').text()).toBe("Hierarchy 2");
+
     });
     it('should edit Hierarchy details', function () {
 
@@ -50,11 +43,11 @@ describe('Hierarchy  Test', function () {
         element('#save').click();
 
         expect(element('#hierarchy-table tbody tr:last td:nth-child(1)').text()).toBe("  Hierarchy edit");
-        pause();
+
     });
 
     it('should delete Hierarchy details', function () {
-        pause();
+
         element('#add-new-hierarchy').click();
         input('Hierarchy.name').enter(' Hierarchy save');
         input('Hierarchy.address').enter(' Hierarchy Address save');

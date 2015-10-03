@@ -12,6 +12,7 @@ describe('Hospital Test', function () {
     });
 
     it('should display hospital list', function () {
+
         input('Hospital.name').enter('ABC Hospital');
         input('Hospital.address').enter('ABC Hospital Address');
         element('#save').click();

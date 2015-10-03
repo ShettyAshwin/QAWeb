@@ -10,6 +10,7 @@ describe('Location Test', function () {
     beforeEach(function () {
         browser().navigateTo(url);
         element('.container nav ul li:eq(1) a').click();
+        pause();
     });
 
     it('should add new location', function () {

@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var framework = require('../framework/hospital/clsHospital');
+var queueSwitch = require('../framework/common/queueSwitch');
+
+var framework = require('../framework/hospital/clsHospital' + queueSwitch.isQueueEnabled());
 
 var clsHospital = framework.factory.getHospitalInstance();
 

@@ -1,197 +1,121 @@
 var amqp = require('amqplib/callback_api');
-var ampServer = 'amqp://localhost';
+var config = require('../../appConfiguration').appConfig;
+var ampServer = config.amqpServer;
 var callBackExtension = "_CallBack";
-var subscriptionConnection = null;
+var Q = require('q');
 
+var amqpConnection = undefined;
+var pendingSub = [];
 
-var clsAmqp = {
-    getUniqueId : function(){
-        return Math.random().toString() +
-            Math.random().toString() +
-            Math.random().toString();
-    },
-    connect : function(callBackFunc){
-        if(subcriptionConnection === null){
-            amqp.connect(ampServer, function(err, conn) {
-                if (err) {
-                    console.error("[AMQP]", err.message);
-                }
-                conn.on("error", function(err) {
-                    if (err.message !== "Connection closing") {
-                        console.error("[AMQP] conn error", err.message);
-                    }
-                });
-                conn.on("close", function() {
-                    console.error("[AMQP] conn close");
-                });
-                console.log("[AMQP] connected");
-                subscriptionConnection = conn;
-                if(callBackFunc){
-                    callBackFunc();
-                }
-            });
-        }else{
-           if(callBackFunc){
-               callBackFunc();
-           }
+amqp.connect(ampServer, function (err, conn) {
+    console.log("Getting new Connection");
+    if (err) {
+        console.error("[AMQP]", err.message);
+    }
+    conn.on("error", function (err) {
+        if (err.message !== "Connection closing") {
+            console.error("[AMQP] conn error", err.message);
         }
-    },
-    publish : function(){
+    });
+    conn.on("close", function () {
+        console.error("[AMQP] conn close");
+    });
+    console.log("[AMQP] connected");
+    amqpConnection = conn;
+    if(pendingSub.length > 0){
+        pendingSub.forEach(function(obj){
+            obj.CurrentInstance.subscribe(obj.queueName, obj.callBack);
+        });
 
-    },
-    subscribe : function(queueName,callBackFunc){
-        this.connect(function(){
-            conn.createChannel(function(err, ch) {
-                ch.assertQueue(queueName, {durable: true});
-                ch.prefetch(1);
-                console.log(' [x] Awaiting RPC requests for queue : ' + queueName);
-                ch.consume(queueName, function reply(msg) {
-                    var message = JSON.parse(msg.content.toString());
-                    console.log("Process Message for queue : " + queueName, message);
-                    if(callBackFunc){
-                        try{
-                            callBackFunc(message,function(responseData){
-                                ch.sendToQueue(msg.properties.replyTo,
-                                    new Buffer(JSON.stringify(responseData)),
-                                    {correlationId: msg.properties.correlationId});
+        pendingSub = [];
+    }
+});
+
+var getUniqueId = function () {
+    return Math.random().toString() +
+        Math.random().toString() +
+        Math.random().toString();
+};
+
+
+var clsAmqp = function () {
+    return {
+        publish: function (queueName, data, messageId, replyToQueue) {
+            var defer = Q.defer();
+            amqpConnection.createChannel(function (err, ch) {
+                ch.assertQueue(queueName, { durable: true }, function (err, q) {
+                    var message = JSON.stringify(data);
+
+                    console.log(' [x] Publishing ' + queueName + ":", message);
+
+                    ch.sendToQueue(queueName,
+                        new Buffer(message), { correlationId: messageId, replyTo: replyToQueue + callBackExtension, durable: true, persistent: true});
+                    ch.close();
+                });
+            });
+
+            return defer.promise;
+        },
+        subscribe: function (queueName, callBackFunc) {
+            if (!amqpConnection) {
+                pendingSub.push({"queueName" : queueName, "callBack": callBackFunc, "CurrentInstance": this });
+            } else {
+                amqpConnection.createChannel(function (err, ch, deliveryInfo, ack) {
+                    ch.assertQueue(queueName, {durable: true});
+                    ch.prefetch(1);
+                    console.log(' [x] Awaiting RPC requests for queue : ' + queueName);
+                    ch.consume(queueName, function reply(msg) {
+                        console.log('Process Message : ' + JSON.stringify(msg));
+                        if (callBackFunc) {
+                            try {
+                                callBackFunc(msg);
                                 ch.ack(msg);
-                            });
-                        }catch(ex){
+                            } catch (ex) {
+                                console.log(err);
+                            }
 
                         }
-
-                    }else{
-                        console.log("Call back function is undefined for queue : " + queueName);
-                    }
-
+                    }, {ack: true, prefetchCount: 1});
                 });
-            });
-        })
-    },
-    requestResponse : function(queueName, data, callBackFunc){
-        amqp.connect(ampServer, function(err, conn) {
-            conn.createChannel(function(err, ch) {
-                ch.assertQueue(queueName + callBackExtension, {exclusive: true, durable: true}, function(err, q) {
-                    var corr = this.getUniqueId();
+
+            }
+
+        },
+        requestResponse: function (queueName, data) {
+            var defer = Q.defer();
+            amqpConnection.createChannel(function (err, ch) {
+                ch.assertQueue(queueName + callBackExtension, { durable: true }, function (err, q) {
+                    var corr = getUniqueId();
                     var message = JSON.stringify(data);
 
                     console.log(' [x] Requesting ' + queueName, message);
 
-                    ch.consume(queueName + callBackExtension, function(msg) {
+                    ch.consume(queueName + callBackExtension, function (msg) {
+                        console.log('Got data for ID :' + msg.properties.correlationId + " Expecting ID :" + corr);
                         if (msg.properties.correlationId == corr) {
-                            console.log(' [.] Got %s', msg.content.toString());
-                            if(callBackFunc){
-                                callBackFunc(msg.content);
-                            };
-                        };
-                    }, {noAck: true});
-
-                    ch.sendToQueue(queueName,
-                        new Buffer(message),
-                        { correlationId: corr, replyTo: queueName + callBackExtension});
-                });
-            });
-        });
-
-    }
-}
-
-module.exports.clsAmpq = clsAmqp;var amqp = require('amqplib/callback_api');
-var ampServer = 'amqp://localhost';
-var callBackExtension = "_CallBack";
-var subscriptionConnection = null;
-
-
-var clsAmqp = {
-    getUniqueId : function(){
-        return Math.random().toString() +
-            Math.random().toString() +
-            Math.random().toString();
-    },
-    connect : function(callBackFunc){
-        if(subcriptionConnection === null){
-            amqp.connect(ampServer, function(err, conn) {
-                if (err) {
-                    console.error("[AMQP]", err.message);
-                }
-                conn.on("error", function(err) {
-                    if (err.message !== "Connection closing") {
-                        console.error("[AMQP] conn error", err.message);
-                    }
-                });
-                conn.on("close", function() {
-                    console.error("[AMQP] conn close");
-                });
-                console.log("[AMQP] connected");
-                subscriptionConnection = conn;
-                if(callBackFunc){
-                    callBackFunc();
-                }
-            });
-        }else{
-           if(callBackFunc){
-               callBackFunc();
-           }
-        }
-    },
-    publish : function(){
-
-    },
-    subscribe : function(queueName,callBackFunc){
-        this.connect(function(){
-            conn.createChannel(function(err, ch) {
-                ch.assertQueue(queueName, {durable: true});
-                ch.prefetch(1);
-                console.log(' [x] Awaiting RPC requests for queue : ' + queueName);
-                ch.consume(queueName, function reply(msg) {
-                    var message = JSON.parse(msg.content.toString());
-                    console.log("Process Message for queue : " + queueName, message);
-                    if(callBackFunc){
-                        try{
-                            callBackFunc(message,function(responseData){
-                                ch.sendToQueue(msg.properties.replyTo,
-                                    new Buffer(JSON.stringify(responseData)),
-                                    {correlationId: msg.properties.correlationId});
-                                ch.ack(msg);
-                            });
-                        }catch(ex){
-                            console.log("Error while process callback function for queue : " + queueName);
+                            console.log(' [.] Got %s', JSON.stringify(msg.content.toString()));
+                            ch.ack(msg);
+                            corr = undefined;
+                            ch.close();
+                            defer.resolve(msg.content.toString());
                         }
-
-                    }else{
-                        console.log("Call back function is undefined for queue : " + queueName);
-                    }
-
-                });
-            });
-        })
-    },
-    requestResponse : function(queueName, data, callBackFunc){
-        amqp.connect(ampServer, function(err, conn) {
-            conn.createChannel(function(err, ch) {
-                ch.assertQueue(queueName + callBackExtension, {exclusive: true, durable: true}, function(err, q) {
-                    var corr = this.getUniqueId();
-                    var message = JSON.stringify(data);
-
-                    console.log(' [x] Requesting ' + queueName, message);
-
-                    ch.consume(queueName + callBackExtension, function(msg) {
-                        if (msg.properties.correlationId == corr) {
-                            console.log(' [.] Got %s', msg.content.toString());
-                            if(callBackFunc){
-                                callBackFunc(msg.content);
-                            };
-                        };
-                    }, {noAck: true});
+                        ;
+                    }, {ack: true, prefetchCount: 1});
 
                     ch.sendToQueue(queueName,
                         new Buffer(message),
-                        { correlationId: corr, replyTo: queueName + callBackExtension});
+                        { correlationId: corr, replyTo: queueName + callBackExtension, durable: true, persistent: true});
                 });
             });
-        });
-
+            return defer.promise;
+        }
     }
 }
 
-module.exports.clsAmpq = clsAmqp;
+var factory = {
+    getAmqpInstance: function () {
+        return clsAmqp();
+    }
+}
+
+module.exports.factory = factory;

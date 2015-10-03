@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var framework = require('../framework/location/clsLocation');
+var queueSwitch = require('../framework/common/queueSwitch');
+
+var framework = require('../framework/location/clsLocation' + queueSwitch.isQueueEnabled());
 
 var clsLocation = framework.factory.getLocationInstance();
 

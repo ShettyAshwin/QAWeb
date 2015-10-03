@@ -2,7 +2,9 @@
 
 var express = require('express');
 var router = express.Router();
-var framework = require('../framework/asset/clsAsset');
+var queueSwitch = require('../framework/common/queueSwitch');
+
+var framework = require('../framework/asset/clsAsset' + queueSwitch.isQueueEnabled());
 
 var clsAsset = framework.factory.getAssetInstance();
 

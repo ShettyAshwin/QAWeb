@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
+var config = require('../../appConfiguration').appConfig;
 
-var dbServer = 'mongodb://localhost:27017/QAWeb';
+var dbServer = config.database.URL;
 var statusOk = {status:'200', detail :''};
 var statusError =  {status :'500', detail :''};
 
@@ -35,7 +36,7 @@ module.exports.connect = function(){
 };
 
 module.exports.close = function(){
-    mongoose.connection.close();
+    //mongoose.connection.close();
 };
 
 module.exports.mongoose = mongoose;

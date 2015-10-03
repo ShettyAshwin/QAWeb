@@ -5,6 +5,7 @@ var Q = require('q');
 var hospitalModel = baseModel.Factory.getHospitalInstance();
 var hierarchyModel = baseModel.Factory.getHierarchyInstance();
 var assetModel = baseModel.Factory.getAssetInstance();
+var locationModel = baseModel.Factory.getLocationInstance();
 
 var clsHospital = function () {
     return {
@@ -51,7 +52,7 @@ var clsHospital = function () {
             return defer.promise;
         },
         getById: function (id) {
-            console.log('Get by Name executed');
+            console.log('Get by ID executed : ' , id );
             baseframework.connect();
             var defer = Q.defer();
             hospitalModel.findById(id,
@@ -80,7 +81,7 @@ var clsHospital = function () {
             );
             return defer.promise;
         },
-        add: function (hospital, res, next) {
+        add: function (hospital) {
             var defer = Q.defer();
             console.log('Add new Hospital');
             if ((hospital) && (hospital.name.length) && hospital.name.length > 0 && (hospital.address) && hospital.address.length > 0) {

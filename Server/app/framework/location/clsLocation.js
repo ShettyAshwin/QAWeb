@@ -125,7 +125,7 @@ var clsLocation = function () {
 
             return defer.promise;
         },
-        update: function (id, location, res, next) {
+        update: function (id, location) {
             var defer = Q.defer();
             console.log('Update existing location');
             //validate hospital

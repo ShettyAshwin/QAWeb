@@ -6,12 +6,19 @@ var locationSchema = new baseframework.mongoose.Schema({name: String, address: S
 var hierarchySchema = new baseframework.mongoose.Schema({name: String, address: String, order : Number, locationId : {type: baseframework.mongoose.Schema.Types.ObjectId, ref:'Location'}, assetId : [{type: baseframework.mongoose.Schema.Types.ObjectId, ref:'Asset'}]});
 var assetSchema = new baseframework.mongoose.Schema({name: String, properties: [{name : String, value:String}], hierarchyId : {type: baseframework.mongoose.Schema.Types.ObjectId, ref:'Hierarchy'}});
 
-var hospitalModel = baseframework.mongoose.model('Hospital', hospitalSchema);
-var locationModel = baseframework.mongoose.model('Location', locationSchema);
-var hierarchyModel = baseframework.mongoose.model('Hierarchy', hierarchySchema);
-var assetModel = baseframework.mongoose.model('Asset', assetSchema);
+var Factory = {
+    getHospitalInstance : function(){
+        return  baseframework.mongoose.model('Hospital', hospitalSchema);
+    },
+    getLocationInstance : function(){
+        return baseframework.mongoose.model('Location', locationSchema);
+    },
+    getHierarchyInstance : function(){
+        return baseframework.mongoose.model('Hierarchy', hierarchySchema);
+    },
+    getAssetInstance : function(){
+        return baseframework.mongoose.model('Asset', assetSchema);
+    }
+}
 
-module.exports.hospitalModel = hospitalModel;
-module.exports.locationModel = locationModel;
-module.exports.hierarchyModel = hierarchyModel;
-module.exports.assetModel = assetModel;
+module.exports.Factory = Factory;

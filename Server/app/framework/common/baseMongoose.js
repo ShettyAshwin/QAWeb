@@ -26,7 +26,20 @@ process.on('SIGINT', function() {
     });
 });
 
+module.exports.connect = function(){
+    mongoose.connect(dbServer,function(error){
+        if(error){
+            console.log(error);
+        }
+    });
+};
+
+module.exports.close = function(){
+    mongoose.connection.close();
+};
+
 module.exports.mongoose = mongoose;
 module.exports.statusOk = statusOk;
 module.exports.statusError = statusError;
 module.exports.dbServer = dbServer;
+

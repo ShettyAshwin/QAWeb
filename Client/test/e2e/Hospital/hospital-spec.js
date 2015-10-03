@@ -12,7 +12,6 @@ describe('Hospital Test', function () {
     });
 
     it('should display hospital list', function () {
-
         input('Hospital.name').enter('ABC Hospital');
         input('Hospital.address').enter('ABC Hospital Address');
         element('#save').click();
@@ -21,21 +20,17 @@ describe('Hospital Test', function () {
 
     it('should save hospital details', function () {
         element('#add-new-hospital').click();
-        input('Hospital.name').enter('ABC Hospital save');
+        input('Hospital.name').enter('z ABC Hospital save');
         input('Hospital.address').enter('ABC Hospital Address save');
         element('#save').click();
-        expect(element('#hospital-table tbody tr:last td:nth-child(1)').text()).toBe("ABC Hospital save");
-        pause();
+        expect(element('#hospital-table tbody tr:last td:nth-child(1)').text()).toBe("z ABC Hospital save");
     });
     it('should edit hospital details', function () {
-
         element('#edit').click();
-        input('Hospital.name').enter('ABC Hospital edit');
+        input('Hospital.name').enter('zz ABC Hospital edit');
         input('Hospital.address').enter('ABC Hospital Address');
-
         element('#save').click();
-
-        expect(element('#hospital-table tbody tr:last td:nth-child(1)').text()).toBe("ABC Hospital edit");
+        expect(element('#hospital-table tbody tr:last td:nth-child(1)').text()).toBe("zz ABC Hospital edit");
     });
 
     it('should delete hospital details', function () {

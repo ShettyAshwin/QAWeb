@@ -1,7 +1,7 @@
 describe('hierarchy', function () {
     describe('controller', function () {
         describe('hierarchySpec', function () {
-            var fakeScope, fakeController, fakeRootScope, httpBackend, fakeHierarchyService, fakeLocationService;
+            var fakeScope, fakeController, fakeRootScope, httpBackend, fakeHierarchyService, fakeLocationService,fakeQ;
             beforeEach(module('barcoApp'));
 
             beforeEach(inject(function ($rootScope, $q, $controller, $httpBackend, hierarchyService, locationService) {
@@ -10,6 +10,7 @@ describe('hierarchy', function () {
                 fakeController = $controller;
                 fakeHierarchyService = hierarchyService;
                 fakeLocationService = locationService;
+                fakeQ=$q;
                 fakeScope.hierarchies = [
                     {"_id": 1, "name": "hierarchy1", "address": "abc"},
                     {"_id": 2, "name": "hierarchy1", "address": "abc"}
@@ -40,25 +41,34 @@ describe('hierarchy', function () {
                 var tempHierarchies = fakeScope.hierarchies;
                 httpBackend.when('GET', angular.getAppSection('location').getAll).respond(tempLocations);
                 httpBackend.when('GET', angular.getAppSection('hierarchy').getAll).respond(tempHierarchies);
-                fakeHierarchyService.getHierarchyById().then(function (response) {
-                    expect(response.name).toBe(tempLocations.name);
+                spyOn(fakeHierarchyService,'getHierarchyList').andCallFake(function(){
+                    var def = fakeQ.defer();
+                    def.resolve(tempHierarchies);
+                    return def.promise;
                 });
+
                 fakeScope.getHierarchies();
                 httpBackend.flush();
-                expect(tempLocations.length).toBeGreaterThan(0);
+                expect(tempHierarchies.length).toBeGreaterThan(0);
+                expect(fakeHierarchyService.getHierarchyList).toHaveBeenCalled();
             });
 
-            it('Should test AddHierarchy Method which is used add hospital details',function(){
+            it('Should test AddHierarchy Method which is used add Hierarchy  details',function(){
                 var tempObj = fakeScope.hierarchies;
                 fakeScope.Hierarchy= {"_id": 0, "name": "hierarchy1", "address": "abc"};
 
                 var tempResponse = { 'Success': true, 'Data': '', 'error': null, 'ErrorCode': status };
                 httpBackend.when('GET', angular.getAppSection('hierarchy').getAll).respond(tempObj);
                 httpBackend.whenPOST(angular.getAppSection('hierarchy').add).respond(200,{});
-                fakeHierarchyService.AddHierarchyDetail(fakeScope.Hierarchy).then(function (response) {
-                    expect(response.Success).toBe(true);
-                });
+               /* spyOn(fakeHierarchyService,'AddHierarchyDetail').andCallFake(function(){
+                    var def = fakeQ.defer();
+                    def.resolve(true);
+                    return def.promise;
+                });*/
+
+
                 fakeScope.addHierarchy();
+             //   expect(fakeHierarchyService.AddHierarchyDetail).toHaveBeenCalled();
                 httpBackend.flush();
             });
             it('Should test AddHierarchy Method for Update',function(){

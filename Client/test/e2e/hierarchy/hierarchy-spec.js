@@ -18,7 +18,7 @@ describe('Hierarchy  Test', function () {
         element('#add-new-hierarchy').click();
         input('Hierarchy.name').enter('Hierarchy 1');
         input('Hierarchy.address').enter('  Hierarchy Address 1 ');
-        select('Hierarchy.associatedLocation').option('testName');
+        select('Hierarchy.associatedLocation').option('LocationForHierarchyTest');
         input('Hierarchy.order').enter('1');
         element('#save').click();
        expect(element('#hierarchy-table tbody tr:last td:nth-child(1)').text()).toBe("Hierarchy 1");
@@ -28,7 +28,7 @@ describe('Hierarchy  Test', function () {
         element('#add-new-hierarchy').click();
         input('Hierarchy.name').enter('Hierarchy 2');
         input('Hierarchy.address').enter('  Hierarchy Address 2 ');
-        select('Hierarchy.associatedLocation').option('testName');
+        select('Hierarchy.associatedLocation').option('LocationForHierarchyTest');
         input('Hierarchy.order').enter('2');
         element('#save').click();
         expect(element('#hierarchy-table tbody tr:last td:nth-child(1)').text()).toBe("Hierarchy 2");
@@ -36,13 +36,14 @@ describe('Hierarchy  Test', function () {
     });
     it('should edit Hierarchy details', function () {
 
-        element('#edit').click();
-        input('Hierarchy.name').enter('  Hierarchy edit');
-        input('Hierarchy.address').enter('  Hierarchy Address');
-
+        var name = element('#hierarchy-table tr:last td:eq(0)').text();
+        name.execute(function () { });
+        element('#hierarchy-table tbody tr:last .icnedit').click(); // Open edit location view
+        input('Hierarchy.name').enter(name.value + ' Updated');
         element('#save').click();
 
-        expect(element('#hierarchy-table tbody tr:last td:nth-child(1)').text()).toBe("  Hierarchy edit");
+        expect(element('#hierarchy-table tbody tr:last td:nth-child(1)').text()).toBe("Hierarchy 2 Updated");
+
 
     });
 
@@ -55,6 +56,7 @@ describe('Hierarchy  Test', function () {
 
         element('#hierarchy-table tbody tr:last .icndelete').click();
         expect(repeater('#hierarchy-table tbody tr').count()).toBeGreaterThan(1);
+        pause();
 
     });
 });

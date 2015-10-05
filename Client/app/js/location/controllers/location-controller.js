@@ -1,21 +1,22 @@
 ﻿/**
  * Created by jadhavp on 9/28/15.
  */
-barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locationService', //'menuService',
-    function ($scope, hospitalService, locationService) { //, menuService) {
-
-        ////menuService.activateMenu('Locations');
+/*global angular, barcoApp*/
+barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locationService',
+    function ($scope, hospitalService, locationService) {
+        'use strict';
 
         // Display grid
         $scope.ShowList = true;
         $scope.OperationMode = "Add";
 
-        $scope.ddlFilteredHospital = "-1"; // Default hospital filter
+        // Default hospital filter
+        $scope.ddlFilteredHospital = "-1";
 
         $scope.getHospitalList = function () {
             hospitalService.GetHospitalList().then(function (obj) {
                 $scope.hospitalList = obj.reponseData;
-            });   
+            });
         };
 
         // load hospital list
@@ -29,8 +30,7 @@ barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locatio
                         $scope.locationList = obj.responseData;
                     }
                 });
-            }
-            else {
+            } else {
                 locationService.getHospitalLocations(hospitalId).then(function (obj) {
                     if (obj.responseData) {
                         $scope.locationList = obj.responseData;
@@ -53,8 +53,8 @@ barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locatio
                 locationService.addHospitalLocation(objLocation).then(function (response) {
                     $scope.LocationId = response.result;
                 });
-            }
-            else { // Update existing location
+            } else {
+                // Update existing location
                 locationService.updateHospitalLocation(objLocation).then(function (response) {
                     $scope.EditLocation = response.result;
                 });
@@ -78,31 +78,28 @@ barcoApp.controller('LocationController', ['$scope', 'hospitalService', 'locatio
                     $scope.Location.associatedHospital = $scope.hospitalList.filter(function (hospital) {
                         return hospital._id === obj.responseData.hospitalId._id;
                     })[0]._id;
-                    //$scope.Location.associatedHospital = obj.responseData.hospitalId; 
                 }
             });
         };
 
         /* Delete hospital location */
         $scope.DeleteHospitalLocation = function (locationId) {
-            locationService.deleteHospitalLocation(locationId).then(function (response) {
+            locationService.deleteHospitalLocation(locationId).then(function () {
                 $scope.LoadHospitalLocations("-1"); // Show all locations
-                //return response.result;
             });
         };
 
         /* Switch from grid view to add view */
-        $scope.OpenAddHospitalLocationView = function () {       
+        $scope.OpenAddHospitalLocationView = function () {
             $scope.OperationMode = "Add";
             $scope.Location = null;
-            //$scope.Location = { 'name': '', 'address': '', 'associatedHospital': '-1' };
             $scope.ShowList = false;
-        }
+        };
 
         /* Switch from grid view to edit view */
         $scope.OpenEditHospitalLocationView = function (locationId) {
             $scope.ShowList = false;
             $scope.OperationMode = "Edit";
             $scope.EditHospitalLocation(locationId);
-        }
+        };
     }]);

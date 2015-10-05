@@ -33,6 +33,8 @@ barcoApp.controller('assetController', ['$scope', '$location', 'assetService',
             var result = assetService.validateAsset($scope.asset);
 
             if (result.length > 0) {
+                console.log("Error in Asset input data" );
+                console.log(result);
                 return;
             }
 

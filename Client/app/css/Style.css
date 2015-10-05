@@ -72,6 +72,7 @@ legend {
 .datatable th { background:#fafafa;color:#343434;border-bottom:solid 0px #cdcdcd;border-right:solid 1px #cdcdcd;text-transform:uppercase; font-weight:bold;font-size:14px;}
 .datatable th a{color:#78a1c4; }
 .datatable td {color:#6b6b6b;border-top:solid 1px #cdcdcd;border-right:solid 1px #cdcdcd;}
+.datatable td.tblNoRecords { text-align:center;}
 .icons{border:0px;}
 .icnedit{background:url(../images/icnedit.png); cursor:pointer; width:15px;height:15px; float:left;text-indent:-99999px;margin-left:20px;
  /* IE 8 */

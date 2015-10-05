@@ -55,7 +55,7 @@
                 <tr class="validRecord" ng-repeat="location in locationList">
                     <td>{{location.name}}</td>
                     <td>{{location.address}}</td>
-                    <td>{{location.hospitalName}}<span style="display:none;">{{location.hospitalId}}</span></td>
+                    <td>{{location.hospitalId.name}}<span style="display:none;">{{location.hospitalId}}</span></td>
                     <td>
                         <div class="icnedit" ng-click="OpenEditHospitalLocationView(location._id)" title="Edit">Edit</div>
                         <div class="icndelete" ng-click="DeleteHospitalLocation(location._id)" title="Delete">Delete</div>

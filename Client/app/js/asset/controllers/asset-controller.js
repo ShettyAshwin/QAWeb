@@ -16,7 +16,7 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
 
         $scope.getAssetsByHierarchy = function (data) {
             assetService.getAssetsByHierarchy(data).then(function (obj) {
-                $scope.assets = obj.reponseData;
+                $scope.assets = obj.responseData;
 
             });
         };

@@ -42,6 +42,9 @@ describe('asset', function () {
                         "hierarchyId":"1"}
                 ];
 
+                fakeScope.assetproperties = [{"name":"p1", "value":"v1"}, {"name":"p2", "value":"v2"}];
+
+
                 httpBackend = $httpBackend;
 
                 $controller('assetController', {
@@ -83,6 +86,189 @@ describe('asset', function () {
                 expect(tempObj.length).toBeGreaterThan(0);
                 expect(fakeAssetService.getLocationsByHospital).toHaveBeenCalled();
             });
+
+            it('Should test getHierachiesByLocation  Method which is used for getting Hierachies list',function(){
+                var tempObj =  fakeScope.locationList;
+                var tmpHierarchies = fakeScope.hierarchyList;
+                var tempHospitalId = 1;
+                var tempLocationId =1 ;
+                fakeScope.ddlHospital =1;
+                httpBackend.when('GET',angular.getAppSection('hospital').list).respond({});
+
+                //httpBackend.when('GET',angular.getAppSection('hierarchy').getByLocation + tempLocationId).respond(tmpHierarchies);
+                spyOn(fakeAssetService,'getHierachiesByLocation').andCallFake(function(){
+                    var def = fakeQ.defer();
+                    def.resolve(tmpHierarchies);
+                    return def.promise;
+                });
+
+
+                fakeScope.getHierachiesByLocation();
+                httpBackend.flush();
+                expect(tmpHierarchies.length).toBeGreaterThan(0);
+                expect(fakeAssetService.getHierachiesByLocation).toHaveBeenCalled();
+            });
+
+            //getAssetsByHierarchy + getAssetsByHierarchy
+            it('Should test getAssetsByHierarchy  Method which is used for getting Assets list',function(){
+                var tempObj =  fakeScope.locationList;
+                var tmpAssets = fakeScope.assets;
+                var tempHospitalId = 1;
+                var tempAssetId =1 ;
+                fakeScope.ddlHospital =1;
+                httpBackend.when('GET',angular.getAppSection('hospital').list).respond({});
+
+                //httpBackend.when('GET',angular.getAppSection('asset').getByHierarchy + tempAssetId).respond(tmpAssets);
+                spyOn(fakeAssetService,'getAssetsByHierarchy').andCallFake(function(){
+                    var def = fakeQ.defer();
+                    def.resolve(tmpAssets);
+                    return def.promise;
+                });
+
+                fakeScope.displayAssetsList();
+                httpBackend.flush();
+                expect(tmpAssets.length).toBeGreaterThan(0);
+                expect(fakeAssetService.getAssetsByHierarchy).toHaveBeenCalled();
+            });
+
+            //getSelectedHierarchy
+            it('Should test getAssetsByHierarchy  Method which is used for getting Assets list',function(){
+                 var result = fakeScope.getSelectedHierarchy (1);
+                 expect (result._id).toBe(1);
+            });
+
+            //addAsset
+
+            it('Should test addAsset  Method for adding new asset',function(){
+                fakeScope.ddlhierarchy =1;
+
+                var tempAsset = fakeScope.assets[0];
+                tempAsset._id = 0;
+                fakeScope.asset = tempAsset;
+                spyOn(fakeAssetService,'validateAsset').andCallFake(function(){
+                    return "error";
+                });
+
+
+                fakeScope.addAsset();
+                expect(fakeAssetService.validateAsset).toHaveBeenCalled();
+
+
+            });
+
+            it('Should test addAsset  Method for adding new asset',function(){
+                fakeScope.ddlhierarchy =1;
+
+                var tempAsset = fakeScope.assets[0];
+                tempAsset._id = 0;
+                fakeScope.asset = tempAsset;
+                spyOn(fakeAssetService,'validateAsset').andCallFake(function(){
+                    return "";
+                });
+
+                spyOn(fakeAssetService,'addAsset').andCallFake(function(){
+                    var def = fakeQ.defer();
+                    def.resolve(true);
+                    return def.promise;
+                });
+
+                fakeScope.addAsset();
+                expect(fakeAssetService.validateAsset).toHaveBeenCalled();
+                expect(fakeAssetService.addAsset).toHaveBeenCalled();
+
+            });
+
+            it('Should test addAsset  Method for Updating existing asset',function(){
+                fakeScope.ddlhierarchy =1;
+
+                var tempAsset = fakeScope.assets[0];
+                tempAsset._id = 1;
+                fakeScope.asset = tempAsset;
+                spyOn(fakeAssetService,'validateAsset').andCallFake(function(){
+                    return "";
+                });
+
+                spyOn(fakeAssetService,'updateAsset').andCallFake(function(){
+                    var def = fakeQ.defer();
+                    def.resolve(true);
+                    return def.promise;
+                });
+
+                fakeScope.addAsset();
+                expect(fakeAssetService.validateAsset).toHaveBeenCalled();
+                expect(fakeAssetService.updateAsset).toHaveBeenCalled();
+
+            });
+
+            it('Should test getAssetById  Method',function(){
+
+                var tempAsset = fakeScope.assets[0];
+                spyOn(fakeAssetService,'getAssetById').andCallFake(function(){
+                    var def = fakeQ.defer();
+                    def.resolve(tempAsset);
+                    return def.promise;
+                });
+
+                fakeScope.getAssetById(1);
+                expect(fakeAssetService.getAssetById).toHaveBeenCalled();
+
+            });
+
+            it('Should test deleteAsset  Method',function(){
+
+                var tempAsset = fakeScope.assets[0];
+                spyOn(fakeAssetService,'deleteAsset').andCallFake(function(){
+                    var def = fakeQ.defer();
+                    def.resolve(true);
+                    return def.promise;
+                });
+
+                fakeScope.deleteAsset(1);
+                expect(fakeAssetService.deleteAsset).toHaveBeenCalled();
+
+            });
+
+            it('Should test afterGetAsset Method',function(){
+
+                fakeScope.asset = fakeScope.assets[0];
+                fakeScope.showList =false;
+                fakeScope.afterGetAsset();
+                expect(fakeScope.showList).toBe(true);
+
+            });
+
+            it('Should test addProperty Method',function(){
+
+                fakeScope.assetproperties = fakeScope.assets[0].properties;
+                var expectedPropertyCount = fakeScope.assetproperties.length+1;
+                fakeScope.addProperty ();
+                expect(fakeScope.assetproperties.length).toBe(expectedPropertyCount);
+
+            });
+
+            it('Should test removeProperty Method',function(){
+
+                fakeScope.assetproperties = fakeScope.assets[0].properties;
+                var expectedPropertyCount = fakeScope.assetproperties.length-1;
+                fakeScope.removeProperty(1);
+                expect(fakeScope.assetproperties.length).toBe(expectedPropertyCount);
+
+            });
+
+            it('Should test showAssetDetails Method',function(){
+                fakeScope.showList = false;
+                fakeScope.ddlSelectHierarchy =1;
+                fakeScope.showAssetDetails();
+                expect(fakeScope.showList).toBe(true);
+            });
+
+            it('Should test clear Method',function(){
+                fakeScope.assetproperties = fakeScope.assets[0].properties;
+                fakeScope.clear();
+                expect(fakeScope.assetproperties.length).toBe(1);
+            });
+
+
 
         })
     })

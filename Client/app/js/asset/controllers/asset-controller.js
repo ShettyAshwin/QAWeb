@@ -12,6 +12,7 @@ barcoApp.controller('assetController', ['$scope', '$location', 'assetService',
         $scope.getAssetsByHierarchy = function (data) {
             assetService.getAssetsByHierarchy(data).then(function (obj) {
                 $scope.assets = obj.responseData;
+                $scope.showList = true;
             });
         };
 
@@ -35,13 +36,13 @@ barcoApp.controller('assetController', ['$scope', '$location', 'assetService',
                 return;
             }
 
-
-            if ($scope.asset._id === null || $scope.asset._id === 0) {
+            //for undefined check ==
+            if ($scope.asset._id == null || $scope.asset._id == 0) {
                 assetService.addAsset($scope.asset).then(function (response) {
                     //TODO: Check StatusID and give Error message
                     $scope.clear();
                     $scope.getAssetsByHierarchy($scope.ddlSelectHierarchy);
-                    $scope.showList = !$scope.showList;
+                    $scope.showList = true;
                 });
             } else {
                 assetService.updateAsset($scope.asset).then(function (response) {

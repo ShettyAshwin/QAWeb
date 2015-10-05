@@ -133,12 +133,9 @@ var clsAsset = function () {
         },
         update: function (id, asset) {
             var defer = Q.defer();
-            console.log('Update existing asset');
             //validate asset
             if ((asset) && (asset.name.length) && asset.name.length > 0) {
                 baseframework.connect();
-                //assetModel.push(asset);
-
                 assetModel.findByIdAndUpdate(id, asset,
                     function (err, post) {
                         baseframework.close();
@@ -152,6 +149,7 @@ var clsAsset = function () {
             } else {
                 defer.resolve(baseframework.statusError);
             }
+
 
             return defer.promise;
         },

@@ -41,7 +41,7 @@ baseQueue.subscribe("Hierarchy.add", function (data) {
 
 baseQueue.subscribe("Hierarchy.update", function (data) {
     var dataValue = JSON.parse(data.content.toString());
-    clsLocation.update(dataValue.id, dataValue.hierarchy).then(function (response) {
+    clsHierarchy.update(dataValue.id, dataValue.hierarchy).then(function (response) {
         baseQueue.publish(data.properties.replyTo, response, data.properties.correlationId, undefined);
     });
 });

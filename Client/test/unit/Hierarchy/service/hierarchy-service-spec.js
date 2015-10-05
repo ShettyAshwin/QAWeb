@@ -1,105 +1,140 @@
 /**
  * Created by katarep on 9/29/15.
  */
-describe('hospital',function(){
+describe('Hierarchy',function(){
     describe('services',function(){
-        describe('hospitalServiceSpec',function(){
-            var  fakeScope, fakehospitalService, httpBackend;
-
+        describe('hierarchyServiceSpec',function(){
+            var fakeScope, fakehierarchyService, httpBackend;
 
             beforeEach(module('barcoApp'));
 
-
-            beforeEach(inject(function ($rootScope,$httpBackend,hospitalService) {
+            beforeEach(inject(function ($rootScope, $httpBackend, hierarchyService) {
                 fakeScope = $rootScope.$new();
-                fakehospitalService = hospitalService;
-                fakeScope.hospitals= [{"_id":1,"name":"hospital1","address":"abc"},{"_id":2,"name":"hospital1","address":"abc"}];
-                fakeScope.Hospital= {"_id":1,"name":"hospital1","address":"abc"};
+                fakehierarchyService = hierarchyService;
+                fakeScope.hierarchies = [
+                    { "_id": 1, "name": "hierarchy1", "address": "abc" },
+                    { "_id": 2, "name": "hierarchy1", "address": "abc" }
+                ];
+                fakeScope.Hierarchy = { "_id": 1, "name": "hierarchy1", "address": "abc" };
+                fakeScope.locationList = [
+                    { "_id": 1, "name": "loc1", "address": "addr1", "hospitalId": "1" },
+                    { "_id": 2, "name": "loc2", "address": "addr2", "hospitalId": "2" }
+                ];
                 httpBackend = $httpBackend;
 
             }));
 
-            it('Should test getHospitalList Method which is used for getting hospital list',function(){
-                var tempObj =  fakeScope.hospitals;
+            /* getHierarchyList */
+            it('Should test getHierarchyList method which is used to get all the hospital location hierarchies list (SUCCESS)', function () {
+                var tempObj = fakeScope.hierarchies;
 
-                httpBackend.when('GET',angular.getAppSection('hospital').list).respond(tempObj);
-                fakehospitalService.GetHospitalList().then(function(response){
-                    expect(response.name).toBe(tempObj.name);
+                httpBackend.when('GET', angular.getAppSection('hierarchy').list).respond(tempObj);
+                fakehierarchyService.getHierarchyList().then(function (response) {
+                    expect(response.responseData.length).toBe(tempObj.length);
                 });
                 httpBackend.flush();
                 expect(tempObj.length).toBeGreaterThan(0);
             });
-            it('Should test getHospitalById Method which is used for getting specific hospital details',function(){
-                var tempObj =  fakeScope.hospitals;
-                httpBackend.when('GET',angular.getAppSection('hospital').get+tempObj._id).respond(tempObj);
-                fakehospitalService.GetHospitalById(fakeScope.hospitals._id).then(function(response){
-                    expect(response.name).toBe(tempObj.name);
+
+            it('Should test getHierarchyList method which is used to get all the hospital location hierarchies list (ERROR)', function () {
+                var tempObj = { 'Success': false, 'Data': {}, 'error': null, 'ErrorCode': 500 };
+
+                httpBackend.when('GET', angular.getAppSection('hierarchy').list).respond(500, tempObj);
+                fakehierarchyService.getHierarchyList().then(function (response) {
+                    expect(response.Code).toBe(tempObj.ErrorCode);
                 });
                 httpBackend.flush();
             });
 
-            it('Should test AddHospitalDetail Method which is used add hospital details',function(){
-                var tempObj =  fakeScope.Hospital;
-                httpBackend.expectPOST(angular.getAppSection('hospital').add).respond(200,tempObj);
-                fakehospitalService.AddHospitalDetail().then(function(response){
-                    expect(response.Data._id).toBe(tempObj._id);
-                });
-                httpBackend.flush();
+            /* AddHierarchyDetail */
+            it('Should test AddHierarchyDetail method which is used to add new hospital location hierarchy (SUCCESS)', function () {
+                var tempObj = fakeScope.Hierarchy;
 
-            });
-
-            it('Should test AddHospitalDetail Method with error',function(){
-                var tempObj =  fakeScope.Hospital;
-                httpBackend.expectPOST(angular.getAppSection('hospital').add).respond(500,tempObj);
-                fakehospitalService.AddHospitalDetail().then(function(response){
-
-                    expect(response.Data).toBe(null);
-                });
-                httpBackend.flush();
-
-            });
-
-            it('Should test UpdateHospitalDetail Method which is used update hospital details',function(){
-                var tempObj =  fakeScope.Hospital;
-                tempObj.name = "hospital2";
-                httpBackend.expectPUT(angular.getAppSection('hospital').update+'1').respond(200,tempObj);
-                fakehospitalService.UpdateHospitalDetail(fakeScope.Hospital).then(function(response){
-                    expect(response.Data.name).toBe(tempObj.name);
+                httpBackend.when('POST', angular.getAppSection('hierarchy').add).respond(tempObj);
+                fakehierarchyService.AddHierarchyDetail().then(function (response) {
+                    expect(response.Success).toBe(true);
                 });
                 httpBackend.flush();
             });
 
-            it('Should test UpdateHospitalDetail Method with error',function(){
-                var tempObj =  fakeScope.Hospital;
-                tempObj.name = "hospital2";
-                httpBackend.expectPUT(angular.getAppSection('hospital').update+'1').respond(500,tempObj);
-                fakehospitalService.UpdateHospitalDetail(fakeScope.Hospital).then(function(response){
-                    expect(response.Data).toBe(null);
+            it('Should test AddHierarchyDetail method which is used to add new hospital location hierarchy (ERROR)', function () {
+                var tempObj = { 'Success': false, 'Data': {}, 'error': null, 'ErrorCode': 500 };
+
+                httpBackend.when('POST', angular.getAppSection('hierarchy').add).respond(500, tempObj);
+                fakehierarchyService.AddHierarchyDetail().then(function (response) {
+                    expect(response.Code).toBe(tempObj.ErrorCode);
                 });
                 httpBackend.flush();
             });
 
-            it('Should test DeleteHospitalDetail Method which is used delete hospital details',function(){
-                var tempObj =  fakeScope.Hospital;
-
-                httpBackend.expectDELETE(angular.getAppSection('hospital').delete +'1').respond(200);
-                fakehospitalService.DeleteHospitalDetail(1).then(function(){
-                    expect(true).toBe(true);
+            /* UpdateHierarchyDetail */
+            it('Should test UpdateHierarchyDetail method which is used to update hospital location hierarchy (SUCCESS)', function () {
+                var tempHierarchy = fakeScope.Hierarchy;
+                var tempObj = { "status": "200", "detail": "" };
+                httpBackend.when('PUT', angular.getAppSection('hierarchy').update + tempHierarchy._id).respond(tempObj);
+                fakehierarchyService.UpdateHierarchyDetail(tempHierarchy).then(function (response) {
+                    expect(response.Success).toBe(true);
                 });
                 httpBackend.flush();
-
             });
 
-            it('Should test DeleteHospitalDetail Method with error',function(){
-                var tempObj =  fakeScope.Hospital;
+            it('Should test UpdateHierarchyDetail method which is used to update hospital location hierarchy (ERROR)', function () {
+                var tempObj = { 'Success': false, 'Data': {}, 'error': null, 'ErrorCode': 500 };
+                var tempHierarchy = fakeScope.Hierarchy;
 
-                httpBackend.expectDELETE(angular.getAppSection('hospital').delete +'1').respond(500);
-                fakehospitalService.DeleteHospitalDetail(1).then(function(){
-                    expect(false).toBe(false);
+                httpBackend.when('PUT', angular.getAppSection('hierarchy').update + tempHierarchy._id).respond(500, tempObj);
+                fakehierarchyService.UpdateHierarchyDetail(tempHierarchy).then(function (response) {
+                    expect(response.Code).toBe(tempObj.ErrorCode);
                 });
                 httpBackend.flush();
-
             });
+
+            /* getHierarchyById */
+            it('Should test getHierarchyById method which is used to get specific hospital location hierarchy (SUCCESS)', function () {
+                var tempHierarchy = fakeScope.Hierarchy;
+                var hierarchyId = 1;
+
+                httpBackend.when('GET', angular.getAppSection('hierarchy').get + hierarchyId).respond(tempHierarchy);
+                fakehierarchyService.getHierarchyById(hierarchyId).then(function (response) {
+                    expect(response.responseData.name).toBe(tempHierarchy.name);
+                });
+                httpBackend.flush();
+            });
+
+            it('Should test UpdateHierarchyDetail method which is used to get specific hospital location hierarchy (ERROR)', function () {
+                var tempObj = { 'Success': false, 'Data': {}, 'error': null, 'ErrorCode': 500 };
+                var hierarchyId = 1;
+
+                httpBackend.when('GET', angular.getAppSection('hierarchy').get + hierarchyId).respond(500, tempObj);
+                fakehierarchyService.getHierarchyById(hierarchyId).then(function (response) {
+                    expect(response.Code).toBe(tempObj.ErrorCode);
+                });
+                httpBackend.flush();
+            });
+
+            /* DeleteHierarchyDetail */
+            it('Should test DeleteHierarchyDetail method which is used to delete specific hospital location hierarchy (SUCCESS)', function () {
+                var tempObj = { "status": "200", "detail": "" };
+                var hierarchyId = 1;
+
+                httpBackend.when('DELETE', angular.getAppSection('hierarchy').delete + hierarchyId).respond(tempObj);
+                fakehierarchyService.DeleteHierarchyDetail(hierarchyId).then(function (response) {
+                    expect(response.Success).toBe(true);
+                });
+                httpBackend.flush();
+            });
+
+            it('Should test UpdateHierarchyDetail method which is used to delete specific hospital location hierarchy (ERROR)', function () {
+                var tempObj = { 'Success': false, 'Data': {}, 'error': null, 'ErrorCode': 500 };
+                var hierarchyId = 1;
+
+                httpBackend.when('DELETE', angular.getAppSection('hierarchy').delete + hierarchyId).respond(500, tempObj);
+                fakehierarchyService.DeleteHierarchyDetail(hierarchyId).then(function (response) {
+                    expect(response.Code).toBe(tempObj.ErrorCode);
+                });
+                httpBackend.flush();
+            });
+
         });
     });
 });

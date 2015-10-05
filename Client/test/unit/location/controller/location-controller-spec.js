@@ -167,17 +167,17 @@ describe('Hospital location controller', function () {
             });
 
             it('Should test OpenAddHospitalLocationView method which is used to switch to location create view', function () {
-                fakeScope.OperationMode = "Add";
-                fakeScope.Location = null;
-                fakeScope.ShowList = false;
                 fakeScope.OpenAddHospitalLocationView();
+                expect(fakeScope.OperationMode).toBe("Add");
+                expect(fakeScope.ShowList).toBe(false);
+                expect(fakeScope.Location).toBe(null);
             });
 
             it('Should test OpenEditHospitalLocationView  method which is used to switch to location edit view', function () {
                 var locationId = 1;
-                fakeScope.OperationMode = "Edit";
-                //fakeScope.ShowList = false;
                 fakeScope.OpenEditHospitalLocationView(locationId);
+                expect(fakeScope.OperationMode).toBe("Edit");
+                expect(fakeScope.ShowList).toBe(false);
             });
 
         });

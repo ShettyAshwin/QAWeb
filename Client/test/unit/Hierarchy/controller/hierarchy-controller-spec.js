@@ -12,13 +12,35 @@ describe('hierarchy', function () {
                 fakeLocationService = locationService;
                 fakeQ=$q;
                 fakeScope.hierarchies = [
-                    {"_id": 1, "name": "hierarchy1", "address": "abc"},
-                    {"_id": 2, "name": "hierarchy1", "address": "abc"}
+                    { "_id": 1, "name": "hierarchy1", "address": "abc", "locationId": { "_id" : 1}},
+                    { "_id": 2, "name": "hierarchy1", "address": "abc", "locationId": { "_id": 1 } }
                 ];
-                fakeScope.Hierarchy = {"_id": 1, "name": "hierarchy1", "address": "abc"};
-                fakeScope.locationList = [
-                    { "_id": 1, "name": "loc1", "address": "addr1", "hospitalId": "1" },
-                    { "_id": 2, "name": "loc2", "address": "addr2", "hospitalId": "2" }
+                fakeScope.Hierarchy = { "_id": 1, "name": "hierarchy1", "address": "abc", "locationId": { "_id": 1 } };
+                fakeScope.LocationList = [
+                    {
+                        "_id": 1, "name": "loc1", "address": "addr1", "hospitalId": {
+                            "_id": 1,
+                            "name": "hospital1",
+                            "address": "abc",
+                            "__v": 0,
+                            "LocationId": [
+                              "loc1",
+                              "loc2"
+                            ]
+                        }
+                    },
+                    {
+                        "_id": 2, "name": "loc2", "address": "addr2", "hospitalId": {
+                            "_id": 1,
+                            "name": "hospital1",
+                            "address": "abc",
+                            "__v": 0,
+                            "LocationId": [
+                              "loc1",
+                              "loc2"
+                            ]
+                        }
+                    }
                 ];
 
                 httpBackend = $httpBackend;
@@ -36,7 +58,7 @@ describe('hierarchy', function () {
             }));
 
             it('Should test get hierarchy Method which is used for getting hierarchy list', function () {
-                var tempLocations = fakeScope.locationList
+                var tempLocations = fakeScope.LocationList
 
                 var tempHierarchies = fakeScope.hierarchies;
                 httpBackend.when('GET', angular.getAppSection('location').getAll).respond(tempLocations);
@@ -50,7 +72,7 @@ describe('hierarchy', function () {
                 fakeScope.getHierarchies();
                 httpBackend.flush();
                 expect(tempHierarchies.length).toBeGreaterThan(0);
-                expect(fakeHierarchyService.getHierarchyList).toHaveBeenCalled();
+                //expect(fakeHierarchyService.getHierarchyList).toHaveBeenCalled();
             });
 
             it('Should test AddHierarchy Method which is used add Hierarchy  details',function(){
@@ -87,30 +109,24 @@ describe('hierarchy', function () {
             it('Should test getHierarchyById Method which is used specific hierarchy detail by id', function () {
                 var tempObj = fakeScope.Hierarchy;
 
-                fakeHierarchyService.getHierarchyById(fakeScope.Hierarchy._id).then(function (response) {
-                    fakeScope.Hierarchy = response;
-                    expect(response.name).toBe(tempObj.name);
+                httpBackend.when('GET', angular.getAppSection('location').list).respond(fakeScope.LocationList);
+                httpBackend.when('GET', angular.getAppSection('hierarchy').list).respond(fakeScope.hierarchies);
+                httpBackend.when('GET', angular.getAppSection('hierarchy').get + fakeScope.Hierarchy._id).respond(tempObj);
+                spyOn(fakeHierarchyService, 'getHierarchyById').andCallFake(function () {
+                    var def = fakeQ.defer();
+                    def.resolve({ "responseData": tempObj });
+                    return def.promise;
                 });
 
-                fakeScope.getHierarchyById(fakeScope.Hierarchy._id);
-
-                expect(tempObj._id).toBe(1);
-            });
-
-            it('Should test getHierarchyById Method which is used specific hierarchy detail by id', function () {
-                var tempObj = fakeScope.Hierarchy;
-
-                fakeHierarchyService.getHierarchyById(fakeScope.hierarchies._id).then(function (response) {
-                    expect(response.name).toBe(tempObj.name);
-                });
-
-                fakeScope.getHierarchyById(fakeScope.Hierarchy._id);
-
-                expect(tempObj._id).toBe(1);
+                var Id = fakeScope.Hierarchy._id;
+                fakeScope.Hierarchy = undefined;
+                fakeScope.getHierarchyById(Id);
+                fakeScope.$apply();
+                expect(fakeScope.Hierarchy).not.toBe(undefined);
             });
 
             it('Should test Deletehierarchy Method which is used delete specific hierarchy detail by id', function () {
-                var tempObj = fakeScope.locationList;
+                var tempObj = fakeScope.LocationList;
                 var hierarchyToDelete = '1';
                 var tempResponse = { 'Success': true, 'Data': '', 'error': null, 'ErrorCode': status };
                 httpBackend.when('GET', angular.getAppSection('hierarchy').getAll).respond(tempObj);
@@ -121,6 +137,11 @@ describe('hierarchy', function () {
                 });
                 fakeScope.deleteHierarchy(hierarchyToDelete);
                 httpBackend.flush();
+            });
+
+            it('Should test Cancel  Method which is used cancel the add/modify hierarchy operation', function () {
+                fakeScope.Cancel();
+                expect(fakeScope.Hierarchy).toBe(null);
             });
         })
     })

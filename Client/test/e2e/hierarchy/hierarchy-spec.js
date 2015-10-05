@@ -10,7 +10,8 @@ describe('Hierarchy  Test', function () {
 
     beforeEach(function () {
         browser().navigateTo(url);
-        element('.container nav ul li:eq(2) a').click();
+        element('.container ul.appMenu li:eq(3) a').click();
+
     });
 
 
@@ -22,6 +23,7 @@ describe('Hierarchy  Test', function () {
         input('Hierarchy.order').enter('1');
         element('#save').click();
        expect(element('#hierarchy-table tbody tr:last td:nth-child(1)').text()).toBe("Hierarchy 1");
+        pause();
 
     });
     it('should add Second   Hierarchy details', function () {

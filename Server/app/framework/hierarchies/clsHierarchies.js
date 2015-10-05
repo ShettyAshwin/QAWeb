@@ -19,7 +19,6 @@ var clsHierarchy = function () {
             baseframework.connect();
             var hierarchy1 = new hierarchyModel({name: 'Hierachy1', address: 'Dummy Address 1'});
             var hierarchy2 = new hierarchyModel({name: 'Hierachy2', address: 'Dummy Address 2'});
-            var hierarchy3 = new hierarchyModel({name: 'Hierachy2', address: 'Dummy Address 2'});
 
             hierarchy1.save(function (err, data) {
                 clsHierarchy.responseHandler(err, data);
@@ -84,7 +83,7 @@ var clsHierarchy = function () {
                         throw err;
                     } else {
                         locationModel.findByIdAndUpdate(post.locationId, {$pull: {hierarchyId: id}}, {safe: true, upsert: true},
-                            function (err, model) {
+                            function (err) {
                                 baseframework.close();
                                 if (err) {
                                     throw err;
@@ -103,6 +102,7 @@ var clsHierarchy = function () {
             console.log('Add new Hospital');
             if ((hierarchy) && (hierarchy.name.length) && hierarchy.name.length > 0 && (hierarchy.address) && hierarchy.address.length > 0 && (hierarchy.locationId) && hierarchy.locationId.length > 0) {
                 baseframework.connect();
+                hierarchy.type = "hierarchy";
                 hierarchyModel.create(hierarchy,
                     function (err, post) {
                         if (err) {
@@ -110,7 +110,7 @@ var clsHierarchy = function () {
                         }
                         else {
                             locationModel.findByIdAndUpdate(hierarchy.locationId, {$push: {hierarchyId: post._id}}, {safe: true, upsert: true},
-                                function (err, model) {
+                                function (err) {
                                     baseframework.close();
                                     if (err) {
                                         throw err;
@@ -133,8 +133,9 @@ var clsHierarchy = function () {
             //validate hospital
             if ((hierarchy) && (hierarchy.name.length) && hierarchy.name.length > 0 && (hierarchy.address) && hierarchy.address.length > 0 && (hierarchy.locationId) && hierarchy.locationId.length > 0) {
                 baseframework.connect();
+                hierarchy.type = "hierarchy";
                 hierarchyModel.findByIdAndUpdate(id, hierarchy,
-                    function (err, post) {
+                    function (err) {
                         baseframework.close();
                         if (err) {
                             throw err;
@@ -148,7 +149,7 @@ var clsHierarchy = function () {
             return defer.promise;
         }
     }
-}
+};
 
 var factory = {
     getHierarchyInstance: function () {

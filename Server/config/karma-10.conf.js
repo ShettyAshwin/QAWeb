@@ -12,31 +12,28 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'app/lib/angular/angular.js',
-            'app/lib/angular/angular-*.js',
-            'app/lib/angular-translate/*.js',
-            'app/lib/angular-translate-*/*.js',
-            'test/lib/angular/angular-mocks.js',
-            'app/lib/appConfiguration.js',
-            'app/js/app.js',
+            'node_modules/requirejs/*.js',
+            'test/unit/**/**/*.js'
+            //'app/lib/angular/angular.js',
+            //'app/lib/angular/angular-*.js',
+            //'app/lib/angular-translate/*.js',
+            //'app/lib/angular-translate-*/*.js',
+            //'test/lib/angular/angular-mocks.js',
+            //'app/lib/appConfiguration.js',
+            //'app/js/app.js',
 
 
-            'app/js/**/**/*.js',
-            'test/unit/**/**/*.js' //Error
-
-
-
-
-            //'app/views/embedding/embedding-popup.html',
+            //'app/js/**/**/*.js',
+            //'test/unit/**/**/*.js' //Error
 
             //'test/data/*.js',
 
         ],
         // list of files to exclude
         exclude: [
-            'app/lib/angular/angular-loader.js',
-            'app/lib/angular/*.min.js',
-            'app/lib/angular/angular-scenario.js'
+            //'app/lib/angular/angular-loader.js',
+            //'app/lib/angular/*.min.js',
+            //'app/lib/angular/angular-scenario.js',
         ],
 
         preprocessors: {

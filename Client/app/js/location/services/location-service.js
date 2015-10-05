@@ -9,6 +9,9 @@ barcoApp.service('locationService', ['$http', '$q', '$rootScope', function ($htt
             $http.get(angular.getAppSection('location').list).
                 success(function (data, status) {
                     defer.resolve({ "responseData": data });
+                })
+                .error(function (data, status) {
+                    defer.resolve({ 'Success': false, 'Data': null, 'error': data, 'ErrorCode': status });
             });
             return defer.promise;
         },
@@ -16,20 +19,25 @@ barcoApp.service('locationService', ['$http', '$q', '$rootScope', function ($htt
         /* Get the locations for given hospital */
         getHospitalLocations: function (hospitalId) {
             var defer = $q.defer();
-            $http.get(angular.getAppSection('location').getByHospital + hospitalId).
-                success(function (data, status) {
-                    defer.resolve({ "responseData": data });
-                });
+            $http.get(angular.getAppSection('location').getByHospital + hospitalId)
+                .success(function (data, status) {
+                    defer.resolve({ "responseData": data }); })
+                .error(function (data, status) {
+                        defer.resolve({ 'Success': false, 'Data': null, 'error': data, 'ErrorCode': status });
+            });
             return defer.promise;
         },
 
         /* Get hospital location details */
         getLocationDetails: function myfunction(locationId) {
             var defer = $q.defer();
-            $http.get(angular.getAppSection('location').get + locationId).
-                success(function (data, status) {
-                    defer.resolve({ "responseData": data });
-            });
+            $http.get(angular.getAppSection('location').get + locationId)
+                .success(function (data, status) {
+                    defer.resolve({ "responseData": data }); 
+                })
+                .error(function (data, status) {
+                    defer.resolve({ 'Success': false, 'Data': null, 'error': data, 'ErrorCode': status });
+            });          
             return defer.promise;
         },
 
@@ -66,7 +74,7 @@ barcoApp.service('locationService', ['$http', '$q', '$rootScope', function ($htt
                     defer.resolve({ 'Success': true, 'Data': data, 'error': null, 'ErrorCode': status });
                 }).error(function (data, status) {
                     defer.resolve({ 'Success': false, 'Data': null, 'error': data, 'ErrorCode': status });
-                });         
+            });         
             return defer.promise;
         }
     };

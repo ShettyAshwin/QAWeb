@@ -1,6 +1,4 @@
-﻿
-
-    <div class="formcontent">
+﻿    <div class="formcontent">
         <form name="locationForm" class="hmsform" ng-show="!ShowList">
             <legend><span>{{OperationMode}}&nbsp;</span>Location</legend>
             <fieldset>
@@ -9,36 +7,35 @@
                         <label>Name<span class="required">*</span> </label>
                         <div class="col-md-4">
                             <input type="text" id="locationId" style="display:none;" ng-model="Location._id" />
-                            <input id="txtLocationName" name="id_req" placeholder="Name" class="form-control input-md" type="text" ng-required="true" ng-model="Location.name">
+                            <input required id="txtLocationName" autofocus name="txtLocationName" placeholder="Name" class="form-control input-md" type="text" ng-model="Location.name" />
                         </div>
                     </li>
                     <li>
                         <label>Address<span class="required">*</span> </label>
                         <div class="col-md-4">
-                            <input id="txtLocationAddress" name="id_req" placeholder="Address" class="form-control input-md" type="text" ng-required="true" ng-model="Location.address">
+                            <input required id="txtLocationAddress" name="txtLocationAddress" placeholder="Address" class="form-control input-md" type="text" ng-model="Location.address" />
                         </div>
                     </li>
                     <li>
                         <label>Hospital<span class="required">*</span> </label>
                         <div class="col-md-4">
-                            <select id="ddlHospital" name="ddlHospital" style="width: 200px;" required data-ng-model="Location.associatedHospital">
+                            <select id="ddlHospital" name="ddlHospital" style="width: 200px;" data-ng-model="Location.associatedHospital">
                                 <option value="-1" selected disabled>[Select Hospital]</option>
                                 <option data-ng-repeat="hospital in hospitalList" value="{{hospital._id}}">{{hospital.name}}</option>
                             </select>
                             <!--<span class="error" ng-show="myForm.service_id.$dirty && myForm.service_id.$invalid">Select service</span>
-                            <span ng-show="locationForm.ddlHospital.$error.required && locationForm.ddlHospital.$dirty
-                                  && locationForm.ddlHospital.$invalid">Select service</span>-->
+                        <span ng-show="locationForm.ddlHospital.$error.required && locationForm.ddlHospital.$dirty
+                              && locationForm.ddlHospital.$invalid">Select service</span>-->
                         </div>
                     </li>
                     <li class="buttons">
-                        <input type="submit" id="cancelLocation" value="Cancel" class="button" ng-click="ShowList=!ShowList">
-                        <input type="submit" id="saveLocation" value="Save" class="button" ng-click="AddHospitalLocation()">
+                        <input type="submit" id="cancelLocation" value="Cancel" class="button" ng-click="ShowList=!ShowList" />
+                        <input type="submit" id="saveLocation" value="Save" class="button" ng-click="AddHospitalLocation()" />
                     </li>
                 </ul>
             </fieldset>
         </form>
-
-
+        
         <div class="datatable" ng-show="ShowList">
             <div class="fltleft">
                 <span style="font-size: 1.333em;line-height:40px;">Filter By Hospital&nbsp;</span>
@@ -63,7 +60,9 @@
                         <div class="icnedit" ng-click="OpenEditHospitalLocationView(location._id)" title="Edit">Edit</div>
                         <div class="icndelete" ng-click="DeleteHospitalLocation(location._id)" title="Delete">Delete</div>
                     </td>
-
+                </tr>
+                <tr ng-show="!locationList.length">
+                    <td colspan="4" class="tblNoRecords">No locations found</td>
                 </tr>
             </table>
         </div>

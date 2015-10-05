@@ -41,7 +41,8 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
 
             if (result.length > 0)
             {
-                alert (result);
+                //alert (result);
+
                 return;
             }
 

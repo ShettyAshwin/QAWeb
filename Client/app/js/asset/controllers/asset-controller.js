@@ -41,7 +41,8 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
 
             if (result.length > 0)
             {
-                alert (result);
+                //alert (result);
+
                 return;
             }
 
@@ -80,7 +81,7 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
             console.log ("selected asset");
             console.log(JSON.stringify($scope.asset));*/
             assetService.getAssetById(id).then(function(obj){
-                $scope.asset = obj.reponseData;
+                $scope.asset = obj.responseData;
                 $scope.afterGetAsset();
                 //$location.url("/Assets/" + $scope.asset._id);
             });
@@ -138,7 +139,7 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
             // alert ($scope.ddlHospital);
             //$scope.locationList = [{"_id":"1", "name": "Location1"}, {"_id":"2", "name": "Location2"}];
             assetService.getLocationsByHospital($scope.ddlHospital).then(function (obj) {
-                $scope.locationList = obj.reponseData;
+                $scope.locationList = obj.responseData;
                 $scope.assets=[];
                 $scope.hierarchyList = [];
                 $scope.assetproperties= [];
@@ -151,7 +152,7 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
             // alert ($scope.ddlHospital);
             //$scope.hierarchyList = [{_id: "H1",name :'hierarchy1'}, {_id: "H2",name :'hierarchy2'}, {_id: "H3",name :'hierarchy3'}  ];
             assetService.getHierachiesByLocation($scope.ddlLocation).then(function (obj) {
-             $scope.hierarchyList = obj.reponseData;
+             $scope.hierarchyList = obj.responseData;
                 $scope.assets=[];
              });
         };

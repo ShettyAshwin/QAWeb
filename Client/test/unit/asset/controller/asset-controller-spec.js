@@ -134,7 +134,7 @@ describe('asset', function () {
             //getSelectedHierarchy
             it('Should test getAssetsByHierarchy  Method which is used for getting Assets list',function(){
                  var result = fakeScope.getSelectedHierarchy (1);
-                 expect (result._id).toBe(1);
+                 expect (result).toBe(1);
             });
 
             //addAsset

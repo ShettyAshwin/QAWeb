@@ -26,7 +26,7 @@ barcoApp.controller('assetController', ['$scope', '$location','assetService',
         $scope.getSelectedHierarchy = function (hierarchyId) {
             return  $scope.hierarchyList.filter(function (element) {
                 return element._id == hierarchyId
-            })[0];
+            })[0]._id;
         };
 
         //save

@@ -14,4 +14,10 @@ var barcoApp = angular.module('barcoApp',['ngRoute','angularTreeview'])
             $routeProvider.otherwise({
                 redirectTo: '/Hospitals'
             });
-        }])
+    }])
+    .run(function ($rootScope) {
+        $rootScope.$on('$routeChangeSuccess', function (ev, data) {
+            if (data.$$route && data.$$route.controller)
+                $rootScope.menu = data.$$route.controller.replace('Controller', '');
+    })
+});

@@ -37,6 +37,9 @@ module.exports = function(config) {
             'app/lib/angular/angular-loader.js',
             'app/lib/angular/*.min.js',
             'app/lib/angular/angular-scenario.js',
+
+            'app/js/common/controllers/admin-header-controller.js', // TBD
+            'app/js/common/directives/admin-header.js' // TBD
         ],
 
         preprocessors: {

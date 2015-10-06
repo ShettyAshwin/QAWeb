@@ -97,6 +97,28 @@ describe('hospital',function(){
                 httpBackend.flush();
 
             });
+
+            it('Should test GetHospitalTreeById method which is used to get the complete hospital tree (SUCCESS)', function () {
+                var tempObj = fakeScope.Hospital;
+                var hospitalId = '1';
+
+                httpBackend.when('GET', angular.getAppSection('hospital').getTreeById + tempObj._id).respond(fakeScope.hospitals);
+                fakehospitalService.GetHospitalTreeById(tempObj._id).then(function (response) {
+                    expect(response.reponseData[0]._id).toBe(tempObj._id);
+                });
+                httpBackend.flush();
+            });
+            /*
+            it('Should test GetHospitalTreeById method which is used to get the complete hospital tree (ERROR)', function () {
+                var tempObj = { 'Success': false, 'Data': {}, 'error': null, 'ErrorCode': 500 };
+                var hospitalId = '1';
+
+                httpBackend.when('GET', angular.getAppSection('location').getByHospital + hospitalId).respond(500, tempObj);
+                fakeLocationService.GetHospitalTreeById(hospitalId).then(function (response) {
+                    expect(response.ErrorCode).toBe(tempObj.ErrorCode);
+                });
+                httpBackend.flush();
+            });*/
         });
     });
 });

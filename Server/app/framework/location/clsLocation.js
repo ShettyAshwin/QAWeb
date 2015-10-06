@@ -83,7 +83,7 @@ var clsLocation = function () {
                         throw err;
                     } else {
                         hospitalModel.findByIdAndUpdate(post.hospitalId, {$pull: {LocationId: id}}, {safe: true, upsert: true},
-                            function (err, model) {
+                            function (err) {
                                 baseframework.close();
                                 if (err) {
                                     throw err;
@@ -101,13 +101,14 @@ var clsLocation = function () {
             console.log('Add new Location');
             if ((location) && (location.name.length) && location.name.length > 0 && (location.address) && location.address.length > 0 && (location.hospitalId) && location.hospitalId.length > 0) {
                 baseframework.connect();
+                location.type ="location";
                 locationModel.create(location,
                     function (err, post) {
                         if (err) {
                             throw err;
                         } else {
                             hospitalModel.findByIdAndUpdate(location.hospitalId, {$push: {LocationId: post._id}}, {safe: true, upsert: true},
-                                function (err, model) {
+                                function (err) {
                                     baseframework.close();
                                     if (err) {
                                         throw err;
@@ -132,9 +133,9 @@ var clsLocation = function () {
             if ((location) && (location.name.length) && location.name.length > 0 && (location.address) && location.address.length > 0 && (location.hospitalId) && location.hospitalId.length > 0) {
                 baseframework.connect();
                 //hospitalModel.push(hospital);
-
+                location.type ="location";
                 locationModel.findByIdAndUpdate(id, location,
-                    function (err, post) {
+                    function (err) {
                         baseframework.close();
                         if (err) {
                             throw err;
@@ -148,7 +149,7 @@ var clsLocation = function () {
             return defer.promise;
         }
     };
-}
+};
 
 var factory = {
     getLocationInstance: function () {

@@ -71,7 +71,7 @@ var clsHospital = function () {
             baseframework.connect();
             var defer = Q.defer();
             hospitalModel.findByIdAndRemove(id,
-                function (err, post) {
+                function (err) {
                     baseframework.close();
                     if (err) {
                         throw err;
@@ -86,8 +86,9 @@ var clsHospital = function () {
             console.log('Add new Hospital');
             if ((hospital) && (hospital.name.length) && hospital.name.length > 0 && (hospital.address) && hospital.address.length > 0) {
                 baseframework.connect();
+                hospital.type ="hospital";
                 hospitalModel.create(hospital,
-                    function (err, post) {
+                    function (err) {
                         baseframework.close();
                         if (err) {
                             throw err;
@@ -107,8 +108,9 @@ var clsHospital = function () {
             //validate hospital
             if ((hospital) && (hospital.name.length) && hospital.name.length > 0 && (hospital.address) && hospital.address.length > 0) {
                 baseframework.connect();
+                hospital.type ="hospital";
                 hospitalModel.findByIdAndUpdate(id, hospital,
-                    function (err, post) {
+                    function (err) {
                         baseframework.close();
                         if (err) {
                             throw err;
@@ -159,13 +161,13 @@ var clsHospital = function () {
         }
 
     };
-}
+};
 
 var factory = {
     getHospitalInstance: function () {
         return new clsHospital();
     }
-}
+};
 
 module.exports.factory = factory;
 module.exports.statusOk = baseframework.statusOk;

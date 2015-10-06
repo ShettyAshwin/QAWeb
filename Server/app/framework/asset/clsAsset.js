@@ -86,7 +86,7 @@ var clsAsset = function () {
                     }
                     else {
                         hierarchyModel.findByIdAndUpdate(post.hierarchyId, {$pull: {assetId: id}}, {safe: true, upsert: true},
-                            function (err, model) {
+                            function (err) {
                                 baseframework.close();
                                 if (err) {
                                     throw err;
@@ -106,6 +106,7 @@ var clsAsset = function () {
             if ((asset) && (asset.name.length) && asset.name.length > 0 && (asset.hierarchyId) && asset.hierarchyId.length > 0) {
                 baseframework.connect();
                 //assetModel.create(asset);
+                asset.type ="asset";
                 assetModel.create(asset,
                     function (err, post) {
                         if (err) {
@@ -137,15 +138,26 @@ var clsAsset = function () {
             //validate asset
             if ((asset) && (asset.name.length) && asset.name.length > 0) {
                 baseframework.connect();
+                asset.type ="asset";
                 //assetModel.push(asset);
 
                 assetModel.findByIdAndUpdate(id, asset,
-                    function (err, post) {
+                    function (err) {
                         baseframework.close();
                         if (err) {
                             throw err;
+                        }else {
+                            /*hierarchyModel.findByIdAndUpdate(asset.hierarchyId, {$push: {assetId: post._id}}, {safe: true, upsert: true},
+                                function (err, model) {
+                                    baseframework.close();
+                                    if (err) {
+                                        throw err;
+                                    } else {
+                                        defer.resolve(baseframework.statusOk);
+                                    }
+                                });*/
+                              defer.resolve(baseframework.statusOk);
                         }
-                        defer.resolve(baseframework.statusOk);
                     }
                 );
 
@@ -171,7 +183,7 @@ var clsAsset = function () {
             return defer.promise;
         }
     };
-}
+};
 
 var factory = {
     getAssetInstance: function () {

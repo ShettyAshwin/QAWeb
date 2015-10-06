@@ -11,7 +11,7 @@ describe('Asset  Test', function () {
 
     beforeEach(function () {
         browser().navigateTo(url);
-        element('.container ul.appMenu li:eq(4) a').click();
+        element('.container ul.appMenu li:eq(3) a').click();
     });
 
     it('should select Hospital, Location, Hierarchy and Click on Add Asset and Save it', function () {

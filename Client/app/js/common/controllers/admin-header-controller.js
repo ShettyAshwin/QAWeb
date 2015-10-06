@@ -7,7 +7,7 @@ barcoApp.
 
 
             $scope.navigateTo = function (target) {
-                alert(target);
+
                 $location.url(target.url);
 
             };

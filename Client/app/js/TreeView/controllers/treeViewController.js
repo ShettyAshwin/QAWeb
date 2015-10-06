@@ -1,5 +1,5 @@
-barcoApp.controller('treeViewController', ['$scope', 'hospitalService', 'locationService',
-    function ($scope, hospitalService, locationService) {
+barcoApp.controller('treeViewController', ['$scope', 'hospitalService',
+    function ($scope, hospitalService) {
 
 
         $scope.GetHospitalList = function () {

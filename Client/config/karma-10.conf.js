@@ -20,7 +20,7 @@ module.exports = function(config) {
             'app/lib/appConfiguration.js',
             'app/js/app.js',
 
-
+            'test/data/*.js',
             'app/js/**/**/*.js',
             'test/unit/**/**/*.js' //Error
 

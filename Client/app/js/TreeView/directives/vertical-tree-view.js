@@ -11,12 +11,9 @@
 
                 '<li data-ng-repeat="node in ' + g + '">' +
 
-                '<i ng-class="{{ node.type == asset ? normal :expanded}}" ' +
-               /* ' ( node.type !== asset && node.nodeChildren.length && !node.collapsed ? expanded ' +
-                ': collapsed)}}" ' +*/
+                '<i class="{{node.type==\'asset\' ? \'normal\' : node.children.length && !node.collapsed ?  \'expanded\': \'collapsed\'}}" ' +
                 'data-ng-click="' + a + '.selectNodeHead(node)"></i>' +
                 '<span data-ng-class="node.selected" data-ng-click="' + a + '.selectNodeLabel(node)">{{node.' + e + '}}</span>' +
-                '<span >{{node.type}}</span>' +
                 '<div data-ng-hide="node.collapsed" data-tree-id="' + a + '" data-tree-model="node.' + d + '" data-node-id=' + (c.nodeId || "id") + " data-node-label=" + e + " data-node-children=" + d + ">" +
                 "</div>" +
                 "</li>" +

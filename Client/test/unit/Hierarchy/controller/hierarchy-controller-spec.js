@@ -143,6 +143,12 @@ describe('hierarchy', function () {
                 fakeScope.Cancel();
                 expect(fakeScope.Hierarchy).toBe(null);
             });
+
+            it('Should test Cancel method which is used to switch to location list', function () {
+                fakeScope.Cancel();
+                expect(fakeScope.Hierarchy).toBe(null);
+                expect(fakeScope.showList).toBe(true);
+            });
         })
     })
 })

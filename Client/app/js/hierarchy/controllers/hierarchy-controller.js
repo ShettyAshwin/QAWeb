@@ -67,6 +67,7 @@ barcoApp.controller('hierarchyController', ['$scope', 'hierarchyService', 'locat
         };
         $scope.Cancel = function () {
             $scope.Hierarchy = null;
+            $scope.showList = true;
         };
 
     }]);

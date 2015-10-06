@@ -16,6 +16,7 @@ barcoApp.controller('indexController', ['$scope', 'hospitalService', 'locationSe
                 var re2 = new RegExp(find, 'g');
 
                 $scope.hospitalList = JSON.parse(JSON.stringify(obj.reponseData).replace(re, "\"children\":").replace(re1, "\"children\":").replace(re2, "\"children\":"));
+                console.log(JSON.stringify($scope.hospitalList));
             });
         };
         $scope.GetHospitalList();

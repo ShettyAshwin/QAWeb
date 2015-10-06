@@ -13,7 +13,10 @@ var app_Config = {
         'add': '{{ServerDetail}}/hospitals/add/',
         'update': '{{ServerDetail}}/hospitals/update/',
         'delete': '{{ServerDetail}}/hospitals/delete/',
-        'get': '{{ServerDetail}}/hospitals/get/'
+        'get': '{{ServerDetail}}/hospitals/get/',
+        'getTree': '{{ServerDetail}}/hospitals/getTree/',
+        'getTreeById': '{{ServerDetail}}/hospitals/getTreeById/'
+
     },
     'location': {
         'list': '{{ServerDetail}}/locations/getAll/',

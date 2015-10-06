@@ -1,4 +1,4 @@
-﻿@charset "utf-8";
+﻿﻿@charset "utf-8";
 /* CSS Document */
 html { 
     height:100%;
@@ -20,12 +20,12 @@ nav{width:225px; background:#252932;float:left;height: 100%;}
 .formcontent{padding:35px;}
 .mrgtop{margin-top: -17px;}
 nav ul{padding:0px;}
-nav li{display:block;height:33px; background:#55585f;line-height: 33px;border-bottom:solid 1px #000;}
+nav li{display:block;min-height:33px; background:#55585f;line-height: 33px;border-bottom:solid 1px #000;}
 nav li a{color:#acadb1; text-decoration:none;padding-left: 17px;font-size:14px;}
 nav li a:hover{color:#fff;}
 nav li.selected a{color:#fff;}
-nav li span{width:6px;float:left;height: 100%;}
-nav li.selected span{width:6px; background:#e7201d;float:left;height: 100%;}
+nav li span{width:6px;/*float:left;*/height: 100%;}
+nav li.selected span{width:6px; background:#e7201d;float:left;height: 33px;}
 
 fieldset{ min-width:0;padding:0;border:0;margin:0;}
 .hmsform{font-size:1.333em;}
@@ -133,3 +133,100 @@ ul.filters li{float:left;margin-left:25px; list-style:none;}
 ul.filters .selectbox {
     width: 180px;
 }
+.treeview, .treeview li{background-color: #252932;}
+div[data-angular-treeview] {
+    /* prevent user selection */
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    /* default */
+    font-family: Tahoma;
+    font-size:13px;
+    color: #555;
+    text-decoration: none;
+}
+
+div[data-tree-model] ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: none;
+    overflow: hidden;
+}
+
+div[data-tree-model] li {
+    position: relative;
+    padding: 0 0 0 20px;
+    line-height: 20px;
+}
+
+div[data-tree-model] li .expanded {
+    padding: 1px 10px;
+    background-image: url("../images/treeview-openarrow.png");
+    background-repeat: no-repeat;
+}
+
+div[data-tree-model] li .collapsed {
+    padding: 1px 10px;
+    background-image: url("../images/treeview-closearrow.png");
+    background-repeat: no-repeat;
+}
+div[data-tree-model] li li .expanded {
+    background-image: url("../images/treeview-childopenarrow.png");
+}
+div[data-tree-model] li li .collapsed {
+    padding: 1px 10px;
+    background-image: url("../images/treeview-childclosearrow.png");
+    background-repeat: no-repeat;
+}
+div[data-tree-model] li li .normal {
+    padding: 1px 10px;
+    background-image: url("../images/treeview-closearrow.png");
+    background-repeat: no-repeat;
+}
+div[data-tree-model] li li li .normal {
+    padding: 1px 10px;
+    background-image: url("../images/treeview-childmonitor.png");
+    background-repeat: no-repeat;
+}
+
+div[data-tree-model] li i, div[data-tree-model] li span {
+    cursor: pointer;
+    color:#b5b3b3;
+}
+div[data-tree-model] li span:hover {color:#fff;}
+div[data-tree-model] li .selected {
+    background-color: #aaddff;
+    font-weight: bold;
+    padding: 1px 5px;
+}
+
+.treeview{position: relative;}
+.treeview:before {
+    display: inline-block;
+    content: "";
+    position: absolute;
+    top: -20px;
+    bottom: 16px;
+    left: 0;
+    border: 1px solid #b5b6b9;
+    border-width: 0 0 0 1px;
+    z-index: 1;
+}
+.treeview li li:before {
+    display: inline-block;
+    content: "";
+    position: absolute;
+    top: 14px;
+    left: -13px;
+    width: 18px;
+    height: 0;
+    border-top: 1px solid #b5b6b9;
+    z-index: 1;
+}
+.appMenu{position: fixed;
+    bottom: 0;
+    width: 225px;}

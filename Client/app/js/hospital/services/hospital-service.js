@@ -1,6 +1,9 @@
 /**
  * Created by katarep on 9/28/15.
  */
+/**
+ * Created by katarep on 9/28/15.
+ */
 barcoApp.service('hospitalService',['$http', '$q', '$rootScope', function ($http, $q, $rootScope) {
     var hospitalService = {
 
@@ -52,7 +55,25 @@ barcoApp.service('hospitalService',['$http', '$q', '$rootScope', function ($http
                 });
 
             return defer.promise;
-        }
+        },
+
+        GetHospitalTree: function () {
+            var defer = $q.defer();
+            $http.get(angular.getAppSection('hospital').getTree).
+                success(function (data, status) {
+                    defer.resolve({ "reponseData": data});
+                });
+            return defer.promise;
+        },
+        GetHospitalTreeById: function (id) {
+            var defer = $q.defer();
+            $http.get(angular.getAppSection('hospital').getTreeById+id).
+                success(function (data, status) {
+                    defer.resolve({ "reponseData": data});
+                });
+            return defer.promise;
+        },
+
     };
     return hospitalService;
 }]);

@@ -56,7 +56,7 @@ describe('Hierarchy  Test', function () {
 
         element('#hierarchy-table tbody tr:last .icndelete').click();
         expect(repeater('#hierarchy-table tbody tr').count()).toBeGreaterThan(1);
-        pause();
+
 
     });
 });

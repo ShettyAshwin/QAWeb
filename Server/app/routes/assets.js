@@ -78,8 +78,7 @@ router.post('/add', function (req, res, next) {
 router.put('/update/:id', function (req, res, next) {
     try {
         console.log('In Update');
-        console.log(req.body);
-        clsAsset.update(req.params.id).then(function (data) {
+        clsAsset.update(req.params.id, req.body).then(function (data) {
             res.json(data);
             res.end();
         });

@@ -13,7 +13,7 @@ describe('Location Test', function () {
     });
 
     it('should add new location', function () {
-        pause();
+        //pause();
         element('#btnAddLocation').click(); // Open add location view
         input('Location.name').enter('testName');
         input('Location.address').enter('testAddress');

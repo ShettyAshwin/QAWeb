@@ -37,15 +37,15 @@
                             <div class="fltright"><input type="button" id="addProperty" value="+ AddProperty" ng-click="addProperty()" class="button addbutton"></div>
                         </li>
                         <li class="buttons">
-                            <input type="submit" value="Cancel" class="button" ng-click="clear()">
-                            <input type="submit" value="Save" class="button" ng-click="addAsset()">
+                            <input type="submit" id="btnCancel" value="Cancel" class="button" ng-click="clear()">
+                            <input type="submit" id="btnSave" value="Save" class="button" ng-click="addAsset()">
                         </li>
                     </ul>
                 </fieldset>
             </form>
 
 
-            <div class="datatable" ng-show="showList">
+            <div class="datatable" id = "tblAsset" ng-show="showList">
                 <div class="fltright">
                     <ul class="filters">
                         <li>
@@ -76,7 +76,7 @@
                             </div>
                         </li>
                         <li>
-                            <div class="fltright"><input type="button" value="Add New Asset" class="button addbutton button-grid" ng-click="showAssetDetails()"></div>
+                            <div class="fltright"><input type="button" id = "btnAddNewAsset" value="Add New Asset" class="button addbutton" ng-click="showAssetDetails()"></div>
                         </li>
                     </ul>
                 </div>
@@ -103,7 +103,7 @@
                                 </tr>
                             </table>-->
                             </td>
-                            <td><div  class="icnedit icons" ng-click="getAssetById(a._id)">Edit</div> <div class="icndelete icons" ng-click="deleteAsset(a._id)">Delete</div> </td>
+                            <td><div  class="icnedit icons" ng-click="getAssetById(a._id)" id="{{'btnEditAsset-' + $index}}">Edit</div> <div class="icndelete icons" ng-click="deleteAsset(a._id)">Delete</div> </td>
                         </tr>
 
                     </table>

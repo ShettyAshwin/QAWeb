@@ -5,14 +5,15 @@ describe('Location Test', function () {
     'use strict';
 
     var url;
-    url = '/QAWebPortal/app/index.html#/Hospitals';
+    url = '/QAWebPortal/app/index.html#/Locations';
 
     beforeEach(function () {
         browser().navigateTo(url);
-        element('.container nav ul li:eq(1) a').click();
+        element('.container nav ul.appMenu li#Menu_Location a').click();
     });
 
     it('should add new location', function () {
+        pause();
         element('#btnAddLocation').click(); // Open add location view
         input('Location.name').enter('testName');
         input('Location.address').enter('testAddress');

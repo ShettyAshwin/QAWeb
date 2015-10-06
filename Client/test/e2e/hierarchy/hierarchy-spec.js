@@ -10,7 +10,7 @@ describe('Hierarchy  Test', function () {
 
     beforeEach(function () {
         browser().navigateTo(url);
-        element('.container nav ul li:eq(2) a').click();
+        element('.container nav ul.appMenu li#Menu_Hierarchy a').click();
     });
 
 
